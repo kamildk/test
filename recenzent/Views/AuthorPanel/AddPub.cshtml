@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Dodaj publikacje";
+}
+
+<h2>Dodaj Publikacje</h2>
+
+@using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data" })){
+<div class="form-group">
+    @Html.Label("Plik", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="file" id="PublicationFile" name="file" />
+    </div>
+
+    
+    <p><input type="submit" value="Akceptuj" /></p>
+    @ViewBag.Message
+</div>
+}
