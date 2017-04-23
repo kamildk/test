@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
-    public class Sources {
+    public class Source {
         public int Id { get; set; }
         public string Name { get; set; }
 

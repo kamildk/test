@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace recenzent.Data.Model
 {
-    class Change_type
+    public class Change_type
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

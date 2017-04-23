@@ -16,14 +16,10 @@ namespace recenzent.Data.Model
         //TODO: tutaj możecie dodać właściwości aby dołożyć coś do tabeli użytkowników
         [Required]
         public string Nick { get; set; }
-<<<<<<< HEAD
-        
-=======
 
         [ForeignKey("AffiliationId")]
         public Affiliation Affiliation { get; set; }
->>>>>>> origin/master
-
+        
         [ForeignKey("EditorId")]
         public Editor Editor { get; set; }
 

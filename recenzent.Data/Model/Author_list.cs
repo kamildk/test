@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace recenzent.Data.Model
 {
-    public class SourcePosition
+    public class Author_list
     {
         public int Id { get; set; }
-
-        public ICollection<Source> Sources { get; set; }
-
-        //public ICollection<Publication> Publications { get; set; }
     }
 }
