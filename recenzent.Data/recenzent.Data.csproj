@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>recenzent.Data</RootNamespace>
     <AssemblyName>recenzent.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -89,12 +90,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
+    <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\Affiliation.cs" />
+    <Compile Include="Model\Author_list.cs" />
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\Change_type.cs" />
+    <Compile Include="Model\Comment.cs" />
+    <Compile Include="Model\Editor.cs" />
+    <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\File.cs" />
     <Compile Include="Model\Publication.cs" />
     <Compile Include="Model\Publication_category.cs" />
+    <Compile Include="Model\Review.cs" />
+    <Compile Include="Model\SourcePosition.cs" />
+    <Compile Include="Model\Source.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\View.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
