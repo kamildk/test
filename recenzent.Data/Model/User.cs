@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -16,7 +17,16 @@ namespace recenzent.Data.Model
         [Required]
         public string Nick { get; set; }
 
+        [ForeignKey("AffiliationId")]
+        public Affiliation Affiliation { get; set; }
 
+        [ForeignKey("EditorId")]
+        public Editor Editor { get; set; }
+
+        [ForeignKey("AdminId")]
+        public Admin Admin { get; set; }
+
+        public ICollection<View> Views { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
