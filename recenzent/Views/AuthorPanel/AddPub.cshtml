@@ -3,17 +3,40 @@
     ViewBag.Title = "Dodaj publikacje";
 }
 
-<h2>Dodaj Publikacje</h2>
-
-@using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data" })){
-<div class="form-group">
-    @Html.Label("Plik", new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <input type="file" id="PublicationFile" name="file" />
+<div class="container">
+    <div>
+        <h2>Dodaj Publikacje</h2>
+        @Html.ActionLink("Powrót", "Index")
     </div>
+    @using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" })) {
 
-    
-    <p><input type="submit" value="Akceptuj" /></p>
-    @ViewBag.Message
+        <div class="form-group">
+            <label class="control-label col-md-2">Tytuł</label>
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="file">Plik</label>
+            <div class="col-md-12">
+                <input type="file" class="form-control" id="PublicationFile" name="file" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="comment">Opis</label>
+            <div class="col-md-12">
+                <textarea class="form-control" rows="15" id="Description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Akceptuj</button>
+            </div>
+        </div>
+
+        @ViewBag.Message
+    }
 </div>
-}

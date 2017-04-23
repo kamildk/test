@@ -21,7 +21,7 @@ namespace recenzent.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPub(HttpPostedFileBase file) {
+        public ActionResult AddPub(HttpPostedFileBase file, string title) {
 
             if(file != null) {
                 string path = Server.MapPath("~/Uploads/");
@@ -30,8 +30,13 @@ namespace recenzent.Controllers
                 }
 
                 file.SaveAs(path + Path.GetFileName(file.FileName));
-                ViewBag.Message = "Plik przesłany";
+                ViewBag.Message = "Plik został przesłany";
             }
+
+            return View();
+        }
+
+        public ActionResult PublicationList() {
 
             return View();
         }
