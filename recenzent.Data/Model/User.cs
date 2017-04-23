@@ -15,7 +15,7 @@ namespace recenzent.Data.Model
         //TODO: tutaj możecie dodać właściwości aby dołożyć coś do tabeli użytkowników
         [Required]
         public string Nick { get; set; }
-
+        
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
