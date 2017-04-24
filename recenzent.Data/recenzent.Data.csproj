@@ -104,6 +104,7 @@
     <Compile Include="Model\Review.cs" />
     <Compile Include="Model\SourcePosition.cs" />
     <Compile Include="Model\Source.cs" />
+    <Compile Include="Model\TestModel.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\View.cs" />
   </ItemGroup>

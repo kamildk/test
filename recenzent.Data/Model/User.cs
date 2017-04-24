@@ -17,12 +17,15 @@ namespace recenzent.Data.Model
         [Required]
         public string Nick { get; set; }
 
+        public int AffiliationId { get; set; }
         [ForeignKey("AffiliationId")]
         public Affiliation Affiliation { get; set; }
-        
+
+        public int EditorId { get; set; }
         [ForeignKey("EditorId")]
         public Editor Editor { get; set; }
 
+        public int AdminId { get; set; }
         [ForeignKey("AdminId")]
         public Admin Admin { get; set; }
 

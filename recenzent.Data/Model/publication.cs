@@ -13,8 +13,7 @@ namespace recenzent.Data.Model
 
         public string Title { get; set; }
 
-        public int Category_id { get; set; }
-
+        public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Publication_category Category { get; set; }
 
@@ -22,12 +21,14 @@ namespace recenzent.Data.Model
 
         public string Abstact { get; set; }
 
-        [ForeignKey("FilesId")]
+        //[ForeignKey("FilesId")]
         public ICollection<File> Files { get; set; }
 
+        public int SourcePositionId { get; set; }
         [ForeignKey("SourcePositionId")]
         public SourcePosition SourcePosition { get; set; }
 
+        public int ReviewId { get; set; }
         [ForeignKey("ReviewId")]
         public Review Review { get; set; }
 

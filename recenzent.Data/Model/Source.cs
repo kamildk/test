@@ -10,6 +10,7 @@ namespace recenzent.Data.Model {
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public int SourcePositionId { get; set; }
         [ForeignKey("SourcePositionId")]
         public SourcePosition SourcePosition { get; set; }
     }

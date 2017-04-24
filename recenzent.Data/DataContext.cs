@@ -32,6 +32,7 @@ namespace recenzent.Data
         public DbSet<SourcePosition> SourcePositions { get; set; }
         public DbSet<Source> Sources { get; set; }
         public DbSet<View> Views { get; set; }
+        public DbSet<TestModel> TestModels { get; set; }
 
 
         //PROTIP: DefaultConnection to nazwa "connection string" w nadrzędnym Web.config projektu (ThingWall)

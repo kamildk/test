@@ -15,6 +15,8 @@ namespace recenzent.Data.Model
 
         public Change_type Type { get; set; }
 
+        public int EmployeeId { get; set; }
+
         [ForeignKey("EmployeeId")]
         public Employee Owner { get; set; }
 

@@ -17,9 +17,11 @@ namespace recenzent.Data.Model
 
         public ICollection<File> Files { get; set; }
 
+        public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Owner { get; set; }
 
+        public int EditorId { get; set; }
         [ForeignKey("EditorId")]
         public Editor Editor { get; set; }
 

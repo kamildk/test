@@ -11,7 +11,8 @@ namespace recenzent.Data.Model
 
         public bool IsCurrent { get; set; }
 
-        [ForeignKey("ChangeID")]
+        public int ChangeId { get; set; }
+        [ForeignKey("ChangeId")]
         public Change Change { get; set; }
 
         public ICollection<Review> Reviews { get; set; }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using recenzent.Data;
+using recenzent.Data.Model;
 
 namespace recenzent.Controllers
 {
@@ -17,6 +19,14 @@ namespace recenzent.Controllers
 
         [HttpGet]
         public ActionResult AddPub() {
+            using(var context = new DataContext()) {
+                TestModel test = new TestModel();
+                test.TestString = "testy testy";
+
+                context.TestModels.Add(test);
+
+                context.SaveChanges();
+            }
             return View();
         }
 
