@@ -9,7 +9,7 @@ namespace recenzent.Data.Model
 {
     public class Change
     {
-        public int Id { get; set; }
+        public int ChangeId { get; set; }
 
         public DateTime Date { get; set; }
 

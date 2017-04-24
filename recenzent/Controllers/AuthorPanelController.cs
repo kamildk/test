@@ -19,14 +19,7 @@ namespace recenzent.Controllers
 
         [HttpGet]
         public ActionResult AddPub() {
-            using(var context = new DataContext()) {
-                TestModel test = new TestModel();
-                test.TestString = "testy testy";
 
-                context.TestModels.Add(test);
-
-                context.SaveChanges();
-            }
             return View();
         }
 

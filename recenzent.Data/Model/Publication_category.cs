@@ -8,7 +8,7 @@ namespace recenzent.Data.Model
 {
     public class Publication_category
     {
-        public int Id { get; set; }
+        public int Publication_categoryId { get; set; }
 
         public string Name { get; set; }
 

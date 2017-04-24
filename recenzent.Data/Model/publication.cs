@@ -9,7 +9,7 @@ namespace recenzent.Data.Model
 {
     public class Publication
     {
-        public int Id { get; set; }
+        public int PublicationId { get; set; }
 
         public string Title { get; set; }
 

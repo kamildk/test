@@ -216,6 +216,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704241519512_first.cs" />
+    <Compile Include="Migrations\201704241519512_first.Designer.cs">
+      <DependentUpon>201704241519512_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704241724506_sec.cs" />
+    <Compile Include="Migrations\201704241724506_sec.Designer.cs">
+      <DependentUpon>201704241724506_sec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -309,6 +318,14 @@
       <Project>{9aedf013-2eab-432f-9bc0-cdd9f31b70b7}</Project>
       <Name>recenzent.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704241519512_first.resx">
+      <DependentUpon>201704241519512_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704241724506_sec.resx">
+      <DependentUpon>201704241724506_sec.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

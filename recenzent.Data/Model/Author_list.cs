@@ -8,6 +8,6 @@ namespace recenzent.Data.Model
 {
     public class Author_list
     {
-        public int Id { get; set; }
+        public int Author_listId { get; set; }
     }
 }

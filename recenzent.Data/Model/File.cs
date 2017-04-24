@@ -5,7 +5,7 @@ namespace recenzent.Data.Model
 {
     public class File
     {
-        public int Id { get; set; }
+        public int FileId { get; set; }
 
         public string Link_source { get; set; }
 
@@ -15,6 +15,6 @@ namespace recenzent.Data.Model
         [ForeignKey("ChangeId")]
         public Change Change { get; set; }
 
-        public ICollection<Review> Reviews { get; set; }
+        //public ICollection<Review> Reviews { get; set; }
     }
 }

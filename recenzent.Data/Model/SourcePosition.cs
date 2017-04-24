@@ -8,7 +8,7 @@ namespace recenzent.Data.Model
 {
     public class SourcePosition
     {
-        public int Id { get; set; }
+        public int SourcePositionId { get; set; }
 
         public ICollection<Source> Sources { get; set; }
 

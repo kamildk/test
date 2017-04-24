@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
     public class Source {
-        public int Id { get; set; }
+        public int SourceId { get; set; }
         public string Name { get; set; }
 
         public int SourcePositionId { get; set; }

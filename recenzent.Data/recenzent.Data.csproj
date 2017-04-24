@@ -90,6 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
+    <Compile Include="Migrations\201704241704507_first.cs" />
+    <Compile Include="Migrations\201704241704507_first.Designer.cs">
+      <DependentUpon>201704241704507_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Affiliation.cs" />
     <Compile Include="Model\Author_list.cs" />
@@ -107,6 +112,11 @@
     <Compile Include="Model\TestModel.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\View.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704241704507_first.resx">
+      <DependentUpon>201704241704507_first.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

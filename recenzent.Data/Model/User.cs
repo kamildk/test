@@ -21,15 +21,13 @@ namespace recenzent.Data.Model
         [ForeignKey("AffiliationId")]
         public Affiliation Affiliation { get; set; }
 
-        public int EditorId { get; set; }
-        [ForeignKey("EditorId")]
-        public Editor Editor { get; set; }
+        //public Editor Editor { get; set; }
+        
+        //public Admin Admin { get; set; }
 
-        public int AdminId { get; set; }
-        [ForeignKey("AdminId")]
-        public Admin Admin { get; set; }
+        //public Employee Employee { get; set; }
 
-        public ICollection<View> Views { get; set; }
+        public virtual ICollection<View> Views { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
@@ -37,6 +35,7 @@ namespace recenzent.Data.Model
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+            
         }
     }
 }

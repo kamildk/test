@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
     public class TestModel {
-        public int Id { get; set; }
+        public int TestModelId { get; set; }
         public string TestString { get; set; }
     }
 }

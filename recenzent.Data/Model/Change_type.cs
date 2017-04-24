@@ -8,7 +8,7 @@ namespace recenzent.Data.Model
 {
     public class Change_type
     {
-        public int Id { get; set; }
+        public int Change_typeId { get; set; }
 
         public string Name { get; set; }
     }
