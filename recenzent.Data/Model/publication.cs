@@ -28,9 +28,9 @@ namespace recenzent.Data.Model
         [ForeignKey("SourcePositionId")]
         public SourcePosition SourcePosition { get; set; }
 
-        public int ReviewId { get; set; }
-        [ForeignKey("ReviewId")]
-        public Review Review { get; set; }
+        //public int ReviewId { get; set; }
+        //[ForeignKey("ReviewId")]
+        //public Review Review { get; set; }
 
 
 
