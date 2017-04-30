@@ -1,7 +1,9 @@
-﻿body {
+﻿
+body {
     padding-top: 50px;
     padding-bottom: 20px;
-    color:#232262
+    color:#232262;
+    font-family:Bitter;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -31,7 +33,13 @@ textarea {
     border-color: #ffffff;
 }
 
+.body > btn :hover{
+    border-width: 0px;
+    border-color: #B3DCBF;
+}
+
 h1, h2, .h1, .h2, .jumbotron{
+    font-family:Bitter;
     margin-left: auto;
     margin-right: auto;
     border-radius:0px;
@@ -49,6 +57,9 @@ h1, h2, .h1, .h2{
 }
 
 .upper-row {
+   padding-left: 10px;
+   padding-right: 10px;
+   color:#ffffff;
    height: 300px;
    padding: 0px;
    margin: 0px;
@@ -66,10 +77,32 @@ h1, h2, .h1, .h2{
 }
 
 .nav-panel {
+    display:block;
+    overflow: hidden;
     position: absolute;
-       min-width:940px;
+    min-height:100%;
+    box-shadow: 0px 5px 5px #a48c81;
 }
 
 .banner{
-    min-width:900px;
+  
+}
+
+.navbar-inverse .navbar-nav > li > a {
+     color:#ffffff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover{
+    background-color:#B3DCBF;
+}
+.navbar-nav > li > a {
+  
+   border: solid;
+   border-width: 2px;
+    border-color: #ffffff;
+}
+
+.a {
+    color:#ffffff;
+    background-color:#B3DCBF;
 }
