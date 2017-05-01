@@ -17,21 +17,26 @@ namespace recenzent.Data
         //tak wygląda "deklaracja" nowej tabeli
         //public DbSet<Model> Models { get; set; }
         //zwróćcie uwagę, że Users już jest w klasie bazowej IdentityDbContext (trzeba wejść głębiej przez F12)
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Affiliation> Affliations { get; set; }
         public DbSet<Author_list> Author_Lists { get; set; }
         public DbSet<Change> Changes { get; set; }
         public DbSet<Change_type> Changes_Types { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Editor> Editors { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee_Job> Employee_Jobs { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Job> Jobs { get; set; }
         public DbSet<Publication> Publications { get; set; }
-        public DbSet<Publication_category> Publication_categories { get; set; }
-        public DbSet<Review> ExampleItems { get; set; }
+        public DbSet<Publication_Autors> Publication_Autors { get; set; }
+        public DbSet<Publication_category> Publication_Categories { get; set; }
+        public DbSet<PublicationTag> Publication_Tags { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ReviewState> ReviewStates { get; set; }
+        public DbSet<ReviewStateHistory> ReviewStateHistory { get; set; }
         public DbSet<SourcePosition> SourcePositions { get; set; }
         public DbSet<Source> Sources { get; set; }
-        public DbSet<View> Views { get; set; }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<TestModel> TestModels { get; set; }
 
 

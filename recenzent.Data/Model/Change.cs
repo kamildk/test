@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace recenzent.Data.Model
 {
@@ -11,15 +12,15 @@ namespace recenzent.Data.Model
     {
         public int ChangeId { get; set; }
 
+        [Required]
         public DateTime Date { get; set; }
-
+        [Required]
         public Change_type Type { get; set; }
 
         public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
+        public File File { get; set; }
 
-        [ForeignKey("EmployeeId")]
-        public Employee Owner { get; set; }
-
-        //TODO: admin ID ? 
+        public User User { get; set; }
     }
 }

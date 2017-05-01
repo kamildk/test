@@ -99,23 +99,28 @@
       <DependentUpon>201704301313125_PublicationTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Affiliation.cs" />
     <Compile Include="Model\Author_list.cs" />
     <Compile Include="Model\Change.cs" />
     <Compile Include="Model\Change_type.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Model\Editor.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Employee_Job.cs" />
     <Compile Include="Model\File.cs" />
+    <Compile Include="Model\Job.cs" />
     <Compile Include="Model\Publication.cs" />
+    <Compile Include="Model\PublicationTag.cs" />
+    <Compile Include="Model\Publication_Autors.cs" />
     <Compile Include="Model\Publication_category.cs" />
+    <Compile Include="Model\Rating.cs" />
     <Compile Include="Model\Review.cs" />
+    <Compile Include="Model\ReviewState.cs" />
+    <Compile Include="Model\ReviewStateHistory.cs" />
     <Compile Include="Model\SourcePosition.cs" />
     <Compile Include="Model\Source.cs" />
+    <Compile Include="Model\Tag.cs" />
     <Compile Include="Model\TestModel.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Model\View.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704241704507_first.resx">

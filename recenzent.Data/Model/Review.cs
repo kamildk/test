@@ -10,21 +10,20 @@ namespace recenzent.Data.Model
 
         public int ReviewId { get; set; }
 
-        public bool IsAccepted { get; set; }
-
+        [Required]
         public DateTime Creation_date { get; set; }
-
+        [Required]
         public DateTime Expiration_date { get; set; }
 
-        //public ICollection<File> Files { get; set; }
+        public ICollection<ReviewStateHistory> StateHistory { get; set; }
+
+        public ICollection<File> Files { get; set; }
 
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Owner { get; set; }
 
-        public int EditorId { get; set; }
-        [ForeignKey("EditorId")]
-        public Editor Editor { get; set; }
+
 
     }
 }

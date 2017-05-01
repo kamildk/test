@@ -15,19 +15,23 @@ namespace recenzent.Data.Model
     {
         //TODO: tutaj możecie dodać właściwości aby dołożyć coś do tabeli użytkowników
         [Required]
-        public string Nick { get; set; }
-
+        public string Name { get; set; }
+        [Required]
+        public string Surname { get; set; }
+        [Required]
+        public string Mail { get; set; }
+        [Required]
+        public DateTime RegistrationDate { get; set; }
+            
         public int AffiliationId { get; set; }
         [ForeignKey("AffiliationId")]
         public Affiliation Affiliation { get; set; }
 
-        //public Editor Editor { get; set; }
-        
-        //public Admin Admin { get; set; }
+        public Employee Employee { get; set; }
 
-        //public Employee Employee { get; set; }
-
-        public virtual ICollection<View> Views { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<Change> Changes { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
