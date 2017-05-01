@@ -18,6 +18,7 @@ namespace recenzent.Data.Model
         public virtual Publication_category Category { get; set; }
 
         public bool IsShared { get; set; }
+        public DateTime ShareDate { get; set; }
 
         public string Abstact { get; set; }
 
