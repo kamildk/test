@@ -1,6 +1,8 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿
+body {
+    padding: 20px;
+    color:#232262;
+    font-family:Bitter;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,5 +22,118 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: none;
+}
+
+.btn{
+    color:#ffffff;
+    background-color:#00A69C;
+    border-width: 3px;
+    border-color: #ffffff;
+}
+
+.body > btn :hover{
+    border-width: 0px;
+    border-color: #B3DCBF;
+}
+
+h1, h2, .h1, .h2, .jumbotron{
+    font-family:Bitter;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius:0px;
+    background-color:#00A69C;
+    color:#ffffff;
+    box-shadow: 0px 5px 5px #a48c81;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family:Bitter;
+}
+
+.jumbotron > h1, .jumbotron > h2{
+    box-shadow: none;
+}
+
+.container .jumbotron,.jumbotron{
+border-radius:0px;
+}
+
+
+.col-md-10, .col-md-9, .col-md-3, navbar, .navbar{
+    padding:0px;
+}
+
+
+h1, h2, .h1, .h2{
+       font-weight:bold;
+       padding:10px;
+       text-align: center;
+}
+
+.upper-row {
+   color:#ffffff;
+   height: 300px;
+   padding: 5px;
+   margin-bottom: 50px;
+   box-shadow: 0px 5px 5px #a48c81;
+}
+
+.lower-row {
+   padding: 5px;
+   height: 600px;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #ffffff;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #B3DCBF;
+    opacity: 0.5;
+}
+
+.navbar-inverse {
+    border-color: #ffffff;
+    background-color: #00A69C;
+    position: relative;
+}
+
+.nav-panel {
+    display:block;
+    overflow: hidden;
+    position: absolute;
+    min-height:100%;
+    box-shadow: 0px 5px 5px #a48c81;
+}
+
+.banner{
+  
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    font-family: 'Clarendon Lt BT';
+    margin-left:5px;
+    margin-right:5px;
+    color:#ffffff;
+    font-size: x-large;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover{
+    background-color:#B3DCBF;
+}
+.navbar-nav > li > a {
+  
+   border: solid;
+   border-width: 2px;
+    border-color: #ffffff;
+}
+
+.btn > a {
+    color:#B3DCBF;
+}
+
+.form-control {
+    color: #ffffff;
+    background-color: #B3DCBF;
 }

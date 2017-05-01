@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201704241704507_first.Designer.cs">
       <DependentUpon>201704241704507_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704301313125_PublicationTest.cs" />
+    <Compile Include="Migrations\201704301313125_PublicationTest.Designer.cs">
+      <DependentUpon>201704301313125_PublicationTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Affiliation.cs" />
@@ -116,6 +120,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704241704507_first.resx">
       <DependentUpon>201704241704507_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704301313125_PublicationTest.resx">
+      <DependentUpon>201704301313125_PublicationTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

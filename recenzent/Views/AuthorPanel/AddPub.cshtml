@@ -10,32 +10,52 @@
     </div>
     @using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" })) {
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Tytuł</label>
-            <div class="col-md-12">
+        <div class="form-group col-md-8">
+            <label class="control-label">Tytuł</label>
+            <div>
                 <input type="text" class="form-control" id="title" name="title">
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2" for="file">Plik</label>
-            <div class="col-md-12">
-                <input type="file" class="form-control" id="PublicationFile" name="file" />
+        <div class="form-group col-md-8">
+            <label class="control-label" for="file">Plik</label>
+            <div>
+                <input type="file" class="form-control" id="PublicationFile" name="file"/>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2" for="comment">Opis</label>
-            <div class="col-md-12">
-                <textarea class="form-control" rows="15" id="Description"></textarea>
+        <div class="form-group col-md-8">
+            <label class="control-label">Tagi</label>
+            <div>
+                <input type="text" class="form-control" id="tags" name="tags" placeholder="Tagi należy podawać po przecinku, np.Fizyka, Matematyka...">
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-default">Akceptuj</button>
+        <div class="form-group col-md-8">
+            <label class="control-label">Inni autorzy</label>
+            <div>
+                <input type="text" class="form-control" id="autors" name="autors">
             </div>
         </div>
+
+        <div class="form-group col-md-8">
+            <label class="control-label">Źródła</label>
+            <div>
+                <input type="text" class="form-control" id="sources" name="sources">
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+            <label class="control-label" for="comment">Opis</label>
+            <div>
+                <textarea class="form-control" rows="5" id="Description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+            <button type="submit" class="btn btn-default">Akceptuj</button>
+        </div>
+
 
         @ViewBag.Message
     }
