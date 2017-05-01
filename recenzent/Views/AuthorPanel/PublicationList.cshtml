@@ -6,8 +6,12 @@
 
 <h2>Lista Publikacji</h2>
 
-<ul class="pre-scrollable">
-    @foreach(var item in Model) {
-        <li>@item.Title</li>
+
+<div class="list-group pre-scrollable">
+    @foreach (var item in Model) {
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">@Html.ActionLink(item.Title, "Index", "AuthorPanel")</h4>
+            <p class="list-group-item-text">Data dodania: @item.ShareDate.ToShortDateString()</p>
+        </div>
     }
-</ul>
+</div>
