@@ -19,16 +19,12 @@ namespace recenzent.Data.Model
         [Required]
         public string Surname { get; set; }
         [Required]
-        public string Mail { get; set; }
-        [Required]
         public DateTime RegistrationDate { get; set; }
-            
-        public int AffiliationId { get; set; }
-        [ForeignKey("AffiliationId")]
-        public Affiliation Affiliation { get; set; }
-
-        public Employee Employee { get; set; }
-
+        
+        //public int AffiliationId { get; set; }
+        //[ForeignKey("AffiliationId")]
+        //public Affiliation Affiliation { get; set; }
+        //public Employee Employee { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Change> Changes { get; set; }

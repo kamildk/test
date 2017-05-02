@@ -1,5 +1,9 @@
-﻿using Microsoft.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin;
 using Owin;
+using recenzent.Data;
+using recenzent.Data.Model;
 
 [assembly: OwinStartupAttribute(typeof(recenzent.Startup))]
 namespace recenzent
@@ -9,7 +13,11 @@ namespace recenzent
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            
+
+
+
         }
+
+
     }
 }
