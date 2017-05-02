@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using recenzent.Models;
+using recenzent.Data;
+using recenzent.Data.Model;
 
 namespace recenzent.Controllers
 {
@@ -151,7 +153,8 @@ namespace recenzent.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, RegistrationDate = DateTime.UtcNow, Name = model.Name, Surname= model.Surname }; //TODO: Dodać wszystkie pola
+               
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -367,7 +370,7 @@ namespace recenzent.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, RegistrationDate = DateTime.UtcNow };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

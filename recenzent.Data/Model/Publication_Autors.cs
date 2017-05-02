@@ -12,6 +12,6 @@ namespace recenzent.Data.Model {
         [Required]
         public Publication Publication { get; set; }
         [Required]
-        public Employee Autor { get; set; }
+        public User Autor { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace recenzent.Data.Model
         [Required]
         public Change_type Type { get; set; }
 
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        //public int EmployeeId { get; set; }
+        //public User Employee { get; set; }
         public File File { get; set; }
 
         public User User { get; set; }

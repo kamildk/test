@@ -13,6 +13,7 @@ namespace recenzent.Controllers
     public class AuthorPanelController : Controller
     {
         // GET: AuthorPanel
+        //[Authorize(Users = "author")]
         public ActionResult Index()
         {
             return View();
