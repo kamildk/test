@@ -5,15 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace recenzent.Data.Model
-{
-    public class Change_type
-    {
-        public int Change_typeId { get; set; }
-
+namespace recenzent.Data.Model {
+    public class Tag {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Change> MyProperty { get; set; }
+        public ICollection<PublicationTag> PublicationTag { get; set; }
     }
 }

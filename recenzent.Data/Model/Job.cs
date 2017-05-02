@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
-    public class Affiliation {
-        public int AffiliationId { get; set; }
-        [Required]
+    public class Job {
+        public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public ICollection<Employee_Job> EmployeeJobs { get; set; }
     }
 }

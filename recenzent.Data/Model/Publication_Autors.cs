@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace recenzent.Data.Model
-{
-    public class SourcePosition
-    {
-        public int SourcePositionId { get; set; }
+namespace recenzent.Data.Model {
+    public class Publication_Autors {
+        public int Id { get; set; }
 
         [Required]
-        public Source Source { get; set; }
-        [Required]
         public Publication Publication { get; set; }
+        [Required]
+        public Employee Autor { get; set; }
     }
 }

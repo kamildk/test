@@ -53,22 +53,20 @@ namespace recenzent.Data.Migrations
                     PublicationId = 1,
                     Title = "Test Publication 1",
                     CategoryId = categoryList[0].Publication_categoryId,
-                    SourcePositionId = sourcesPosition[0].SourcePositionId,
                     ShareDate = DateTime.Now
                 },
                 new Publication() {
                     PublicationId = 2,
                     Title = "Test Publication 2",
                     CategoryId = categoryList[1].Publication_categoryId,
-                    SourcePositionId = sourcesPosition[1].SourcePositionId,
                     ShareDate = DateTime.Now
                 }
             };
 
 
             foreach (var item in categoryList) {
-                if(!context.Publication_categories.Any(x => x.Publication_categoryId == item.Publication_categoryId)) {
-                    context.Publication_categories.Add(item);
+                if(!context.Publication_Categories.Any(x => x.Publication_categoryId == item.Publication_categoryId)) {
+                    context.Publication_Categories.Add(item);
                 }
             }
 

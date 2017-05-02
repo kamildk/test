@@ -6,20 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
-    public class Comment {
-        public int CommentId { get; set; }
+    public class Rating {
+        public int Id { get; set; }
         [Required]
-        public string Text { get; set; }
+        [Range(1,5)]
+        public int Value { get; set; }
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
         public Publication Publication { get; set; }
-
         [Required]
         public User User { get; set; }
-
-        public Comment ParentComment { get; set; }
-        public ICollection<Comment> ChildComments { get; set; }
     }
 }
