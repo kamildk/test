@@ -5,9 +5,12 @@
 
 <h2>Panel Recenzenta</h2>
 
-<ul class="pre-scrollable">
+
+<div class="list-group pre-scrollable">
     @for (int i = 0; i < 20; i++)
     {
-        <li>Artykuł do zrecenzowania nr @(i+1)</li>
+        <div class="list-group-item">
+            <p class="list-group-item-text">Artykuł do zrecenzowania nr @(i + 1)</p>
+        </div>
     }
-</ul>
+</div>
