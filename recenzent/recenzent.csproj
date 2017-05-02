@@ -214,6 +214,7 @@
     <Compile Include="Controllers\AuthorPanelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReviewerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -291,7 +292,11 @@
     <Content Include="Views\AuthorPanel\AddPub.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\AuthorPanel\PublicationList.cshtml" />
+
     <Content Include="Views\AdminPanel\Index.cshtml" />
+
+    <Content Include="Views\Reviewer\Index.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
