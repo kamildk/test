@@ -17,7 +17,7 @@ namespace recenzent.Data
         //public DbSet<Model> Models { get; set; }
         //zwróćcie uwagę, że Users już jest w klasie bazowej IdentityDbContext (trzeba wejść głębiej przez F12)
         public DbSet<Affiliation> Affliations { get; set; }
-        public DbSet<Author_list> Author_Lists { get; set; }
+        //public DbSet<Author_list> Author_Lists { get; set; }
         public DbSet<Change> Changes { get; set; }
         public DbSet<Change_type> Changes_Types { get; set; }
         public DbSet<Comment> Comments { get; set; }

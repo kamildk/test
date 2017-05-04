@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
+    <Compile Include="Interface\ITagsService.cs" />
     <Compile Include="Migrations\201704241704507_first.cs" />
     <Compile Include="Migrations\201704241704507_first.Designer.cs">
       <DependentUpon>201704241704507_first.cs</DependentUpon>
@@ -126,6 +127,7 @@
     <Compile Include="Model\Tag.cs" />
     <Compile Include="Model\TestModel.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Service\TagsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704241704507_first.resx">
@@ -138,6 +140,7 @@
       <DependentUpon>201705021834377_DataContext.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

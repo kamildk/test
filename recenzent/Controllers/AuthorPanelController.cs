@@ -7,9 +7,15 @@ using System.IO;
 using recenzent.Data;
 using recenzent.Data.Model;
 using System.Diagnostics;
+using recenzent.Data.Interface;
+using recenzent.Data.Service;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace recenzent.Controllers
 {
+    [Authorize(Roles = "Author")]
     public class AuthorPanelController : Controller
     {
         // GET: AuthorPanel
@@ -21,28 +27,30 @@ namespace recenzent.Controllers
 
         [HttpGet]
         public ActionResult AddPub() {
-
             return View();
         }
 
         [HttpPost]
         public ActionResult AddPub(HttpPostedFileBase file, string title, string tags) {
 
-            if(file != null) {
+            //File
+            if (file != null) {
                 string path = Server.MapPath("~/Uploads/");
                 if (!Directory.Exists(path)) {
                     Directory.CreateDirectory(path);
                 }
 
                 file.SaveAs(path + Path.GetFileName(file.FileName));
-                ViewBag.Message = "Plik został przesłany";
             }
 
+            //Tags
             string[] tagsSplited = tags.Split(',');
             for (int i = 0; i < tagsSplited.Length; i++) {
                 tagsSplited[i] = tagsSplited[i].Trim();
-                Debug.WriteLine(tagsSplited[i]);
             }
+
+            ITagsService service = new TagsService();
+            service.AddTags(tagsSplited.ToList());
 
             return View();
         }

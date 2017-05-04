@@ -10,6 +10,7 @@ namespace recenzent.Data.Model
 {
     public class Publication
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PublicationId { get; set; }
 
         [Required]

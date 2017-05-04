@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using recenzent.Models;
 using recenzent.Data;
 using recenzent.Data.Model;
+using System.Diagnostics;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace recenzent.Controllers
 {
@@ -153,13 +155,25 @@ namespace recenzent.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email, RegistrationDate = DateTime.UtcNow, Name = model.Name, Surname= model.Surname }; //TODO: Dodać wszystkie pola
+                var ctx = new DataContext();
+                var affiliation = (from Affiliation a in ctx.Affliations where a.Name == "brak" select a).First();
+                var userManager = new UserManager<User>(new UserStore<User>(ctx));
+
+                var user = new User { UserName = model.Email,
+                    Email = model.Email,
+                    RegistrationDate = DateTime.UtcNow,
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    }; //TODO: Dodać wszystkie pola
                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    userManager.AddToRole(user.Id, "Admin");
+                    userManager.AddToRole(user.Id, "Author");
+                    userManager.AddToRole(user.Id, "Reviewer");
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

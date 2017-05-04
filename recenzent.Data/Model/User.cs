@@ -20,14 +20,14 @@ namespace recenzent.Data.Model
         public string Surname { get; set; }
         [Required]
         public DateTime RegistrationDate { get; set; }
-        
-        //public int AffiliationId { get; set; }
-        //[ForeignKey("AffiliationId")]
-        //public Affiliation Affiliation { get; set; }
+
+        public Affiliation Affiliation { get; set; }
         //public Employee Employee { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Change> Changes { get; set; }
+        public ICollection<Publication_Autors> PublicationAutors { get; set; }
+        public ICollection<Review> Reviews { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

@@ -7,7 +7,7 @@ namespace recenzent.Data.Model
 {
     public class Review
     {
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReviewId { get; set; }
 
         [Required]

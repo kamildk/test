@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
     public class Affiliation {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AffiliationId { get; set; }
         [Required]
         public string Name { get; set; }
 
+        //public ICollection<User> Users { get; set; }
     }
 }

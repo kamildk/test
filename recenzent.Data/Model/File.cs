@@ -6,6 +6,7 @@ namespace recenzent.Data.Model
 {
     public class File
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FileId { get; set; }
 
         [Required]
