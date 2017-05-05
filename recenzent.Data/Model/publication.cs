@@ -26,12 +26,14 @@ namespace recenzent.Data.Model
         [ForeignKey("CategoryId")]
         public virtual Publication_category Category { get; set; }
 
+        public User Author { get; set; }
+
         public ICollection<SourcePosition> SourcePositions { get; set; }
         public ICollection<File> Files { get; set; }
         public ICollection<PublicationTag> PublicationTags { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<Publication_Autors> PublicationAutors { get; set; }
+        //public ICollection<Publication_Autors> PublicationAutors { get; set; }
 
         //public int ReviewId { get; set; }
         //[ForeignKey("ReviewId")]

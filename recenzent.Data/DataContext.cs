@@ -26,7 +26,7 @@ namespace recenzent.Data
         public DbSet<File> Files { get; set; }
         //public DbSet<Job> Jobs { get; set; }
         public DbSet<Publication> Publications { get; set; }
-        public DbSet<Publication_Autors> Publication_Autors { get; set; }
+        //public DbSet<Publication_Autors> Publication_Autors { get; set; }
         public DbSet<Publication_category> Publication_Categories { get; set; }
         public DbSet<PublicationTag> Publication_Tags { get; set; }
         public DbSet<Rating> Ratings { get; set; }

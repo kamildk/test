@@ -26,7 +26,8 @@ namespace recenzent.Data.Model
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Change> Changes { get; set; }
-        public ICollection<Publication_Autors> PublicationAutors { get; set; }
+        //public ICollection<Publication_Autors> PublicationAutors { get; set; }
+        public ICollection<Publication> Publications { get; set; }
         public ICollection<Review> Reviews { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
