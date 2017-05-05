@@ -292,11 +292,9 @@
     <Content Include="Views\AuthorPanel\AddPub.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\AuthorPanel\PublicationList.cshtml" />
-
     <Content Include="Views\AdminPanel\Index.cshtml" />
-
     <Content Include="Views\Reviewer\Index.cshtml" />
-
+    <Content Include="Views\AdminPanel\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
