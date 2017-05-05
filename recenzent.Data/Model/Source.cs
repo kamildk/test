@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace recenzent.Data.Model {
     public class Source {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SourceId { get; set; }
         [Required]
         public string Name { get; set; }

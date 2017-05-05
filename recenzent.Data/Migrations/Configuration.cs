@@ -25,68 +25,15 @@ namespace recenzent.Data.Migrations
 
             try
             {
-            //    var categoryList = new List<Publication_category>() {
-            //    new Publication_category() {
-            //        Name = "Matematyka",
-            //        Publication_categoryId = 1
-            //    },
-            //    new Publication_category() {
-            //        Name = "Informatyka",
-            //        Publication_categoryId = 2
-            //    }
-            //};
+                var testAffiliation = new Affiliation() {
+                    Name = "brak"
+                };
 
-            //    var sourcesPosition = new List<SourcePosition>() {
-            //    new SourcePosition() {
-            //        SourcePositionId = 1,
-            //    },
-            //    new SourcePosition() {
-            //        SourcePositionId = 2,
-            //    }
-            //};
-
-            //    List<Publication> publications = new List<Publication>() {
-            //    new Publication() {
-            //        PublicationId = 1,
-            //        Title = "Test Publication 1",
-            //        CategoryId = categoryList[0].Publication_categoryId,
-            //        ShareDate = DateTime.Now
-            //    },
-            //    new Publication() {
-            //        PublicationId = 2,
-            //        Title = "Test Publication 2",
-            //        CategoryId = categoryList[1].Publication_categoryId,
-            //        ShareDate = DateTime.Now
-            //    }
-            //};
-
-
-            //    foreach (var item in categoryList)
-            //    {
-            //        if (!context.Publication_Categories.Any(x => x.Publication_categoryId == item.Publication_categoryId))
-            //        {
-            //            context.Publication_Categories.Add(item);
-            //        }
-            //    }
-
-            //    foreach (var item in sourcesPosition)
-            //    {
-            //        if (!context.SourcePositions.Any(x => x.SourcePositionId == item.SourcePositionId))
-            //        {
-            //            context.SourcePositions.Add(item);
-            //        }
-            //    }
-
-            //    foreach (var item in publications)
-            //    {
-            //        if (!context.Publications.Any(x => x.PublicationId == item.PublicationId))
-            //        {
-            //            context.Publications.Add(item);
-            //        }
-            //    }
+                if(!context.Affliations.Any(a => a.Name == testAffiliation.Name))
+                    context.Affliations.AddOrUpdate(testAffiliation);
 
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-                var UserManager = new UserManager<User>(new UserStore<User>(context));
+                var userManager = new UserManager<User>(new UserStore<User>(context));
 
                 if (!roleManager.RoleExists("Admin"))
                 {
@@ -116,23 +63,24 @@ namespace recenzent.Data.Migrations
                 //user.Name = "Wojciech";
                 //user.Surname = "Sendera";
                 //user.RegistrationDate = DateTime.UtcNow;
+                //user.Affiliation = testAffiliation;
                 //string userPassword = "Test_1234";
 
                 //var chkUser = UserManager.Create(user, userPassword);
-                //if (chkUser.Succeeded)
-                //{
+                //if (chkUser.Succeeded) {
                 //    var result1 = UserManager.AddToRole(user.Id, "Admin");
                 //}
-                
+
                 //user = new User();
                 //user.UserName = "author";
                 //user.Email = "test2@test.pl";
                 //user.Name = "Wojciech2";
                 //user.Surname = "Sendera2";
                 //user.RegistrationDate = DateTime.UtcNow;
+                //user.Affiliation = testAffiliation;
+
                 //var chkUser2 = UserManager.Create(user, userPassword);
-                //if (chkUser2.Succeeded)
-                //{
+                //if (chkUser2.Succeeded) {
                 //    var result1 = UserManager.AddToRole(user.Id, "Author");
                 //}
 
@@ -142,11 +90,15 @@ namespace recenzent.Data.Migrations
                 //user.Name = "Wojciech3";
                 //user.Surname = "Sendera3";
                 //user.RegistrationDate = DateTime.UtcNow;
+                //user.Affiliation = testAffiliation;
+                //user.EmailConfirmed = true;
+
                 //var chkUser3 = UserManager.Create(user, userPassword);
-                //if (chkUser3.Succeeded)
-                //{
+                //if (chkUser3.Succeeded) {
                 //    var result1 = UserManager.AddToRole(user.Id, "Reviewer");
                 //}
+
+
             }
 
             catch (System.Data.Entity.Validation.DbEntityValidationException e)

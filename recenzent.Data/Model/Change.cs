@@ -10,6 +10,7 @@ namespace recenzent.Data.Model
 {
     public class Change
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ChangeId { get; set; }
 
         [Required]

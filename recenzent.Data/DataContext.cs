@@ -17,7 +17,7 @@ namespace recenzent.Data
         //public DbSet<Model> Models { get; set; }
         //zwróćcie uwagę, że Users już jest w klasie bazowej IdentityDbContext (trzeba wejść głębiej przez F12)
         public DbSet<Affiliation> Affliations { get; set; }
-        public DbSet<Author_list> Author_Lists { get; set; }
+        //public DbSet<Author_list> Author_Lists { get; set; }
         public DbSet<Change> Changes { get; set; }
         public DbSet<Change_type> Changes_Types { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -26,7 +26,7 @@ namespace recenzent.Data
         public DbSet<File> Files { get; set; }
         //public DbSet<Job> Jobs { get; set; }
         public DbSet<Publication> Publications { get; set; }
-        public DbSet<Publication_Autors> Publication_Autors { get; set; }
+        //public DbSet<Publication_Autors> Publication_Autors { get; set; }
         public DbSet<Publication_category> Publication_Categories { get; set; }
         public DbSet<PublicationTag> Publication_Tags { get; set; }
         public DbSet<Rating> Ratings { get; set; }
