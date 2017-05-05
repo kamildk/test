@@ -45,17 +45,18 @@
         </div>
         <div class="col-md-3">
             <div class="upper-row" style="background-color:#00A69C">
+
+                @RenderSection("RightUpperSection", required: false)
                 
-                    @RenderSection("RightUpperSection", required: false)
-                    <p> RightUpperSection </p>
-  
+                   <!-- <img src="~/Images/user.png" class="rh-section" /> -->
+                   
+
             </div>
 
             <div class="lower-row" style="background-color:#B3DCBF">
-              
-                     @RenderSection("RightLowerSection", required: false) 
-                     <p> RightLowerSection </p>
-            
+               
+                    @RenderSection("RightLowerSection", required: false)
+                    <p> RightLowerSection </p>
             </div>
             
         </div>
