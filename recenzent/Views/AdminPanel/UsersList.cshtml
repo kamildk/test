@@ -1,0 +1,21 @@
+﻿@using recenzent.Data.Model
+@model IEnumerable<User>
+
+@{
+    ViewBag.Title = "UsersList";
+}
+
+<h2>UsersList</h2>
+<table class="table">
+    @foreach (var p in Model)
+    {
+        <tr>
+
+            <th>@p.Email</th>
+            <th>@p.Name</th>
+            <th>@p.Surname</th>
+        </tr>
+    }
+</table>
+
+

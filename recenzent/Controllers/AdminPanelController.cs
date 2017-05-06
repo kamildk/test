@@ -37,17 +37,21 @@ namespace recenzent.Controllers
             return roles;
         }
         //Get: List of users
-        public ActionResult UsersList()
+        public ViewResult UsersList()
         {
-            var context = new DataContext();
-            List<string> users = new List<string>();
-            var UserManager = new UserManager<User>(new UserStore<User>(context));
-            foreach (var User in UserManager.Users)
+            using (var context = new DataContext())
             {
-                users.Add(User.Name.ToString());
-            }
+                //List<string> users = new List<string>();
+                //var UserManager = new UserManager<User>(new UserStore<User>(context));
+                var userlist = context.Users.ToList();
+                //foreach (var User in UserManager.Users)
+                //{
+                //    users.Add(User.Name.ToString());
+                //}
 
-            return View(users);
+                return View(userlist);
+            }
         }
+        
     }
 }
