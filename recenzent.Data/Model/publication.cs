@@ -18,14 +18,16 @@ namespace recenzent.Data.Model
 
         [Required]
         public bool IsShared { get; set; }
-        public DateTime ShareDate { get; set; }
+        public DateTime? ShareDate { get; set; }
         [Required]
         public string Description { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Publication_category Category { get; set; }
 
+        public string AuthoId { get; set; }
+        [ForeignKey("AuthoId")]
         public User Author { get; set; }
 
         public ICollection<SourcePosition> SourcePositions { get; set; }
@@ -33,6 +35,14 @@ namespace recenzent.Data.Model
         public ICollection<PublicationTag> PublicationTags { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment> Comments { get; set; }
+
+        public Publication() {
+            SourcePositions = new List<SourcePosition>();
+            Files = new List<File>();
+            PublicationTags = new List<PublicationTag>();
+            Ratings = new List<Rating>();
+            Comments = new List<Comment>();
+        }
         //public ICollection<Publication_Autors> PublicationAutors { get; set; }
 
         //public int ReviewId { get; set; }

@@ -17,7 +17,12 @@ namespace recenzent.Data.Model
         public bool IsCurrent { get; set; }
 
         public ICollection<Change> Changes { get; set; }
+        public int? ReviewId { get; set; }
+        [ForeignKey("ReviewId")]
         public Review Review { get; set; }
+
+        public int? PublicationId { get; set; }
+        [ForeignKey("PublicationId")]
         public Publication Publication { get; set; }
     }
 }

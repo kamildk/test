@@ -60,6 +60,7 @@ namespace recenzent.Data
             catch (DbEntityValidationException e)
             {
                 var newException = new FormattedDbEntityValidationException(e);
+                System.Diagnostics.Debug.WriteLine(newException.Message);
                 throw newException;
             }
         }

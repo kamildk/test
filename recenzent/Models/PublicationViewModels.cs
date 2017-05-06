@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +10,7 @@ namespace recenzent.Models {
         public string Title { get; set; }
         public HttpPostedFileBase File { get; set; }
         public string Tags { get; set; }
+        [Required]
         public string Description { get; set; }
     }
 }

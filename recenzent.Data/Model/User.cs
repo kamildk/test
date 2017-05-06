@@ -21,6 +21,8 @@ namespace recenzent.Data.Model
         [Required]
         public DateTime RegistrationDate { get; set; }
 
+        public int? AffiliationId { get; set; }
+        [ForeignKey("AffiliationId")]
         public Affiliation Affiliation { get; set; }
         //public Employee Employee { get; set; }
         public ICollection<Comment> Comments { get; set; }
@@ -29,6 +31,15 @@ namespace recenzent.Data.Model
         //public ICollection<Publication_Autors> PublicationAutors { get; set; }
         public ICollection<Publication> Publications { get; set; }
         public ICollection<Review> Reviews { get; set; }
+
+        public User() {
+            Comments = new List<Comment>();
+            Ratings = new List<Rating>();
+            Changes = new List<Change>();
+            Publications = new List<Publication>();
+            Reviews = new List<Review>();
+
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="Interface\ITagsService.cs" />
+    <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Migrations\201704241704507_first.cs" />
     <Compile Include="Migrations\201704241704507_first.Designer.cs">
       <DependentUpon>201704241704507_first.cs</DependentUpon>
@@ -128,6 +129,7 @@
     <Compile Include="Model\TestModel.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Service\TagsService.cs" />
+    <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704241704507_first.resx">

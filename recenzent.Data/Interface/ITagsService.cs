@@ -10,6 +10,7 @@ namespace recenzent.Data.Interface {
         List<Tag> GetTagsList();
         Task<List<Tag>> GetTagsListAsync();
         Tag GetTag(int id);
+        Tag GetTag(string name);
 
         void AddTag(Tag tag);
         void AddTags(List<Tag> tags);

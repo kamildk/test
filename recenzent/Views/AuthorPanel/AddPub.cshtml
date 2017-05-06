@@ -35,13 +35,6 @@
         </div>
 
         <div class="form-group col-md-8">
-            <label class="control-label">Inni autorzy</label>
-            <div>
-                <input type="text" class="form-control" id="autors" name="autors">
-            </div>
-        </div>
-
-        <div class="form-group col-md-8">
             <label class="control-label">Źródła</label>
             <div>
                 <input type="text" class="form-control" id="sources" name="sources">
@@ -52,7 +45,7 @@
             <label class="control-label" for="comment">Opis</label>
             <div>
                 @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
-                @Html.TextAreaFor(m=>m.Description, new { @class = "form-control", rows = "5" })
+                @Html.TextAreaFor(m=>m.Description, new { @class = "form-control", rows = "5" , required = "true"})
             </div>
         </div>
 

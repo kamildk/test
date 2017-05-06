@@ -12,10 +12,12 @@ namespace recenzent.Data.Model {
         public int Id { get; set; }
 
         [Required]
+        [ForeignKey("TagId")]
         public Tag Tag { get; set; }
         public int TagId { get; set; }
 
         [Required]
+        [ForeignKey("PublicationId")]
         public Publication Publication { get; set; }
         public int PublicationId { get; set; }
     }

@@ -60,6 +60,14 @@ namespace recenzent.Data.Service {
             }
         }
 
+        public Tag GetTag(string name) {
+            using(var ctx = new DataContext()) {
+                var result = ctx.Tags.Where(t => t.Name == name).ToList();
+
+                return result.Count > 0 ? result.FirstOrDefault() : null;
+            }
+        }
+
         public Tag GetTag(int id) {
             using(var ctx = new DataContext()) {
                 var result = from Tag tag in ctx.Tags where tag.Id == id select tag;
