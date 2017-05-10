@@ -65,7 +65,6 @@ border-radius:0px;
 }
 
 
-
 h1, h2, .h1, .h2{
        font-weight:bold;
        padding:10px;
@@ -73,12 +72,10 @@ h1, h2, .h1, .h2{
 }
 
 .upper-row {
-   font-family: 'Clarendon Lt BT';
    color:#ffffff;
    height: 300px;
    padding: 5px;
    margin-bottom: 50px;
-   text-align: center;
    box-shadow: 0px 5px 5px #a48c81;
 }
 
@@ -136,41 +133,7 @@ h1, h2, .h1, .h2{
     color:#B3DCBF;
 }
 
-
 .form-control {
-    color: #000000;
+    color: #ffffff;
     background-color: #B3DCBF;
-    width: 100%;
-    margin: 0px;
-}
-.col-md-11{
-    width: 80%;
-    float: right;
-}
-.form-group{
-    width: 100%;
-    padding: 0px;
-}
-
-.control-label{
-    width: 20%;
-    text-align: right;
-}
-
-.col-md-11 > .btn{
-    position: relative;
-    font-size: 20px;
-    font-weight: bold;
-    left: 50%;
-    height: 50px;
-    width: 120px;
-    margin-left: -120px;
-}
-
-.rh-section{
-    position: relative;
-    left: 50%;
-    margin-left: -50px;
-    max-height: 120px;
-    display: block;
 }

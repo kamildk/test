@@ -20,7 +20,6 @@ namespace recenzent.Controllers
     public class AuthorPanelController : Controller
     {
         // GET: AuthorPanel
-        //[Authorize(Users = "author")]
         public ActionResult Index()
         {
             return View();
@@ -28,33 +27,13 @@ namespace recenzent.Controllers
 
         [HttpGet]
         public ActionResult AddPub() {
+
+            using(var ctx = new DataContext()) {
+                ViewBag.Categories = ctx.Publication_Categories.Select(c => c.Name).ToList();
+            }
+
             return View();
         }
-
-        //[HttpPost]
-        //public ActionResult AddPub(HttpPostedFileBase file, string title, string tags) {
-
-        //    //File
-        //    if (file != null) {
-        //        string path = Server.MapPath("~/Uploads/");
-        //        if (!Directory.Exists(path)) {
-        //            Directory.CreateDirectory(path);
-        //        }
-
-        //        file.SaveAs(path + Path.GetFileName(file.FileName));
-        //    }
-
-        //    //Tags
-        //    string[] tagsSplited = tags.Split(',');
-        //    for (int i = 0; i < tagsSplited.Length; i++) {
-        //        tagsSplited[i] = tagsSplited[i].Trim();
-        //    }
-
-        //    ITagsService service = new TagsService();
-        //    service.AddTags(tagsSplited.ToList());
-
-        //    return View();
-        //}
 
         [HttpPost]
         public ActionResult AddPub(PublicationViewModel model) {
@@ -63,9 +42,10 @@ namespace recenzent.Controllers
                 var ctx = new DataContext();
                 Publication publication = new Publication();
 
-                //IUserService userService = new UserService();
+                IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault(); //userService.GetUser(User.Identity.GetUserId());
+                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault(); 
+                //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
 
                 //Tags
                 string[] tagsSplited = model.Tags.Split(',');
@@ -93,7 +73,7 @@ namespace recenzent.Controllers
                     Directory.CreateDirectory(filePath);
                 }
 
-                string fileName = publication.PublicationId.ToString() + DateTime.Now.ToShortDateString();
+                string fileName = model.File.FileName;
                 model.File.SaveAs(filePath + fileName);
 
                 Data.Model.File file = new Data.Model.File() {
@@ -105,30 +85,53 @@ namespace recenzent.Controllers
 
                 ctx.Files.Add(file);
 
-                //publication.Author = currentUser;
+                publication.Author = currentUser;
                 publication.Title = model.Title;
                 publication.PublicationTags = pubTags;
                 publication.Description = model.Description;
                 publication.Files.Add(file);
-                //publication.ShareDate = DateTime.Now;
 
                 currentUser.Publications.Add(publication);
 
                 ctx.Publications.Add(publication);
 
                 ctx.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View();
         }
 
+
         public ActionResult PublicationList() {
 
             using (var context = new Data.DataContext()) {
+                string userId = User.Identity.GetUserId();
+                var pubList = from Publication pub in context.Publications
+                              where pub.AuthoId == userId && pub.IsShared == true
+                              select pub;
 
-                var pubList = context.Publications.ToList();
+                return View(pubList.ToList());
+            }
+        }
 
-                return View(pubList);
+        public ActionResult PublicationInReviewList() {
+
+            using (var context = new Data.DataContext()) {
+                string userId = User.Identity.GetUserId();
+                var pubList = from Publication pub in context.Publications
+                              where pub.AuthoId == userId && pub.IsShared == false
+                              select pub;
+
+                return View(pubList.ToList());
+            }
+        }
+
+        public ActionResult PublicationReview(int id = 6) {
+            using (var ctx = new DataContext()) {
+                Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
+                
+                return View(pub);
             }
         }
     }

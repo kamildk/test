@@ -296,6 +296,8 @@
     <Content Include="Views\AdminPanel\Index.cshtml" />
     <Content Include="Views\Reviewer\Index.cshtml" />
     <Content Include="Views\AdminPanel\UsersList.cshtml" />
+    <Content Include="Views\AuthorPanel\PublicationInReviewList.cshtml" />
+    <Content Include="Views\AuthorPanel\PublicationReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

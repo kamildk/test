@@ -21,8 +21,10 @@ namespace recenzent.Data.Service {
         public void AddTags(List<string> tags) {
             using (var ctx = new DataContext()) {
                 foreach (var item in tags) {
-                    Tag tag = new Tag() { Name = item };
-                    ctx.Tags.Add(tag);
+                    if (!ctx.Tags.Any(t => t.Name == item)) {
+                        Tag tag = new Tag() { Name = item };
+                        ctx.Tags.Add(tag);
+                    }
                 }
 
                 ctx.SaveChanges();

@@ -19,13 +19,19 @@ namespace recenzent.Data.Service {
             userManager = new UserManager<User>(new UserStore<User>(context));
         }
 
-        public User GetUser(string id) {
+        public User GetOwinUser(string id) {
             var result = userManager.Users.Where(u => u.Id == id).ToList();
 
             return result.Count > 0 ? result.FirstOrDefault() : null;
         }
 
-        public List<User> GetUsersList() {
+        public User GetDBUser(string id) {
+            var result = context.Users.Where(u => u.Id == id).ToList();
+
+            return result.Count > 0 ? result.FirstOrDefault() : null;
+        }
+
+        public List<User> GetOwinUsersList() {
             return userManager.Users.ToList();
         }
     }

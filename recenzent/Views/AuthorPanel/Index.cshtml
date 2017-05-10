@@ -4,11 +4,17 @@
 }
 
 <h2>Panel Autora</h2>
+<form class="container">
 
-<div class="btn-default">
-    @Html.ActionLink("Dodaj publikacje", "AddPub", "AuthorPanel")
-</div>
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Dodaj publikacje", "AddPub", "AuthorPanel")
+    </div>
 
-<div class="btn-default">
-    @Html.ActionLink("Lista publikacji", "PublicationList", "AuthorPanel")
-</div>
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Lista publikacji", "PublicationList", "AuthorPanel")
+    </div>
+
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Lista publikacji w recenzji", "PublicationInReviewList", "AuthorPanel")
+    </div>
+</form>

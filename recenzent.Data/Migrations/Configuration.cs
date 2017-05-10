@@ -98,6 +98,23 @@ namespace recenzent.Data.Migrations
                 //    var result1 = UserManager.AddToRole(user.Id, "Reviewer");
                 //}
 
+                Publication_category category1 = new Publication_category() {
+                    Name = "Informatyka"
+                };
+
+                Publication_category category2 = new Publication_category() {
+                    Name = "Matematyka"
+                };
+                Publication_category category3 = new Publication_category() {
+                    Name = "Fizyka"
+                };
+
+                if (!context.Publication_Categories.Any(c => c.Name == category1.Name))
+                    context.Publication_Categories.Add(category1);
+                if (!context.Publication_Categories.Any(c => c.Name == category2.Name))
+                    context.Publication_Categories.Add(category2);
+                if (!context.Publication_Categories.Any(c => c.Name == category3.Name))
+                    context.Publication_Categories.Add(category3);
 
             }
 

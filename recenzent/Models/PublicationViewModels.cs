@@ -12,5 +12,6 @@ namespace recenzent.Models {
         public string Tags { get; set; }
         [Required]
         public string Description { get; set; }
+        public string Category { get; set; }
     }
 }
