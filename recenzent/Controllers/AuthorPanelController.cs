@@ -36,7 +36,12 @@ namespace recenzent.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPub(PublicationViewModel model) {
+        public ActionResult AddPub(PublicationViewModel model, string[] sources) {
+            Debug.WriteLine("YYYYYY???");
+            foreach (var item in sources) {
+                Debug.WriteLine(item);
+            }
+
 
             if (ModelState.IsValid) {
                 var ctx = new DataContext();

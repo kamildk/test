@@ -3,6 +3,29 @@
     ViewBag.Title = "Dodaj publikacje";
 }
 
+<script>
+    function AddSource() {
+        var length = $("#SourcesList il").length;
+        var array = Array();
+
+        for (var i = 0; i < 5; i++) {
+            array[i] = i;
+        }
+        var postData = { values: array };
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddPub", "AuthorPanel")",
+            data: postData,
+            success: function () {
+                alert("udalo sie...?")
+            },
+            dataType: "json",
+            traditional: true
+        });
+    }
+</script>
+
 <div class="container">
     <div>
         <h2>Dodaj Publikacje</h2>
@@ -15,14 +38,14 @@
             <div>
                 @*<input type="text" class="form-control" id="title" name="title">*@
                 @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-            </div> 
+            </div>
         </div>
 
         <div class="form-group col-md-8">
             <label class="control-label" for="file">Plik</label>
             <div>
                 @*<input type="file" class="form-control" id="PublicationFile" name="file"/>*@
-                @Html.TextBoxFor(m => m.File, new {@class = "form-control inputlg", type = "file", accept = ".pdf"})
+                @Html.TextBoxFor(m => m.File, new { @class = "form-control inputlg", type = "file", accept = ".pdf" })
             </div>
         </div>
 
@@ -37,7 +60,7 @@
             <label class="control-label">Tagi</label>
             <div>
                 @*<input type="text" class="form-control" id="tags" name="tags" placeholder="Tagi należy podawać po przecinku, np.Fizyka, Matematyka...">*@
-                @Html.TextBoxFor(m=> m.Tags, new { @class = "form-control", placeholder = "Tagi należy podawać po przecinku, np.Fizyka, Matematyka..." })
+                @Html.TextBoxFor(m => m.Tags, new { @class = "form-control", placeholder = "Tagi należy podawać po przecinku, np.Fizyka, Matematyka..." })
             </div>
         </div>
 
@@ -45,7 +68,10 @@
             <label class="control-label">Źródła</label>
             <div>
                 <input type="text" class="form-control" id="sources" name="sources">
-                <button type="button" class="btn">Dodaj</button>
+                <ul class="list-group" id="SourcesList">
+
+                </ul>
+                <button type="button" class="btn" id="btn1" onclick="AddSource()">Dodaj</button>
             </div>
         </div>
 
@@ -53,7 +79,7 @@
             <label class="control-label" for="comment">Opis</label>
             <div>
                 @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
-                @Html.TextAreaFor(m=>m.Description, new { @class = "form-control", rows = "5" , required = "true"})
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5", required = "true" })
             </div>
         </div>
 
