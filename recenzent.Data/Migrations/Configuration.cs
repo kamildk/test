@@ -67,7 +67,8 @@ namespace recenzent.Data.Migrations
                 //string userPassword = "Test_1234";
 
                 //var chkUser = UserManager.Create(user, userPassword);
-                //if (chkUser.Succeeded) {
+                //if (chkUser.Succeeded)
+                //{
                 //    var result1 = UserManager.AddToRole(user.Id, "Admin");
                 //}
 

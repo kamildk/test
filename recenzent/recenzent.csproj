@@ -214,6 +214,7 @@
     <Compile Include="Controllers\AuthorPanelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PublicationPanelController.cs" />
     <Compile Include="Controllers\ReviewerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -296,6 +297,7 @@
     <Content Include="Views\AdminPanel\Index.cshtml" />
     <Content Include="Views\Reviewer\Index.cshtml" />
     <Content Include="Views\AdminPanel\UsersList.cshtml" />
+    <Content Include="Views\PublicationPanel\Open.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
