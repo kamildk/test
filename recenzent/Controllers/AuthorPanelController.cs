@@ -36,9 +36,9 @@ namespace recenzent.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPub(PublicationViewModel model, string[] sources) {
+        public ActionResult AddPub(PublicationViewModel model) {
             Debug.WriteLine("YYYYYY???");
-            foreach (var item in sources) {
+            foreach (var item in model.Sources) {
                 Debug.WriteLine(item);
             }
 
@@ -49,7 +49,7 @@ namespace recenzent.Controllers
 
                 IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault(); 
+                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
                 //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
 
                 //Tags
