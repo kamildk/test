@@ -2,28 +2,34 @@
 @{
     ViewBag.Title = "Dodaj publikacje";
 }
-@{int i = 0; }
+
 <script>
     function AddSource() {
-        var length = $("#SourcesList il").length;
-        var array = Array();
-        $("#SourcesList").append(@Html.TextBoxFor(m=>m.Sources[i], new { @class = "form-control" }))
+        var length = $("#SourcesList input").length;
+        var buttonCode = '<button type="button" class = "btn btn-sm col-sm-1" id =sButton' + length + ' onclick="RemoveSource(' +length+')">Usuń</button>';
+        $("#SourcesList").append('<input type="text"  class="list-group-item col-sm-11" id = source' + length + ' onchange = SetSources()>' + buttonCode);
+    }
 
-        @*for (var i = 0; i < 5; i++) {
-            array[i] = i;
+    function RemoveSource(id){
+        $('#source' + id).remove();
+        $('#sButton' + id).remove();
+
+        SetSources();
+    }
+
+    function SetSources() {
+        var length = $("#SourcesList input").length;
+        var text = ""
+        for (var i = 0; i < length; i++) {
+            id = $("#SourcesList input").get(i).id
+            text += $('#'+id).val() + "\n";
         }
-        var postData = { values: array };
+        $("#testBox").val(text);
+        //alert($("#testBox").val());
+    }
 
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("AddPub", "AuthorPanel")",
-            data: postData,
-            success: function () {
-                alert("udalo sie...?")
-            },
-            dataType: "json",
-            traditional: true
-        });*@
+    function Test() {
+        alert($("#testBox").val());
     }
 </script>
 
@@ -32,9 +38,9 @@
         <h2>Dodaj Publikacje</h2>
         @Html.ActionLink("Powrót", "Index")
     </div>
-    @using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" })) {
+    @using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data" })) {
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="control-label">Tytuł</label>
             <div>
                 @*<input type="text" class="form-control" id="title" name="title">*@
@@ -42,7 +48,7 @@
             </div>
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="control-label" for="file">Plik</label>
             <div>
                 @*<input type="file" class="form-control" id="PublicationFile" name="file"/>*@
@@ -50,14 +56,14 @@
             </div>
         </div>
 
-        <div class="form-group col-md-8">
-            <label class="control-label">Categoria</label>
+        <div class="form-group col-md-10">
+            <label class="control-label">Kategoria</label>
             <div>
                 @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.Categories), new { @class = "form-control" })
             </div>
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="control-label">Tagi</label>
             <div>
                 @*<input type="text" class="form-control" id="tags" name="tags" placeholder="Tagi należy podawać po przecinku, np.Fizyka, Matematyka...">*@
@@ -65,23 +71,22 @@
             </div>
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="control-label">Źródła</label>
+            <button type="button" class="btn" id="btn1" onclick="AddSource()">Dodaj</button>
+            @*<button type="button" class="btn" id="btn2" onclick="Test()">test</button>*@
             <div>
-                <input type="text" class="form-control" id="sources" name="sources">
-                <ul class="list-group" id="SourcesList">
-                    @Html.TextBoxFor(m=>m.Sources[0], new { @class = "form-control"})
-                    @Html.TextBoxFor(m => m.Sources[1], new { @class = "form-control" })
 
-                    @Html.TextBoxFor(m => m.Sources[2], new { @class = "form-control" })
+                <div class="list-group" id="SourcesList">
+                </div>
 
+                @Html.TextAreaFor(m => m.Sources, new { @class = "form-control hidden", id = "testBox" })
 
-                </ul>
-                <button type="button" class="btn" id="btn1" onclick="AddSource()">Dodaj</button>
             </div>
+
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <label class="control-label" for="comment">Opis</label>
             <div>
                 @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
@@ -89,7 +94,7 @@
             </div>
         </div>
 
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
             <button type="submit" class="btn btn-default">Akceptuj</button>
         </div>
 
