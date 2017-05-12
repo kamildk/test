@@ -1,14 +1,23 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using recenzent.Data;
+using recenzent.Data.Model;
+using PagedList;
 
 namespace recenzent.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             ViewBag.Controller = "Home";
             ViewBag.Action = "Index";
-            return View();
+            var ctx = new DataContext();
+            var pubSort = (from Publication pub in ctx.Publications orderby pub.ShareDate descending select pub).ToList(); 
+
+            int pageSize = 2;
+            int pageNumber = (page ?? 1);
+            return View(pubSort.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult About()
