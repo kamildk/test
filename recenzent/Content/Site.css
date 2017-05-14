@@ -134,11 +134,16 @@ h1, h2, .h1, .h2{
 }
 
 .form-control {
-    color: #ffffff;
+    color: #000000;
     background-color: #B3DCBF;
 }
 
 .list-group-item{
-    color: #ffffff;
+    color: #000000;
     background-color: #B3DCBF;
 }
+
+.panel > .panel-heading {
+    background-color: #B3DCBF;
+}
+
