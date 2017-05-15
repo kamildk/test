@@ -7,7 +7,12 @@
 
 <h1>@Model.Title</h1>
 <h2>@Model.Description</h2>
-<h3></h3>
+
+<h1>
+@Html.ActionLink("Pobierz Publikacje",
+                "Download", "PublicationPanel", new { Model.PublicationId }, null)
+</h1> 
+
 
 
 
