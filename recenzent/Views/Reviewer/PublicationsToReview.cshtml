@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Lista publikacji do zrecenzowania";
 }
-
+<input type="button" value="Powrót" style="border-spacing:100px 100px; float:right; right:5%"
+    onclick="location.href='@Url.Action("Index", "Reviewer" )'" />
 <h2>Lista publikacji w recenzji</h2>
 
 <div class="list-group pre-scrollable">
