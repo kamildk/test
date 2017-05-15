@@ -8,7 +8,7 @@ namespace recenzent.Models
 {
     public class CommentViewModel
     {
-        public CommentViewModel()
+        public CommentViewModel() { }
         public CommentViewModel(Comment comment)
         {
             Comment = comment;
