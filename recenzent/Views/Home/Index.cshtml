@@ -2,10 +2,10 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Strona główna";
 }
 
-<div class="btn btn-block">
+@*<div class="btn btn-block">
     @Html.ActionLink("Author page", "Index", "AuthorPanel")
 </div>
 
@@ -15,7 +15,7 @@
 
 <div class="btn btn-block">
     @Html.ActionLink("Reviewer page", "Index", "Reviewer")
-</div>
+</div>*@
 
 @foreach (var item in Model)
 {
@@ -25,6 +25,7 @@
         <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
         <br />
         <p>@Html.DisplayFor(modelItem => item.Description)</p>
+        <button class="btn btn-default">@Html.ActionLink("więcej", "Open", "PublicationPanel", new { id = item.PublicationId }, null)</button>
     </div>
 }
 <br />

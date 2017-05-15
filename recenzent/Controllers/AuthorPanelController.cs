@@ -110,7 +110,8 @@ namespace recenzent.Controllers {
                     Publication = publication
                 };
 
-                ctx.Files.Add(file);
+                IFileService fileService = new FileService();
+                fileService.AddFile(file);
 
                 publication.Author = currentUser;
                 publication.Title = model.Title;

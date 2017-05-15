@@ -15,7 +15,7 @@ namespace recenzent.Controllers
             var ctx = new DataContext();
             var pubSort = (from Publication pub in ctx.Publications orderby pub.ShareDate descending select pub).ToList(); 
 
-            int pageSize = 2;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(pubSort.ToPagedList(pageNumber, pageSize));
         }

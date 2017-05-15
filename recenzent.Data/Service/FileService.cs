@@ -7,7 +7,7 @@ using recenzent.Data.Interface;
 using recenzent.Data.Model;
 
 namespace recenzent.Data.Service {
-    class FileService : IFileService {
+    public class FileService : IFileService {
         DataContext context;
 
         public FileService() {
