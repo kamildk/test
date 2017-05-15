@@ -32,18 +32,6 @@ namespace recenzent.Controllers {
             return View();
         }
 
-        void AddSources(List<string> sources) {
-            using (var ctx = new DataContext()) {
-                foreach (var item in sources) {
-                    if (!ctx.Sources.Any(t => t.Name == item)) {
-                        Source source = new Source() { Name = item };
-                        ctx.Sources.Add(source);
-                    }
-                }
-
-                ctx.SaveChanges();
-            }
-        }
 
         [HttpPost]
         public ActionResult AddPub(PublicationViewModel model) {
@@ -78,17 +66,19 @@ namespace recenzent.Controllers {
                 ctx.Publication_Tags.AddRange(pubTags);
 
                 //category
-                Publication_category category = ctx.Publication_Categories.Where(c => c.Name == model.Category).FirstOrDefault();
+                ICategoryService categoryService = new CategoryService();
+                Publication_category category = categoryService.GetCategory(model.Category);
 
                 //sources
                 string[] sourcesSplited = model.Sources.Split('\n');
                 for (int i = 0; i < sourcesSplited.Length; i++) {
                     sourcesSplited[i] = sourcesSplited[i].Trim();
                 }
-                var l = sourcesSplited.ToList();
-                l.RemoveAt(l.Count - 1);
+                var sourcesList = sourcesSplited.ToList();
+                sourcesList.RemoveAt(sourcesList.Count - 1);
 
-                AddSources(l);
+                ISourceService sourceService = new SourceService();
+                sourceService.AddSources(sourcesList);
 
                 //source position
                 List<SourcePosition> sourcePositions = new List<SourcePosition>();

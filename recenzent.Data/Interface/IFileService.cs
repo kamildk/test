@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using recenzent.Data.Model;
 
 namespace recenzent.Data.Interface {
-    public interface ICategoryService {
+    public interface IFileService {
+        File GetFile(int id);
+        File GetFile(string name);
 
-        List<Publication_category> GetCategoriesList();
-        Publication_category GetCategory(string name);
+        void AddFile(File file);
 
-        void AddCategory(string name);
     }
 }

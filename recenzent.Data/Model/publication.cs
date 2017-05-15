@@ -35,6 +35,7 @@ namespace recenzent.Data.Model
         public ICollection<PublicationTag> PublicationTags { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<Review> Reviews { get; set; }
 
         public Publication() {
             SourcePositions = new List<SourcePosition>();
@@ -42,6 +43,7 @@ namespace recenzent.Data.Model
             PublicationTags = new List<PublicationTag>();
             Ratings = new List<Rating>();
             Comments = new List<Comment>();
+            Reviews = new List<Review>();
         }
         //public ICollection<Publication_Autors> PublicationAutors { get; set; }
 
