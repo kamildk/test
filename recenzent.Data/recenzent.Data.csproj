@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="Interface\ICategoryService.cs" />
+    <Compile Include="Interface\ICommentService.cs" />
     <Compile Include="Interface\ITagsService.cs" />
     <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Migrations\201704241704507_first.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Model\TestModel.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Service\CategoryService.cs" />
+    <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\TagsService.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>

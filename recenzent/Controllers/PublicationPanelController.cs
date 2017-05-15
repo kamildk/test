@@ -28,9 +28,11 @@ namespace recenzent.Controllers
                 return View("Error");
         }
 
-        public ActionResult Download(int id)
+
+        
+        public ActionResult Download(int PublicationId)
         {
-            var physicalFilePath = (from File f in ctx.Files where f.PublicationId == id select f.Link_source).First();
+            var physicalFilePath = (from File f in ctx.Files where f.PublicationId == PublicationId select f.Link_source).First();
 
             if (physicalFilePath != null)
             {
