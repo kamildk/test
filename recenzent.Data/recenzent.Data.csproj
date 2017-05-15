@@ -61,6 +61,14 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -107,6 +115,10 @@
     <Compile Include="Migrations\201705021834377_DataContext.Designer.cs">
       <DependentUpon>201705021834377_DataContext.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705121412258_SourceRepairTest.cs" />
+    <Compile Include="Migrations\201705121412258_SourceRepairTest.Designer.cs">
+      <DependentUpon>201705121412258_SourceRepairTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Affiliation.cs" />
     <Compile Include="Model\Author_list.cs" />
@@ -144,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705021834377_DataContext.resx">
       <DependentUpon>201705021834377_DataContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705121412258_SourceRepairTest.resx">
+      <DependentUpon>201705121412258_SourceRepairTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

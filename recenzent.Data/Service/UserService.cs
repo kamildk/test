@@ -26,9 +26,11 @@ namespace recenzent.Data.Service {
         }
 
         public User GetDBUser(string id) {
-            var result = context.Users.Where(u => u.Id == id).ToList();
+            using (var ctx = new DataContext()) {
+                var result = ctx.Users.Where(u => u.Id == id).ToList();
 
-            return result.Count > 0 ? result.FirstOrDefault() : null;
+                return result.Count > 0 ? result.FirstOrDefault() : null;
+            }
         }
 
         public List<User> GetOwinUsersList() {

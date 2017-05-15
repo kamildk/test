@@ -1,4 +1,7 @@
-﻿@{
+﻿@model PagedList.IPagedList<recenzent.Data.Model.Publication>
+@using PagedList.Mvc;
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -14,7 +17,20 @@
     @Html.ActionLink("Reviewer page", "Index", "Reviewer")
 </div>
 
+@foreach (var item in Model)
+{
+    var tagList = item.PublicationTags.ToList();
 
+    <div class="well-sm">
+        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+        <br />
+        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+    </div>
+}
+<br />
+Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 @section RightUpperSection{
     <p>Treść Sekcji w indeksie</p>
 }

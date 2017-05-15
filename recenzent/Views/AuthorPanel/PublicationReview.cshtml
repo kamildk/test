@@ -1,4 +1,4 @@
-﻿@model recenzent.Data.Model.Publication
+﻿@model recenzent.Models.PublcationReviewViewModel
 @{
     ViewBag.Title = "Recanzja: " + Model.Title;
 }
@@ -6,10 +6,50 @@
 <h2>Recenzje publikacji</h2>
 
 <div class="container">
-    <h3>@Model.Title</h3>
+    <h2>@Model.Title</h2>
+
 
     <div class="panel panel-default">
-        <div class="panel-heading">Opis</div>
+        <div class="panel-heading">Kategoria</div>
+        <div class="panel-body">@Model.Category</div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="background-color:#B3DCBF">Opis</div>
         <div class="panel-body">@Model.Description</div>
     </div>
+
+    @{ string tags = Model.Tags[0];
+        for (int i = 1; i < Model.Tags.Count; i++) {
+            tags += " ," + Model.Tags[i];
+        }
+    }
+    <div class="panel panel-default">
+        <div class="panel-heading">Tagi</div>
+        <div class="panel-body">@tags</div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Źródła</div>
+        <div class="panel-body">
+            @foreach (var item in Model.Sources) {
+                <div>@item</div>
+            }
+        </div>
+    </div>
+
+    <button class="btn">he?</button> 
+
+    <div class="list-group pre-scrollable">
+        @for (int i = 0; i < 5; i++) {
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">Testowa recenzja  @i</h4>
+                <p class="list-group-item-text">Data dodania:</p>
+                <p class="list-group-item-text">Streszczenie:</p>
+                <p class="list-group-item-text">Plik:</p>
+
+            </div>
+        }
+    </div>
+
 </div>
