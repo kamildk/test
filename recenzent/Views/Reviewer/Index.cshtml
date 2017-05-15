@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<recenzent.Data.Model.Publication>
+
 @{
     ViewBag.Title = "Panel recenzenta";
 }
@@ -10,14 +11,15 @@
            onclick="location.href='@Url.Action("Index", "AuthorPanel")'" />
 </div>
 
-<div class="list-group pre-scrollable" style="width:75%; min-height:750px" >
-    @for (int i = 0; i < 20; i++)
+<div class="btn-default well-sm col-lg-11">
+    @Html.ActionLink("Lista publikacji do zrecenzowania", "PublicationsToReview", "Reviewer")
+</div>
+
+@*<div class="list-group pre-scrollable" style="width:75%; min-height:750px" >    
+    @foreach (var item in Model)
     {
         <div class="list-group-item">
-            <p class="list-group-item-text">Artykuł do zrecenzowania nr @(i + 1)
-                <input type="button" value="Wyślij recenzję" id="sendRev@(i + 1)" style="float:right" />
-                <input type="button" value="Pobierz" id="download@(i + 1)" style="float:right"/>
-            </p>
+            <h4 class="list-group-item-heading">@Html.ActionLink(item.Title, "PublicationReview", "ReviewerController", new { id = item.PublicationId }, null)</h4>
         </div>
     }
-</div>
+</div>*@
