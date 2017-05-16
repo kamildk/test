@@ -6,11 +6,14 @@
 <h2>Recenzje publikacji</h2>
 
 <div class="container">
-    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "Reviewer" )'">Powrót</button>
+    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("PublicationsToReview", "Reviewer" )'">Powrót</button>
     <h3>@Model.Title</h3>
 
     <div class="panel panel-default">
         <div class="panel-heading">Opis</div>
         <div class="panel-body">@Model.Description</div>
+    </div>
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Recenzuj", "AddReview", "Reviewer")
     </div>
 </div>

@@ -32,6 +32,7 @@ namespace recenzent.Controllers
             return View();
         }
         
+        /*
         [HttpPost]
         public ActionResult UploadRev(HttpPostedFileBase file, string title)
         {
@@ -49,10 +50,11 @@ namespace recenzent.Controllers
 
             return View();
         }
-
+        */
+        
         //-------------------------------
         [HttpGet]
-        public ActionResult AddPub()
+        public ActionResult AddReview()
         {
 
             using (var ctx = new DataContext())
@@ -62,7 +64,7 @@ namespace recenzent.Controllers
 
             return View();
         }
-
+        
         void AddSources(List<string> sources)
         {
             using (var ctx = new DataContext())
@@ -81,74 +83,20 @@ namespace recenzent.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPub(PublicationViewModel model)
+        public ActionResult AddReview(ReviewViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 var ctx = new DataContext();
-                Publication publication = new Publication();
+                Review review = new Review();
 
                 IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
                 User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
                 //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
 
-                //Tags
-                string[] tagsSplited = model.Tags.Split(',');
-                for (int i = 0; i < tagsSplited.Length; i++)
-                {
-                    tagsSplited[i] = tagsSplited[i].Trim();
-                }
-
-                ITagsService tagsService = new TagsService();
-                tagsService.AddTags(tagsSplited.ToList());
-
-                //Publication tags
-                List<PublicationTag> pubTags = new List<PublicationTag>();
-                for (int i = 0; i < tagsSplited.Length; i++)
-                {
-                    Tag tag = tagsService.GetTag(tagsSplited[i]);
-                    if (tagsSplited != null)
-                    {
-                        pubTags.Add(new PublicationTag() { Publication = publication, Tag = tag });
-                    }
-                }
-
-                ctx.Publication_Tags.AddRange(pubTags);
-
-                //category
-                Publication_category category = ctx.Publication_Categories.Where(c => c.Name == model.Category).FirstOrDefault();
-
-                //sources
-                string[] sourcesSplited = model.Sources.Split('\n');
-                for (int i = 0; i < sourcesSplited.Length; i++)
-                {
-                    sourcesSplited[i] = sourcesSplited[i].Trim();
-                }
-                var l = sourcesSplited.ToList();
-                l.RemoveAt(l.Count - 1);
-
-                AddSources(l);
-
-                //source position
-                List<SourcePosition> sourcePositions = new List<SourcePosition>();
-                for (int i = 0; i < sourcesSplited.Length - 1; i++)
-                {
-                    string sourceName = sourcesSplited[i];
-                    Source source = ctx.Sources.Where(s => s.Name == sourceName).FirstOrDefault();
-                    SourcePosition position = new SourcePosition()
-                    {
-                        Source = source,
-                        Publication = publication
-                    };
-                    sourcePositions.Add(position);
-                }
-
-                ctx.SourcePositions.AddRange(sourcePositions);
-
                 //File
-                string filePath = Server.MapPath("~/Publications/");
+                string filePath = Server.MapPath("~/Reviews/");
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
@@ -162,22 +110,21 @@ namespace recenzent.Controllers
                     Name = fileName,
                     Link_source = filePath + fileName,
                     IsCurrent = true,
-                    Publication = publication
+                    Review = review
                 };
 
                 ctx.Files.Add(file);
 
-                publication.Author = currentUser;
-                publication.Title = model.Title;
-                publication.PublicationTags = pubTags;
-                publication.Description = model.Description;
-                publication.SourcePositions = sourcePositions;
-                publication.Category = category;
-                publication.Files.Add(file);
+                review.User = currentUser;
+                DateTime date = DateTime.Today;
+                review.Creation_date = date;
+                date.AddDays(14);
+                review.Expiration_date = date;
+                review.Files.Add(file);
 
-                currentUser.Publications.Add(publication);
+                currentUser.Reviews.Add(review);
 
-                ctx.Publications.Add(publication);
+                ctx.Reviews.Add(review);
 
                 ctx.SaveChanges();
                 return RedirectToAction("Index");

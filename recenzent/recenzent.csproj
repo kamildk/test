@@ -232,6 +232,7 @@
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PublicationViewModels.cs" />
+    <Compile Include="Models\ReviewViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -313,6 +314,7 @@
     <Content Include="Views\Shared\_CommentsPartial.cshtml" />
     <Content Include="Views\Reviewer\PublicationDetails.cshtml" />
     <Content Include="Views\Reviewer\PublicationsToReview.cshtml" />
+    <Content Include="Views\Reviewer\AddReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
