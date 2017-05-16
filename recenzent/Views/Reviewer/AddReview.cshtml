@@ -1,37 +1,11 @@
-﻿@model recenzent.Models.PublicationViewModel
+﻿@model recenzent.Models.ReviewViewModel
+
 @{
     ViewBag.Title = "Dodaj recenzję";
+    //Model.Publication =
 }
 
-<script>
-    function AddSource() {
-        var length = $("#SourcesList input").length;
-        var buttonCode = '<button type="button" class = "btn btn-sm col-sm-1" id =sButton' + length + ' onclick="RemoveSource(' +length+')">Usuń</button>';
-        $("#SourcesList").append('<input type="text"  class="list-group-item col-sm-11" id = source' + length + ' onchange = SetSources()>' + buttonCode);
-    }
 
-    function RemoveSource(id){
-        $('#source' + id).remove();
-        $('#sButton' + id).remove();
-
-        SetSources();
-    }
-
-    function SetSources() {
-        var length = $("#SourcesList input").length;
-        var text = ""
-        for (var i = 0; i < length; i++) {
-            id = $("#SourcesList input").get(i).id
-            text += $('#'+id).val() + "\n";
-        }
-        $("#testBox").val(text);
-        //alert($("#testBox").val());
-    }
-
-    function Test() {
-        alert($("#testBox").val());
-    }
-</script>
 
 <div class="container">
     <div>
@@ -40,11 +14,13 @@
     </div>
     @using (Html.BeginForm("AddReview", "Reviewer", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @Html.HiddenFor(m => m.pubId)
         <div class="form-group col-md-10">
             <label class="control-label" for="file">Plik z recenzją</label>
             <div>
                 @*<input type="file" class="form-control" id="PublicationFile" name="file"/>*@
                 @Html.TextBoxFor(m => m.File, new { @class = "form-control inputlg", type = "file", accept = ".pdf" })
+
             </div>
         </div>
 

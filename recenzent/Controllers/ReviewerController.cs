@@ -31,7 +31,7 @@ namespace recenzent.Controllers
         {
             return View();
         }
-        
+
         /*
         [HttpPost]
         public ActionResult UploadRev(HttpPostedFileBase file, string title)
@@ -51,20 +51,20 @@ namespace recenzent.Controllers
             return View();
         }
         */
-        
+
         //-------------------------------
-        [HttpGet]
-        public ActionResult AddReview()
-        {
+        //[HttpGet]
+        //public ActionResult AddReview()
+        //{
 
-            using (var ctx = new DataContext())
-            {
-                ViewBag.Categories = ctx.Publication_Categories.Select(c => c.Name).ToList();
-            }
+        //    using (var ctx = new DataContext())
+        //    {
+        //        ViewBag.Categories = ctx.Publication_Categories.Select(c => c.Name).ToList();
+        //    }
 
-            return View();
-        }
-        
+        //    return View();
+        //}
+
         void AddSources(List<string> sources)
         {
             using (var ctx = new DataContext())
@@ -81,57 +81,76 @@ namespace recenzent.Controllers
                 ctx.SaveChanges();
             }
         }
+        [HttpGet]
+        public ActionResult AddReview( int pubId = -1)
+        {
+            using (var ctx = new DataContext())
+            {
+                ViewBag.Categories = ctx.Publication_Categories.Select(c => c.Name).ToList();
 
+                Publication pub = ctx.Publications.Where(p => p.PublicationId == pubId).FirstOrDefault();
+                ReviewViewModel _model = new ReviewViewModel();
+                _model.pubId = pub.PublicationId;
+                return View(_model);
+            }
+        }
         [HttpPost]
         public ActionResult AddReview(ReviewViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var ctx = new DataContext();
-                Review review = new Review();
-
-                IUserService userService = new UserService();
-                string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
-                //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
-
-                //File
-                string filePath = Server.MapPath("~/Reviews/");
-                if (!Directory.Exists(filePath))
+            
+                if (ModelState.IsValid && model.File != null && model.pubId>0)
                 {
-                    Directory.CreateDirectory(filePath);
+                using (DataContext ctx = new DataContext())
+                {
+                    Review review = new Review();
+
+                    IUserService userService = new UserService();
+                    string userId = User.Identity.GetUserId();
+                    User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
+                    //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
+
+                    //File
+                    string filePath = Server.MapPath("~/Reviews/");
+                    if (!Directory.Exists(filePath))
+                    {
+                        Directory.CreateDirectory(filePath);
+                    }
+
+                    string fileName = model.File.FileName;
+                    fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
+
+                    model.File.SaveAs(filePath + fileName);
+
+                    Data.Model.File file = new Data.Model.File()
+                    {
+                        Name = fileName,
+                        Link_source = filePath + fileName,
+                        IsCurrent = true,
+                        Review = review
+                    };
+
+                    ctx.Files.Add(file);
+
+                    review.User = currentUser;
+                    DateTime date = DateTime.Today;
+                    review.Creation_date = date;
+                    date.AddDays(14);
+                    review.Expiration_date = date;
+                    review.PublicationId = model.pubId;
+                    review.Files.Add(file);
+
+                    currentUser.Reviews.Add(review);
+
+                    ctx.Reviews.Add(review);
+
+                    ctx.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-
-                string fileName = model.File.FileName;
-                model.File.SaveAs(filePath + fileName);
-
-                Data.Model.File file = new Data.Model.File()
-                {
-                    Name = fileName,
-                    Link_source = filePath + fileName,
-                    IsCurrent = true,
-                    Review = review
-                };
-
-                ctx.Files.Add(file);
-
-                review.User = currentUser;
-                DateTime date = DateTime.Today;
-                review.Creation_date = date;
-                date.AddDays(14);
-                review.Expiration_date = date;
-                review.Files.Add(file);
-
-                currentUser.Reviews.Add(review);
-
-                ctx.Reviews.Add(review);
-
-                ctx.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            return View();
+            return View(model);
         }
+
 
 
         public ActionResult PublicationList()
@@ -162,12 +181,11 @@ namespace recenzent.Controllers
             }
         }
 
-        public ActionResult PublicationDetails(int id = 6)
+        public ViewResult PublicationDetails(int id = 6)
         {
             using (var ctx = new DataContext())
             {
                 Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
-
                 return View(pub);
             }
         }

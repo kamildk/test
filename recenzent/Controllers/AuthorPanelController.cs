@@ -15,7 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using recenzent.Models;
 
 namespace recenzent.Controllers {
-    [Authorize(Roles = "Author")]
+   // [Authorize(Roles = "Author")]
     public class AuthorPanelController : Controller {
         // GET: AuthorPanel
         public ActionResult Index() {
@@ -101,6 +101,8 @@ namespace recenzent.Controllers {
                 }
 
                 string fileName = model.File.FileName;
+                fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
+
                 model.File.SaveAs(filePath + fileName);
 
                 Data.Model.File file = new Data.Model.File() {
