@@ -22,10 +22,10 @@
     var tagList = item.PublicationTags.ToList();
 
     <div class="well-sm">
-        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+        <h2>@Html.ActionLink(item.Title, "Open", "PublicationPanel", new { id = item.PublicationId }, null)</h2>
         <br />
         <p>@Html.DisplayFor(modelItem => item.Description)</p>
-        <button class="btn btn-default">@Html.ActionLink("więcej", "Open", "PublicationPanel", new { id = item.PublicationId }, null)</button>
+        @Html.ActionLink("więcej", "Open", "PublicationPanel", new { id = item.PublicationId }, htmlAttributes: new {@class= "btn btn-default" })
     </div>
 }
 <br />

@@ -63,6 +63,8 @@
                 @RenderSection("RightLowerSection", required: false)
                 <p> RightLowerSection </p>
 
+                @Html.Action("LatestPublicationsPartial", "Home")
+
                 <div class="col-sm-15" style="background-color:white;" id="test1">
                     <script>
                         function showTextDate() {
