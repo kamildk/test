@@ -14,7 +14,6 @@ namespace recenzent.Data.Model {
         [Required]
         public string Name { get; set; }
 
-        public ICollection<ReviewStateHistory> ChangesFromHistory { get; set; }
         public ICollection<ReviewStateHistory> ChangesToHistory { get; set; }
     }
 }
