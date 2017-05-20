@@ -12,7 +12,13 @@
     </div>
 
     <div class="btn-default well-sm col-lg-11">
-        @Html.ActionLink("Lista publikacji do zrecenzowania", "PublicationsToReview", "Reviewer")
+        @Html.ActionLink("Publikacje do zrecenzowania", "PublicationsToReview", "Reviewer")
+    </div> 
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Recenzje czekające na zatwierdzenie", "ReviewsWaiting", "Reviewer")
+    </div>
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Zatwierdzone recenzje", "ReviewsAccepted", "Reviewer")
     </div>  
 
     @*<div class="list-group pre-scrollable" style="width:75%; min-height:750px" >
