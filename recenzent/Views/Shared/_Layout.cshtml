@@ -52,7 +52,53 @@
                 <div class="navbar-collapse collapse">
                     @Html.Partial("_LoginPartial")
                 </div>
+                <style type="text/css">
+                    .social-title {
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }
 
+                    .count {
+                        font-size: 37px;
+                        margin-top: 5px;
+                        margin-bottom: 10px;
+                    }
+
+                    .fa {
+                        text-align: right;
+                        position: absolute;
+                        top: 8px;
+                        right: 22px;
+                        outline: none;
+                    }
+
+                    .social .panel {
+                        color: #fff;
+                        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+                    }
+
+                    .social a {
+                        text-decoration: none;
+                    }
+
+                    .visitor {
+                        background-color: #eb6d20;
+                    }
+                </style>
+
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="panel panel-default visitor">
+                            <div class="panel-body">
+                                <small class="social-title">Zalogowanych użytkowników</small>
+                                <h3 class="count">
+                                    0
+                                </h3>
+                                <img src="~/Images/user.png" width="76" height="106" class="fa" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- <img src="~/Images/user.png" class="rh-section" /> -->
 
 
@@ -64,7 +110,9 @@
                 <p> RightLowerSection </p>
 
                 @Html.Action("LatestPublicationsPartial", "Home")
-
+                <table border="4">
+                    <tr>
+                        <td>
                 <div class="col-sm-15" style="background-color:white;" id="test1">
                     <script>
                         function showTextDate() {
@@ -136,17 +184,21 @@
 
                             var godzina = leadingZero(currentDate.getHours()) + ":" + leadingZero(currentDate.getMinutes()) + ":" + leadingZero(currentDate.getSeconds()) + "<br>";
                             var akutalnaData = currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear();
-                            element.innerHTML = "Aktualnie obowiązuje w Polsce".fontcolor("black").fontsize(3) + czas[i].bold().fontcolor("black").fontsize(3) + ".".bold().fontcolor("black").fontsize(3) + "<br>";
-                            element.innerHTML += "Jest godzina: ".fontcolor("black").fontsize(3) + "<br>";
-                            element.innerHTML += godzina.fontsize(6).fontcolor("black");
-                            element.innerHTML += "Dzisiaj mamy: ".fontcolor("black").fontsize(3) + nazwaDnia[currentDate.getDay()].fontcolor("black").bold().fontsize(3) + ", ".fontcolor("black").fontsize(3).bold() + akutalnaData.bold().fontcolor("black").fontsize(3) + "<br>";
-                            element.innerHTML += "Imieniny ".fontcolor("black").fontsize(3) + im.fontcolor("black").fontsize(3).bold();
+                            element.innerHTML = "<center>" + "Aktualnie obowiązuje w Polsce:".fontcolor("black").fontsize(3) + "<br>" + czas[i].bold().fontcolor("black").fontsize(3) + "</center>";;
+                            //element.innerHTML += "Jest godzina: ".fontcolor("black").fontsize(3) + "<br>";
+
+                            element.innerHTML += "<center>" + godzina.fontsize(6).fontcolor("black") + "</center>";
+                            element.innerHTML += "<center>" + "Dzisiaj mamy: ".fontcolor("black").fontsize(3) + nazwaDnia[currentDate.getDay()].fontcolor("black").bold().fontsize(3) + ", ".fontcolor("black").fontsize(3).bold() + akutalnaData.bold().fontcolor("black").fontsize(3) + "<br>" + "</center>";
+                            element.innerHTML += "<center>" + "Imieniny ".fontcolor("black").fontsize(3) + im.fontcolor("black").fontsize(3).bold() + "</center>";
                             setTimeout(function () { showTextDate() }, 1000);
                         }
                         showTextDate();
                     </script>
 
                 </div>
+                            </td>
+                        </tr>
+                </table>
             </div>
 
         </div>
