@@ -135,5 +135,20 @@ h1, h2, .h1, .h2{
 
 .form-control {
     color: #ffffff;
-    background-color: #B3DCBF;
+    background-color: #acd3b8;
+}
+
+container > btn-default , .container > .btn-default {
+    background-color: #FFFCE9;
+    font-size: large;
+}
+
+.list-group-item{
+    background-color:  #B3DCBF;
+    border-color: #ffffff;
+    border-width: 2px;
+}
+
+.text-danger{
+    color: #f97474;
 }
