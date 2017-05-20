@@ -13,21 +13,27 @@ namespace recenzent.Models {
         [Required]
         public string Description { get; set; }
         public string Category { get; set; }
-        public string Sources { get; set; }
+       // public string Sources { get; set; }
     }
 
-    public class PublcationReviewViewModel {
+    public class PublicationReviewListViewModel {
         public string Title { get; set; }
         public List<string> Tags { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public List<string> Sources { get; set; }
-        public List<recenzent.Data.Model.Review> Reviews { get; set; }
+        //public List<string> Sources { get; set; }
+        public List<PublicationReviewViewModel> Reviews { get; set; }
 
-        public PublcationReviewViewModel() {
+        public PublicationReviewListViewModel() {
             Tags = new List<string>();
-            Sources = new List<string>();
-            Reviews = new List<Data.Model.Review>();
+            //Sources = new List<string>();
+            Reviews = new List<PublicationReviewViewModel>();
         }
+    }
+
+    public class PublicationReviewViewModel {
+        public int Id { get; set; }
+        public DateTime AddDate { get; set; }
+        public string State { get; set; }
     }
 }

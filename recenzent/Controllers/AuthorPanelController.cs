@@ -15,7 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using recenzent.Models;
 
 namespace recenzent.Controllers {
-   // [Authorize(Roles = "Author")]
+    [Authorize(Roles = "Author")]
     public class AuthorPanelController : Controller {
         // GET: AuthorPanel
         public ActionResult Index() {
@@ -70,29 +70,29 @@ namespace recenzent.Controllers {
                 Publication_category category = categoryService.GetCategory(model.Category);
 
                 //sources
-                string[] sourcesSplited = model.Sources.Split('\n');
-                for (int i = 0; i < sourcesSplited.Length; i++) {
-                    sourcesSplited[i] = sourcesSplited[i].Trim();
-                }
-                var sourcesList = sourcesSplited.ToList();
-                sourcesList.RemoveAt(sourcesList.Count - 1);
+                //string[] sourcesSplited = model.Sources.Split('\n');
+                //for (int i = 0; i < sourcesSplited.Length; i++) {
+                //    sourcesSplited[i] = sourcesSplited[i].Trim();
+                //}
+                //var sourcesList = sourcesSplited.ToList();
+                //sourcesList.RemoveAt(sourcesList.Count - 1);
 
-                ISourceService sourceService = new SourceService();
-                sourceService.AddSources(sourcesList);
+                //ISourceService sourceService = new SourceService();
+                //sourceService.AddSources(sourcesList);
 
-                //source position
-                List<SourcePosition> sourcePositions = new List<SourcePosition>();
-                for (int i = 0; i < sourcesSplited.Length - 1; i++) {
-                    string sourceName = sourcesSplited[i];
-                    Source source = ctx.Sources.Where(s => s.Name == sourceName).FirstOrDefault();
-                    SourcePosition position = new SourcePosition() {
-                        Source = source,
-                        Publication = publication
-                    };
-                    sourcePositions.Add(position);
-                }
+                ////source position
+                //List<SourcePosition> sourcePositions = new List<SourcePosition>();
+                //for (int i = 0; i < sourcesSplited.Length - 1; i++) {
+                //    string sourceName = sourcesSplited[i];
+                //    Source source = ctx.Sources.Where(s => s.Name == sourceName).FirstOrDefault();
+                //    SourcePosition position = new SourcePosition() {
+                //        Source = source,
+                //        Publication = publication
+                //    };
+                //    sourcePositions.Add(position);
+                //}
 
-                ctx.SourcePositions.AddRange(sourcePositions);
+                //ctx.SourcePositions.AddRange(sourcePositions);
 
                 //File
                 string filePath = Server.MapPath("~/Publications/");
@@ -120,7 +120,7 @@ namespace recenzent.Controllers {
                 publication.Title = model.Title;
                 publication.PublicationTags = pubTags;
                 publication.Description = model.Description;
-                publication.SourcePositions = sourcePositions;
+                //publication.SourcePositions = sourcePositions;
                 publication.Category = category;
                 publication.Files.Add(file);
 
@@ -160,11 +160,25 @@ namespace recenzent.Controllers {
             }
         }
 
-        public ActionResult PublicationReview(int id = 6) {
+        public ActionResult PublicationReview(int id) {
             using (var ctx = new DataContext()) {
                 Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
 
-                PublcationReviewViewModel vm = new PublcationReviewViewModel() {
+                var reviews = from Review r in ctx.Reviews
+                              join ReviewState s in ctx.ReviewStates on r.CurrentStateId equals s.Id
+                              where r.PublicationId == id
+                              select new { Review = r, State = s };
+                
+                List<PublicationReviewViewModel> reviewList = new List<PublicationReviewViewModel>();
+                foreach (var item in reviews) {
+                    reviewList.Add(new PublicationReviewViewModel() {
+                        Id = item.Review.ReviewId,
+                        AddDate = item.Review.Creation_date,
+                        State = item.State.Name
+                    });
+                }
+
+                PublicationReviewListViewModel vm = new PublicationReviewListViewModel() {
                     Title = pub.Title,
                     Description = pub.Description,
                     Category = pub.Category.Name
@@ -172,10 +186,28 @@ namespace recenzent.Controllers {
 
                 vm.Tags = (from PublicationTag tag in ctx.Publication_Tags
                            where tag.PublicationId == pub.PublicationId select tag.Tag.Name).ToList();
-                vm.Sources = (from SourcePosition source in ctx.SourcePositions
-                              where source.PublicationId == pub.PublicationId select source.Source.Name).ToList();
+                //vm.Sources = (from SourcePosition source in ctx.SourcePositions
+                //              where source.PublicationId == pub.PublicationId select source.Source.Name).ToList();
+                vm.Reviews = reviewList;
 
                 return View(vm);
+            }
+        }
+
+        public ActionResult DownloadReview(int id) {
+            using (var ctx = new DataContext()) {
+                var result = (from Review review in ctx.Reviews
+                              where review.ReviewId == id select review).FirstOrDefault();
+                var filePath = (from Data.Model.File file in ctx.Files
+                                where file.IsCurrent == true && file.ReviewId == result.ReviewId
+                                select file.Link_source).FirstOrDefault();
+
+                if (filePath != null) {
+                    return File(filePath, "application/pdf");
+                }
+                else {
+                    return View("Error");
+                }
             }
         }
     }

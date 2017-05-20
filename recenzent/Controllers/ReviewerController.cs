@@ -65,22 +65,6 @@ namespace recenzent.Controllers
         //    return View();
         //}
 
-        void AddSources(List<string> sources)
-        {
-            using (var ctx = new DataContext())
-            {
-                foreach (var item in sources)
-                {
-                    if (!ctx.Sources.Any(t => t.Name == item))
-                    {
-                        Source source = new Source() { Name = item };
-                        ctx.Sources.Add(source);
-                    }
-                }
-
-                ctx.SaveChanges();
-            }
-        }
         [HttpGet]
         public ActionResult AddReview( int pubId = -1)
         {
@@ -108,6 +92,9 @@ namespace recenzent.Controllers
                     string userId = User.Identity.GetUserId();
                     User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
 
+                    ReviewState state = ctx.ReviewStates.Where(s => s.Name == "Przydzielony").FirstOrDefault();
+                    review.CurrentState = state;
+
                     //File
                     string filePath = Server.MapPath("~/Reviews/");
                     if (!Directory.Exists(filePath))
@@ -128,6 +115,7 @@ namespace recenzent.Controllers
                         Review = review
                     };
 
+                    Publication pub = ctx.Publications.Find(model.pubId);
                     ctx.Files.Add(file);
 
                     review.User = currentUser;
@@ -135,7 +123,8 @@ namespace recenzent.Controllers
                     review.Creation_date = date;
                     date = date.AddDays(14);
                     review.Expiration_date = date;
-                    review.PublicationId = model.pubId;
+                    //review.PublicationId = model.pubId;
+                    review.Publication = pub;
                     review.Files.Add(file);
 
                     currentUser.Reviews.Add(review);

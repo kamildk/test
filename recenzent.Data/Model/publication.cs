@@ -30,7 +30,7 @@ namespace recenzent.Data.Model
         [ForeignKey("AuthoId")]
         public User Author { get; set; }
 
-        public ICollection<SourcePosition> SourcePositions { get; set; }
+        //public ICollection<SourcePosition> SourcePositions { get; set; }
         public ICollection<File> Files { get; set; }
         public ICollection<PublicationTag> PublicationTags { get; set; }
         public ICollection<Rating> Ratings { get; set; }
@@ -38,7 +38,7 @@ namespace recenzent.Data.Model
         public ICollection<Review> Reviews { get; set; }
 
         public Publication() {
-            SourcePositions = new List<SourcePosition>();
+            //SourcePositions = new List<SourcePosition>();
             Files = new List<File>();
             PublicationTags = new List<PublicationTag>();
             Ratings = new List<Rating>();

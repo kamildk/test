@@ -27,7 +27,9 @@ namespace recenzent.Data.Model
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-
+        public int CurrentStateId { get; set; }
+        [ForeignKey("CurrentStateId")]
+        public ReviewState CurrentState { get; set; }
 
     }
 }
