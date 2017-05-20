@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using recenzent.Data.Service;
 
 namespace recenzent.Controllers
 {
@@ -39,18 +40,8 @@ namespace recenzent.Controllers
         //Get: List of users
         public ViewResult UsersList()
         {
-            using (var context = new DataContext())
-            {
-                //List<string> users = new List<string>();
-                //var UserManager = new UserManager<User>(new UserStore<User>(context));
-                var userlist = context.Users.ToList();
-                //foreach (var User in UserManager.Users)
-                //{
-                //    users.Add(User.Name.ToString());
-                //}
-
-                return View(userlist);
-            }
+            UserService svc = new UserService();
+            return View(svc.GetOwinUsersList());
         }
         
     }

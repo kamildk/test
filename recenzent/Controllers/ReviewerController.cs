@@ -107,7 +107,6 @@ namespace recenzent.Controllers
                     IUserService userService = new UserService();
                     string userId = User.Identity.GetUserId();
                     User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
-                    //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
 
                     //File
                     string filePath = Server.MapPath("~/Reviews/");
@@ -134,7 +133,7 @@ namespace recenzent.Controllers
                     review.User = currentUser;
                     DateTime date = DateTime.Today;
                     review.Creation_date = date;
-                    date.AddDays(14);
+                    date = date.AddDays(14);
                     review.Expiration_date = date;
                     review.PublicationId = model.pubId;
                     review.Files.Add(file);
