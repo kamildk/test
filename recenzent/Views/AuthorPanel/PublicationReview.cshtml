@@ -1,4 +1,4 @@
-﻿@model recenzent.Models.PublcationReviewViewModel
+﻿@model recenzent.Models.PublicationReviewListViewModel
 @{
     ViewBag.Title = "Recanzja: " + Model.Title;
 }
@@ -21,7 +21,7 @@
 
     @{ string tags = Model.Tags[0];
         for (int i = 1; i < Model.Tags.Count; i++) {
-            tags += " ," + Model.Tags[i];
+            tags += ", " + Model.Tags[i];
         }
     }
     <div class="panel panel-default">
@@ -29,24 +29,25 @@
         <div class="panel-body">@tags</div>
     </div>
 
-    <div class="panel panel-default">
+    @*<div class="panel panel-default">
         <div class="panel-heading">Źródła</div>
         <div class="panel-body">
             @foreach (var item in Model.Sources) {
                 <div>@item</div>
             }
         </div>
-    </div>
+    </div>*@
 
-    <button class="btn">he?</button> 
+    @Html.ActionLink("Edytuj", "EditPub", "AuthorPanel", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
 
     <div class="list-group pre-scrollable">
-        @for (int i = 0; i < 5; i++) {
+        @for (int i = 0; i < Model.Reviews.Count; i++) {
             <div class="list-group-item">
-                <h4 class="list-group-item-heading">Testowa recenzja  @i</h4>
-                <p class="list-group-item-text">Data dodania:</p>
-                <p class="list-group-item-text">Streszczenie:</p>
-                <p class="list-group-item-text">Plik:</p>
+                <h4 class="list-group-item-heading">Recenzja  @(i+1)</h4>
+                <p class="list-group-item-text">Data dodania: @Model.Reviews[i].AddDate.ToShortDateString()</p>
+                <p class="list-group-item-text">Stan: @Model.Reviews[i].State</p>
+                @*<p class="list-group-item-text">Streszczenie:</p>*@
+                <p class="list-group-item-text">Plik: @Html.ActionLink("Pobierz", "DownloadReview", "AuthorPanel", new { id = Model.Reviews[i].Id }, null) </p>
 
             </div>
         }

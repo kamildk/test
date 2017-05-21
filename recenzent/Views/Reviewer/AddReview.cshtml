@@ -1,0 +1,34 @@
+﻿@model recenzent.Models.ReviewViewModel
+
+@{
+    ViewBag.Title = "Dodaj recenzję";
+    //Model.Publication =
+}
+
+
+
+<div class="container">
+    <div>
+        <h2>Dodaj recenzję</h2>
+        @Html.ActionLink("Powrót", "Index")
+    </div>
+    @using (Html.BeginForm("AddReview", "Reviewer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.pubId)
+        <div class="form-group col-md-10">
+            <label class="control-label" for="file">Plik z recenzją</label>
+            <div>
+                @*<input type="file" class="form-control" id="PublicationFile" name="file"/>*@
+                @Html.TextBoxFor(m => m.File, new { @class = "form-control inputlg", type = "file", accept = ".pdf" })
+
+            </div>
+        </div>
+
+        <div class="form-group col-md-10">
+            <button type="submit" class="btn btn-default">Akceptuj</button>
+        </div>
+
+        @ViewBag.Message
+    }
+</div>
+

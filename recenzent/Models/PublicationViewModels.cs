@@ -8,30 +8,33 @@ using System.Web;
 namespace recenzent.Models {
     public class PublicationViewModel {
 
+        public int Id { get; set; }
         public string Title { get; set; }
         public HttpPostedFileBase File { get; set; }
         public string Tags { get; set; }
         [Required]
         public string Description { get; set; }
         public string Category { get; set; }
-        public string Sources { get; set; }
+       // public string Sources { get; set; }
     }
 
-    public class PublcationReviewViewModel {
+    public class PublicationReviewListViewModel {
+        public int Id { get; set; }
         public string Title { get; set; }
         public List<string> Tags { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public List<string> Sources { get; set; }
-        public List<recenzent.Data.Model.Review> Reviews { get; set; }
+        //public List<string> Sources { get; set; }
+        public List<PublicationReviewViewModel> Reviews { get; set; }
 
-        public PublcationReviewViewModel() {
+        public PublicationReviewListViewModel() {
             Tags = new List<string>();
-            Sources = new List<string>();
-            Reviews = new List<Data.Model.Review>();
+            //Sources = new List<string>();
+            Reviews = new List<PublicationReviewViewModel>();
         }
     }
 
+<<<<<<< HEAD
     public class PublicationCommentViewModel
     {
         public string Title { get; set; }
@@ -53,5 +56,11 @@ namespace recenzent.Models {
             Comments = new List<Comment>();
         }
 
+=======
+    public class PublicationReviewViewModel {
+        public int Id { get; set; }
+        public DateTime AddDate { get; set; }
+        public string State { get; set; }
+>>>>>>> 66dbc862c8900644b637fb190a78ff5b0a101baf
     }
 }

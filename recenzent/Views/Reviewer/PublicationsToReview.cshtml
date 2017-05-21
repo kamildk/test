@@ -1,0 +1,20 @@
+﻿@model IEnumerable<recenzent.Data.Model.Publication>
+
+@{
+    ViewBag.Title = "Lista publikacji do zrecenzowania";
+}
+
+<h2>Lista publikacji w recenzji</h2>
+
+<div class="container">
+    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "Reviewer" )'">Powrót</button>
+
+    <div class="list-group pre-scrollable">
+        @foreach (var item in Model)
+        {
+            <div class="list-group-item">
+                <h4 class="list-group-item-heading">@Html.ActionLink(item.Title, "PublicationDetails", "Reviewer", new { id = item.PublicationId}, null)</h4>
+            </div>
+        }
+    </div>
+</div>

@@ -1,23 +1,32 @@
-﻿
+﻿@model IEnumerable<recenzent.Data.Model.Publication>
+
 @{
     ViewBag.Title = "Panel recenzenta";
 }
 
 <h2>Panel Recenzenta</h2>
 
-<div>
-    <input type="button" value="Przejdź do panelu autora" style="border-spacing:100px 100px; float:right; right:5%"
-           onclick="location.href='@Url.Action("Index", "AuthorPanel")'" />
-</div>
+<div class="container">
+    <div>
+        <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "AuthorPanel")'">Przejdź do panelu autora</button>
+    </div>
 
-<div class="list-group pre-scrollable" style="width:75%; min-height:750px" >
-    @for (int i = 0; i < 20; i++)
-    {
-        <div class="list-group-item">
-            <p class="list-group-item-text">Artykuł do zrecenzowania nr @(i + 1)
-                <input type="button" value="Wyślij recenzję" id="sendRev@(i + 1)" style="float:right" />
-                <input type="button" value="Pobierz" id="download@(i + 1)" style="float:right"/>
-            </p>
-        </div>
-    }
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Publikacje do zrecenzowania", "PublicationsToReview", "Reviewer")
+    </div> 
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Recenzje czekające na zatwierdzenie", "ReviewsWaiting", "Reviewer")
+    </div>
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Zatwierdzone recenzje", "ReviewsAccepted", "Reviewer")
+    </div>  
+
+    @*<div class="list-group pre-scrollable" style="width:75%; min-height:750px" >
+            @foreach (var item in Model)
+            {
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">@Html.ActionLink(item.Title, "PublicationReview", "ReviewerController", new { id = item.PublicationId }, null)</h4>
+                </div>
+            }
+        </div>*@
 </div>

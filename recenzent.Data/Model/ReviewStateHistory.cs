@@ -13,11 +13,13 @@ namespace recenzent.Data.Model {
         [Required]
         public DateTime ChangeDate { get; set; }
 
-        [Required]
+        public int ReviewId { get; set; }
+        [ForeignKey("ReviewId")]
         public Review Review { get; set; }
-        [Required]
-        public ReviewState ChangesToState { get; set; }
-        [Required]
-        public ReviewState ChangesFrom { get; set; }
+
+        public int StateId { get; set; }
+        [ForeignKey("StateId")]
+        public ReviewState State { get; set; }
+
     }
 }

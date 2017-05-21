@@ -1,44 +1,14 @@
 ﻿@model recenzent.Models.PublicationViewModel
 @{
-    ViewBag.Title = "Dodaj publikacje";
+    ViewBag.Title = "Edycja publikacji";
 }
-
-<script>
-    function AddSource() {
-        var length = $("#SourcesList input").length;
-        var buttonCode = '<button type="button" class = "btn btn-sm col-sm-1" id =sButton' + length + ' onclick="RemoveSource(' +length+')">Usuń</button>';
-        $("#SourcesList").append('<input type="text"  class="list-group-item col-sm-11" id = source' + length + ' onchange = SetSources()>' + buttonCode);
-    }
-
-    function RemoveSource(id){
-        $('#source' + id).remove();
-        $('#sButton' + id).remove();
-
-        SetSources();
-    }
-
-    function SetSources() {
-        var length = $("#SourcesList input").length;
-        var text = ""
-        for (var i = 0; i < length; i++) {
-            id = $("#SourcesList input").get(i).id
-            text += $('#'+id).val() + "\n";
-        }
-        $("#testBox").val(text);
-        //alert($("#testBox").val());
-    }
-
-    function Test() {
-        alert($("#testBox").val());
-    }
-</script>
 
 <div class="container">
     <div>
-        <h2>Dodaj Publikacje</h2>
+        <h2>Edytuj publikacje</h2>
         @Html.ActionLink("Powrót", "Index")
     </div>
-    @using (Html.BeginForm("AddPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    @using (Html.BeginForm("EditPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data" })) {
 
         <div class="form-group col-md-10">
             <label class="control-label">Tytuł</label>
@@ -59,7 +29,7 @@
         <div class="form-group col-md-10">
             <label class="control-label">Kategoria</label>
             <div>
-                @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.Categories), new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.Categories, Model.Category), new { @class = "form-control" })
             </div>
         </div>
 
@@ -72,18 +42,18 @@
         </div>
 
         @*<div class="form-group col-md-10">
-            <label class="control-label">Źródła</label>
-            <button type="button" class="btn" id="btn1" onclick="AddSource()">Dodaj</button>
-            <div>
+                <label class="control-label">Źródła</label>
+                <button type="button" class="btn" id="btn1" onclick="AddSource()">Dodaj</button>
+                <div>
 
-                <div class="list-group" id="SourcesList">
+                    <div class="list-group" id="SourcesList">
+                    </div>
+
+                    @Html.TextAreaFor(m => m.Sources, new { @class = "form-control hidden", id = "testBox" })
+
                 </div>
 
-                @Html.TextAreaFor(m => m.Sources, new { @class = "form-control hidden", id = "testBox" })
-
-            </div>
-
-        </div>*@
+            </div>*@
 
         <div class="form-group col-md-10">
             <label class="control-label" for="comment">Opis</label>
