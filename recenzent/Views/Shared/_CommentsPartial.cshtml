@@ -1,6 +1,51 @@
-﻿
-<div class="form-group" action="/CommentController/SendComment" method="post">
-    <label for="comment">Comment:</label>
-    <textarea class="form-control" rows="5" id="comment"></textarea>
-    <input type="submit" value="Wyślij" />
-</div> 
+﻿@model recenzent.Models.PublicationCommentViewModel
+@using recenzent.Controllers
+
+
+
+
+<div class="container">
+    @using (Html.BeginForm("AddComment", "PublicationPanel", FormMethod.Post, new { enctype = "multipart/form-data", Model.PublicationId }))
+    {
+        <div class="form-group col-md-10">
+            <label class="control-label" for="comment">Skomentuj publikację:</label>
+            <div>
+                @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
+                @Html.TextAreaFor(m => m.newCommentText, new { @class = "form-control", rows = "5", required = "true" })
+                @Html.HiddenFor(m => m.PublicationId)
+            </div>
+        </div>
+
+        <div class="form-group col-md-10">
+            <button type="submit" class="btn btn-default">Akceptuj</button>
+        </div>
+    }
+</div>
+
+
+@foreach (var item in Model.Comments)
+{
+
+    <div class="well-sm">
+        <br />
+        <h2>@Html.DisplayFor(ModelItem=>item.User.UserName) @Html.ActionLink("Odpowiedz na komentarz",
+                "ReplyOnComment", "PublicationPanel", new { item.CommentId }, null)
+        </h2>
+        <p>@Html.DisplayFor(modelItem => item.Text)</p>
+
+         @{
+
+             PublicationPanelController ppC = new PublicationPanelController() { };
+             var replies = ppC.GetCommentReplies(item);
+             foreach (var i in replies)
+             {
+                <div class="well-sm" style="margin-left: 20px;">
+                    <br />
+                    <h2>@i.User.Surname</h2>
+                    <p>@i.Text</p>
+                </div>
+             }
+
+        }
+    </div>
+}

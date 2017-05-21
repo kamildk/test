@@ -1,0 +1,12 @@
+﻿@model recenzent.Models.PublicationCommentViewModel
+
+
+@foreach (var item in Model.Comments)
+{
+
+    <div class="well-sm" style="margin-left: 20px;">
+        <br />
+        <h2>@Html.DisplayFor(ModelItem=>item.User.UserName)</h2>
+        <p>@Html.DisplayFor(modelItem => item.Text)</p>
+    </div>
+}

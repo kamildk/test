@@ -1,5 +1,8 @@
-﻿using recenzent.Data;
+﻿using Microsoft.AspNet.Identity;
+using recenzent.Data;
+using recenzent.Data.Interface;
 using recenzent.Data.Model;
+using recenzent.Data.Service;
 using recenzent.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +15,34 @@ namespace recenzent.Controllers
     public class CommentController : Controller
     {
         [HttpPost]
-        public ActionResult SendComment(string comment)
+        public ActionResult AddComment(CommentViewModel commentModel)
         {
-            var com = new CommentViewModel() { Body = comment };
-            return Content(comment);
+            if (ModelState.IsValid)
+            {
+                var ctx = new DataContext();
+                Comment comment = new Comment();
+
+                Publication pub = new Publication();
+                IUserService userService = new UserService();
+                string userId = User.Identity.GetUserId();
+                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
+
+                pub = ViewBag.publication;
+
+
+                comment.Text = commentModel.Body;
+                comment.Date = DateTime.Now;
+                comment.User = currentUser;
+                comment.Publication = pub;
+
+                ctx.Comments.Add(comment);
+           //     currentUser.Comments.Add(comment);
+
+                ctx.SaveChanges();
+                return RedirectToAction("Open", "PublicationPanelController");
+            }
+            else
+                return View("_CommentsPartial", "Open", commentModel);
         }
         // GET: Comment
         /* public ActionResult Index()

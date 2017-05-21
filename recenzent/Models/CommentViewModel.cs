@@ -20,6 +20,7 @@ namespace recenzent.Models
         public int Id { get; set; }
         public int ParentReplyId { get; set; }
         public string UserName { get; set; }
+        public Publication Pub { get; set; }
 
     }
 }
