@@ -7,6 +7,7 @@ using System.Web;
 namespace recenzent.Models {
     public class PublicationViewModel {
 
+        public int Id { get; set; }
         public string Title { get; set; }
         public HttpPostedFileBase File { get; set; }
         public string Tags { get; set; }
@@ -17,6 +18,7 @@ namespace recenzent.Models {
     }
 
     public class PublicationReviewListViewModel {
+        public int Id { get; set; }
         public string Title { get; set; }
         public List<string> Tags { get; set; }
         public string Description { get; set; }

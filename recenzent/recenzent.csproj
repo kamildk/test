@@ -319,6 +319,7 @@
     <Content Include="Views\Shared\LatestPublicationPartial.cshtml" />
     <Content Include="Views\Reviewer\ReviewsWaiting.cshtml" />
     <Content Include="Views\Reviewer\ReviewsAccepted.cshtml" />
+    <Content Include="Views\AuthorPanel\EditPub.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
