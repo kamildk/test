@@ -66,7 +66,7 @@ namespace recenzent.Controllers
         //}
 
         [HttpGet]
-        public ActionResult AddReview( int pubId = -1)
+        public ActionResult AddReview(int pubId = -1)
         {
             using (var ctx = new DataContext())
             {
@@ -81,82 +81,23 @@ namespace recenzent.Controllers
         [HttpPost]
         public ActionResult AddReview(ReviewViewModel model)
         {
-            /*if (ModelState.IsValid && model.File != null && model.pubId>0)
-            {
-            using (DataContext ctx = new DataContext())
-            {
-                //Review review = new Review();
-                Review review = ctx.Reviews.Find(model.pubId);
-
-                IUserService userService = new UserService();
-                string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
-                //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
-
-                ReviewState state = ctx.ReviewStates.Where(s => s.Name == "Przydzielony").FirstOrDefault();
-                //review.CurrentState = state;
-
-                //File
-                string filePath = Server.MapPath("~/Reviews/");
-                if (!Directory.Exists(filePath))
-                {
-                    Directory.CreateDirectory(filePath);
-                }
-
-                string fileName = model.File.FileName;
-                fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
-
-                model.File.SaveAs(filePath + fileName);
-
-                Data.Model.File file = new Data.Model.File()
-                {
-                    Name = fileName,
-                    Link_source = filePath + fileName,
-                    IsCurrent = true,
-                    Review = review
-                };
-
-                Publication pub = ctx.Publications.Find(model.pubId);
-                ctx.Files.Add(file);
-
-                var original = ctx.Reviews.Find(review);
-
-                if(original != null)
-                {
-                    //review.User = currentUser;
-                    DateTime date = DateTime.Today;
-                    review.Creation_date = date;
-                    date = date.AddDays(14);
-                    review.Expiration_date = date;
-                    //review.PublicationId = model.pubId;
-                    //review.Publication = pub;
-                    review.Files.Add(file);
-                    ctx.SaveChanges();
-                }
-
-                //currentUser.Reviews.Add(review);
-
-                //ctx.Reviews.Add(review);
-
-                ctx.SaveChanges();
-                return RedirectToAction("Index");
-            }*/
-
             if (ModelState.IsValid && model.File != null && model.pubId > 0)
             {
                 using (DataContext ctx = new DataContext())
                 {
                     //Review review = new Review();
-                    var revID = from Review rev in ctx.Reviews
-                                where rev.PublicationId == model.pubId
-                                select rev.ReviewId;
-                    int reviewID = revID.First();
-
-                    Review review = ctx.Reviews.Find(reviewID);
 
                     IUserService userService = new UserService();
                     string userId = User.Identity.GetUserId();
                     User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
+
+                    var revId = from Review rev in ctx.Reviews
+                                where rev.PublicationId == model.pubId && rev.UserId == userId
+                                select rev.ReviewId;
+                    int reviewId = revId.First();
+
+                    Review review = ctx.Reviews.Find(reviewId);
+                    Publication pub = ctx.Publications.Find(model.pubId);
 
                     //ReviewState state = ctx.ReviewStates.Where(s => s.Name == "Przydzielony").FirstOrDefault();
                     //review.CurrentState = state;
@@ -182,15 +123,13 @@ namespace recenzent.Controllers
                     };
                     ctx.Files.Add(file);
 
-
-
                     //var original = ctx.Reviews.Find(review);
 
                     if (review != null)
                     {
                         //review.User = currentUser;
-                        DateTime date = DateTime.Today;
-                        review.Creation_date = date;
+                        DateTime date = DateTime.Now;
+                        //review.Creation_date = date;
                         date = date.AddDays(14);
                         review.Expiration_date = date;
                         //review.PublicationId = model.pubId;
@@ -203,9 +142,23 @@ namespace recenzent.Controllers
                     //currentUser.Reviews.Add(review);
 
                     //ctx.Reviews.Add(review);
-                    Publication pub = ctx.Publications.Find(model.pubId);
-                    //pub.Reviews.Add(review); //Tu moze byc problem
+                    var fId = from Data.Model.File f in ctx.Files
+                              where f.ReviewId == reviewId
+                              select f.FileId;
+                    int fileId = fId.First();
 
+                    Data.Model.File fileCheck = ctx.Files.Find(fileId);
+                    if (fileCheck != null)
+                    {
+                        ReviewStateHistory stateHistory = new ReviewStateHistory();
+                        stateHistory.ChangeDate = DateTime.Now;
+                        stateHistory.StateId = review.CurrentStateId;
+                        stateHistory.ReviewId = reviewId;
+                        ctx.ReviewStateHistory.Add(stateHistory);
+                    }
+
+                    review.Publication = pub;
+                    pub.Reviews.Add(review); //Tu moze byc problem
                     ctx.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -233,17 +186,7 @@ namespace recenzent.Controllers
             using (var context = new Data.DataContext())
             {
                 string userId = User.Identity.GetUserId();
-                //Jak narazie wyswietla wszystkie, a powinno tylko niezrecenzowane
-                /*var pubList = from Publication pub in context.Publications
-                              where pub.AuthoId != userId && pub.IsShared == false
-                              select pub;*/
 
-                /*
-                var pubList = from Publication pub in context.Publications
-                              join rev in context.Reviews on pub.PublicationId equals rev.PublicationId into joined
-                              where pub.AuthoId != userId && pub.IsShared == false
-                                select pub;
-                */
                 var pubList = from Publication pub in context.Publications
                               from Review rev in context.Reviews
                               where rev.UserId == userId && pub.PublicationId == rev.PublicationId && rev.CurrentStateId == 1
@@ -280,7 +223,7 @@ namespace recenzent.Controllers
             }
         }
 
-        public ViewResult PublicationDetails(int id, bool reviewed)
+        public ViewResult PublicationDetails(int id)
         { 
             using (var ctx = new DataContext())
             {
