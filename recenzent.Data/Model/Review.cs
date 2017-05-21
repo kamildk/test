@@ -12,7 +12,7 @@ namespace recenzent.Data.Model
 
         [Required]
         public DateTime Creation_date { get; set; }
-        [Required]
+        //[Required]
         public DateTime Expiration_date { get; set; }
 
         public ICollection<ReviewStateHistory> StateHistory { get; set; }

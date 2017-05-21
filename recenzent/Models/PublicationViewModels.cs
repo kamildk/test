@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using recenzent.Data;
 
 namespace recenzent.Models {
     public class PublicationViewModel {
@@ -14,7 +15,7 @@ namespace recenzent.Models {
         [Required]
         public string Description { get; set; }
         public string Category { get; set; }
-       // public string Sources { get; set; }
+        // public string Sources { get; set; }
     }
 
     public class PublicationReviewListViewModel {
@@ -38,4 +39,18 @@ namespace recenzent.Models {
         public DateTime AddDate { get; set; }
         public string State { get; set; }
     }
+
+    public class PublicationEditViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public HttpPostedFileBase File { get; set; }
+        public string Tags { get; set; }
+        [Required]
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public IEnumerable<Data.Model.Review> AllReviews {get; set;}
+
+    }
+
 }

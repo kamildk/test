@@ -13,4 +13,13 @@ namespace recenzent.Models
         public int pubId{get; set; }
         public int ReviewId { get; set; }
     }
+    public class OrderReviewViewModel
+    {
+        public int pubId { get; set; }
+        public int ReviewerId { get; set; }
+        public IEnumerable<User> ValidUsers{ get; set; }
+        
+
+    }
+
 }

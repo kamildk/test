@@ -14,11 +14,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using recenzent.Models;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 
 namespace recenzent.Controllers
 {
-    [Authorize(Roles = "Reviewer")]
+    //[Authorize(Roles = "Reviewer")]
     public class ReviewerController : Controller
     {
         // GET: Reviewer
@@ -159,6 +161,8 @@ namespace recenzent.Controllers
 
                     review.Publication = pub;
                     pub.Reviews.Add(review); //Tu moze byc problem
+                    ctx.Entry(pub).State = EntityState.Modified;
+                    ctx.Entry(pub.Reviews).State = EntityState.Modified;
                     ctx.SaveChanges();
                     return RedirectToAction("Index");
                 }

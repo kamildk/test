@@ -1,0 +1,29 @@
+﻿@model PagedList.IPagedList<recenzent.Data.Model.Publication>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "PublicationList";
+}
+
+<h2>Lista Publikacji</h2>
+<table>
+    @foreach (var item in Model)
+    {
+        var tagList = item.PublicationTags.ToList();
+
+
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "PublicationDetails", "AdminPanel", new { id = item.PublicationId }, null)
+            </td>
+            <br />
+            <td style="background-color: red"> 
+                <pre>@Html.DisplayFor(modelItem => item.Description)</pre>
+            </td>
+            <td style="background-color: olivedrab">@Html.ActionLink(item.AuthoId, "UserDetails", "AdminPanel", new { id = item.AuthoId }, null)</td>
+            <td>@Html.ActionLink("Szczegóły", "PublicationDetails", "AdminPanel", new { id = item.PublicationId }, htmlAttributes: new { @class = "btn btn-default" })</td>
+        </tr>
+    }
+</table>
+<br />
+Strona @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount

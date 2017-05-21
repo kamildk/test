@@ -1,0 +1,11 @@
+﻿@model recenzent.Models.PublicationEditViewModel
+@{
+    ViewBag.Title = "PublicationDetails";
+}
+
+<h2>@Model.Title</h2>
+@Model.Id
+
+@Html.ActionLink("Dodaj recezje", "OrderReview", "AdminPanel", new { publicationId = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+
+

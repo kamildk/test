@@ -320,6 +320,10 @@
     <Content Include="Views\Reviewer\ReviewsWaiting.cshtml" />
     <Content Include="Views\Reviewer\ReviewsAccepted.cshtml" />
     <Content Include="Views\AuthorPanel\EditPub.cshtml" />
+    <Content Include="Views\AdminPanel\PublicationList.cshtml" />
+    <Content Include="Views\AdminPanel\EditPub.cshtml" />
+    <Content Include="Views\AdminPanel\PublicationDetails.cshtml" />
+    <Content Include="Views\AdminPanel\OrderReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
