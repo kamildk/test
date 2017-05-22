@@ -1,4 +1,4 @@
-﻿@model recenzent.Data.Model.Publication
+﻿@model recenzent.Models.PublicationCommentViewModel
 
 @{
     ViewBag.Title = Model.Title;
@@ -8,11 +8,44 @@
 <h1>@Model.Title</h1>
 <h2>@Model.Description</h2>
 
+
 <h1>
-@Html.ActionLink("Pobierz Publikacje",
-                "Download", "PublicationPanel", new { PublicationId = Model.PublicationId }, null)
-</h1> 
+    @Html.ActionLink("Pobierz Publikacje",
+                "Download", "PublicationPanel", new { Model.PublicationId }, null)
+</h1>
+
+<h3>
+    @if (Model.rating == 0)
+    {
+        <span>
+            Ta publiakcja nie ma jeszcze ocen, bądź pierwszym który ją oceni:
+        </span>
+    }
+    else
+    {
+        <span>Obecna średnia ocena artykułu:@Model.rating</span>
+    }
+</h3>
+
+<div class="container">
+    @using (Html.BeginForm("RatePub", "PublicationPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group col-md-10">
+            <label class="control-label">@ViewBag.RateMessage</label>
+            <div>
+                @Html.DropDownListFor(m => m.rateFromCurrUser, new SelectList(ViewBag.Ratings), new { @class = "form-control" })
+                @Html.HiddenFor(m => m.PublicationId)
+            </div>
+        </div>
+        <div class="form-group col-md-10">
+            <button type="submit" class="btn btn-default">Wystaw Ocenę</button>
+        </div>
+    }
+</div>
 
 
 
 
+
+
+@Html.Partial("_CommentsPartial")
