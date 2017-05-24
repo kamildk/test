@@ -21,7 +21,7 @@
 
     @{ string tags = Model.Tags[0];
         for (int i = 1; i < Model.Tags.Count; i++) {
-            tags += " ," + Model.Tags[i];
+            tags += ", " + Model.Tags[i];
         }
     }
     <div class="panel panel-default">
@@ -38,7 +38,7 @@
         </div>
     </div>*@
 
-    <button class="btn">he?</button> 
+    @Html.ActionLink("Edytuj", "EditPub", "AuthorPanel", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
 
     <div class="list-group pre-scrollable">
         @for (int i = 0; i < Model.Reviews.Count; i++) {

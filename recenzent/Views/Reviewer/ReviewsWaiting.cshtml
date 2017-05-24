@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<recenzent.Data.Model.Publication>
 
 @{
-    ViewBag.Title = "Lista publikacji do zrecenzowania";
+    ViewBag.Title = "Zrecenzowane publikacje czekające na zatwierdzenie";
 }
 
-<h2>Lista publikacji w recenzji</h2>
+<h2>Zrecenzowane publikacje czekające na zatwierdzenie</h2>
 
 <div class="container">
-    
+    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "Reviewer" )'">Powrót</button>
 
     <div class="list-group pre-scrollable">
         @foreach (var item in Model)
@@ -17,6 +17,4 @@
             </div>
         }
     </div>
-
-    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "Reviewer" )'">Powrót</button>
 </div>

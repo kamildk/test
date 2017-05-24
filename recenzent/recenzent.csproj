@@ -231,6 +231,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PublicationCommentViewModel.cs" />
     <Compile Include="Models\PublicationViewModels.cs" />
     <Compile Include="Models\ReviewViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -247,6 +248,7 @@
     <Content Include="Images\Banner.png" />
     <Content Include="Images\Panel-Shadow.png" />
     <Content Include="Images\Panel.png" />
+    <Content Include="Images\user.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -316,6 +318,13 @@
     <Content Include="Views\Reviewer\PublicationsToReview.cshtml" />
     <Content Include="Views\Reviewer\AddReview.cshtml" />
     <Content Include="Views\Shared\LatestPublicationPartial.cshtml" />
+    <Content Include="Views\Reviewer\ReviewsWaiting.cshtml" />
+    <Content Include="Views\Reviewer\ReviewsAccepted.cshtml" />
+    <Content Include="Views\AuthorPanel\EditPub.cshtml" />
+    <Content Include="Views\AdminPanel\PublicationList.cshtml" />
+    <Content Include="Views\AdminPanel\EditPub.cshtml" />
+    <Content Include="Views\AdminPanel\PublicationDetails.cshtml" />
+    <Content Include="Views\AdminPanel\OrderReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,7 +14,11 @@
         <div class="panel-body">@Model.Description</div>
     </div>
     <div class="btn-default well-sm col-lg-11">
-        @Html.ActionLink("Recenzuj", "AddReview", "Reviewer", new { pubId = Model.PublicationId }, null)
-        
+        @Html.ActionLink("Pobierz publikacje", "DownloadPublication", "Reviewer", new { pubId = Model.PublicationId }, null)
     </div>
+    <div class="btn-default well-sm col-lg-11">
+        @Html.ActionLink("Recenzuj", "AddReview", "Reviewer", new { pubId = Model.PublicationId}, null)
+    </div>
+    
+
 </div>
