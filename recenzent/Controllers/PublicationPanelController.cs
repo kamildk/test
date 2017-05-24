@@ -45,7 +45,7 @@ namespace recenzent.Controllers
 
             if (pub != null)
             {
-                List<Comment> com = (from Comment c in ctx.Comments where c.Publication.PublicationId == id select c).ToList();
+                List<Comment> com = (from Comment c in ctx.Comments where c.Publication.PublicationId == id && c.ParentComment==null select c).ToList();
                 var pubCom = new PublicationCommentViewModel() { Comments = com, Description = pub.Description, Title = pub.Title, PublicationId = pub.PublicationId, rating = rating };
                 return View(pubCom);
             }
