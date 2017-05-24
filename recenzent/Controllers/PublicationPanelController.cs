@@ -53,6 +53,10 @@ namespace recenzent.Controllers
                     string userName = (from User u in ctx.Users
                                       where u.Id == item.UserID
                                       select u.UserName).FirstOrDefault();
+                    //PROTIP
+                    //W tym miejscu możesz odpytać jeszcze raz bazę o komentarze, które mają id rodzica równe item.commentID
+                    //Następnie robisz kolejne ViewModele z nich i przypisujesz ją do tego dodawanego niżej:
+
                     commentVMList.Add(new CommentViewModel() {
                         Body = item.Text,
                         Id = item.CommentId,
