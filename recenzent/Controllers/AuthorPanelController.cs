@@ -86,6 +86,7 @@ namespace recenzent.Controllers {
                 ICategoryService categoryService = new CategoryService();
                 Publication_category category = categoryService.GetCategory(model.Category);
 
+                #region Sources
                 //sources
                 //string[] sourcesSplited = model.Sources.Split('\n');
                 //for (int i = 0; i < sourcesSplited.Length; i++) {
@@ -110,7 +111,7 @@ namespace recenzent.Controllers {
                 //}
 
                 //ctx.SourcePositions.AddRange(sourcePositions);
-
+                #endregion
                 //File
                 string filePath = Server.MapPath("~/Publications/");
                 if (!Directory.Exists(filePath)) {
@@ -199,6 +200,7 @@ namespace recenzent.Controllers {
                 ICategoryService categoryService = new CategoryService();
                 Publication_category category = categoryService.GetCategory(model.Category);
 
+                #region Sources
                 //sources
                 //string[] sourcesSplited = model.Sources.Split('\n');
                 //for (int i = 0; i < sourcesSplited.Length; i++) {
@@ -223,7 +225,7 @@ namespace recenzent.Controllers {
                 //}
 
                 //ctx.SourcePositions.AddRange(sourcePositions);
-
+                #endregion
                 //File
                 string filePath = Server.MapPath("~/Publications/");
                 if (!Directory.Exists(filePath)) {
@@ -251,7 +253,7 @@ namespace recenzent.Controllers {
                 publication.PublicationTags = pubTags;
                 publication.Description = model.Description;
                 //publication.SourcePositions = sourcePositions;
-                publication.Category = category;
+                publication.CategoryId = category.Publication_categoryId;
                 publication.Files.Add(file);
 
                 currentUser.Publications.Add(publication);
