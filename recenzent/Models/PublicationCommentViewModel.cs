@@ -21,6 +21,7 @@ namespace recenzent.Models
         public string newCommentText { get; set; }
         public float rating { get; set; }
         public int rateFromCurrUser { get; set; }
+        public int ParentCommentId { get; set; }
 
         public PublicationCommentViewModel()
         {
