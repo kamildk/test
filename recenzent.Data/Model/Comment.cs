@@ -15,10 +15,12 @@ namespace recenzent.Data.Model {
         [Required]
         public DateTime Date { get; set; }
 
-        [Required]
+        public int PublicationID { get; set; }
+        [ForeignKey("PublicationID")]
         public Publication Publication { get; set; }
 
-        [Required]
+        public string UserID { get; set; }
+        [ForeignKey("UserID")]
         public User User { get; set; }
 
         public Comment ParentComment { get; set; }

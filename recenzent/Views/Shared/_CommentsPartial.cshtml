@@ -1,4 +1,4 @@
-﻿@model recenzent.Models.PublicationCommentViewModel
+﻿@model recenzent.Models.PublicationPanelViewModel
 @using recenzent.Controllers
 
 
@@ -45,7 +45,7 @@
             <label class="control-label" for="comment">Skomentuj publikację:</label>
             <div>
                 @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
-                @Html.TextAreaFor(m => m.newCommentText, new { @class = "form-control", rows = "5", required = "true" })
+                @Html.TextAreaFor(m => m.NewCommentText, new { @class = "form-control", rows = "5", required = "true" })
                 @Html.HiddenFor(m => m.PublicationId)
             </div>
         </div>
@@ -59,32 +59,20 @@
 @foreach (var item in Model.Comments) {
 
     <div class="well-sm">
-        <br />
-        <h2>
-            <button type="button" class="btn" id="btn1" onclick="AddReply(@item.CommentId)">Dodaj Odpowiedź</button>
-        </h2>
-        <p>@Html.DisplayFor(modelItem => item.Text)</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">@item.UserName napisał:</div>
+            <div class="panel-body">@item.Body</div>
+        </div>
+        <button type="button" class="btn" id="btn1" onclick="AddReply(@item.Id)">Dodaj Odpowiedź</button>
 
-        @*No nie ogarniam tego szajsu, dziś to już w ogóle nic nowego mi nie wpadło do głowy, tylko nabrudziłem w kodzie. :C *@
-        @{string test = "CommentReply" + item.CommentId.ToString();
+        @{string replyId = "CommentReply" + item.Id.ToString();
         }
-        <div class="list-group" id=@test>
+        <div class="list-group" id=@replyId>
         </div>
 
 
     </div>
     <div>
-        @{
-
-            PublicationPanelController ppC = new PublicationPanelController() { };
-            var replies = ppC.GetCommentReplies(item);
-            foreach (var i in replies) {
-                <div class="well-sm" style="margin-left: 20px;">
-                    <h2>Tu będzie autor odpowiedzi</h2>
-                    <p>@i.Text</p>
-                </div>
-            }
-
-        }
+        @*Tu kiedyś powinny być odpowiedzi*@
     </div>
             }

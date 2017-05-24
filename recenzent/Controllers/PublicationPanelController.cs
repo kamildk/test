@@ -45,8 +45,30 @@ namespace recenzent.Controllers
 
             if (pub != null)
             {
-                List<Comment> com = (from Comment c in ctx.Comments where c.Publication.PublicationId == id && c.ParentComment==null select c).ToList();
-                var pubCom = new PublicationCommentViewModel() { Comments = com, Description = pub.Description, Title = pub.Title, PublicationId = pub.PublicationId, rating = rating };
+                List<Comment> comments = (from Comment c in ctx.Comments
+                                          where c.Publication.PublicationId == id && c.ParentComment==null
+                                          select c).ToList();
+                List<CommentViewModel> commentVMList = new List<CommentViewModel>();
+                foreach (var item in comments) {
+                    string userName = (from User u in ctx.Users
+                                      where u.Id == item.UserID
+                                      select u.UserName).FirstOrDefault();
+                    commentVMList.Add(new CommentViewModel() {
+                        Body = item.Text,
+                        Id = item.CommentId,
+                        UserName = userName,
+                        AddDate = item.Date
+                    });
+                }
+
+                var pubCom = new PublicationPanelViewModel() 
+                {
+                    Comments = commentVMList,
+                    Description = pub.Description,
+                    Title = pub.Title,
+                    PublicationId = pub.PublicationId,
+                    Rating = rating
+                };
                 return View(pubCom);
             }
             else
@@ -55,7 +77,7 @@ namespace recenzent.Controllers
 
 
         [HttpPost]
-        public ActionResult RatePub(PublicationCommentViewModel pubCom)
+        public ActionResult RatePub(PublicationPanelViewModel pubCom)
         {
             IUserService userService = new UserService();
             string userId = User.Identity.GetUserId();
@@ -73,7 +95,7 @@ namespace recenzent.Controllers
             {
                 ratePrevious.Date = DateTime.Now;
                 ratePrevious.User = currentUser;
-                ratePrevious.Value = pubCom.rateFromCurrUser;
+                ratePrevious.Value = pubCom.RateFromCurrUser;
                 ratePrevious.Publication = ctx.Publications.Find(pubCom.PublicationId);
 
             }
@@ -81,7 +103,7 @@ namespace recenzent.Controllers
             {
                 rate.Date = DateTime.Now;
                 rate.User = currentUser;
-                rate.Value = pubCom.rateFromCurrUser;
+                rate.Value = pubCom.RateFromCurrUser;
                 rate.Publication = ctx.Publications.Find(pubCom.PublicationId);
                 ctx.Ratings.Add(rate);
             }
@@ -120,9 +142,9 @@ namespace recenzent.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddComment(PublicationCommentViewModel pubCom)
+        public ActionResult AddComment(PublicationPanelViewModel pubCom)
         {
-            if (pubCom.newCommentText.Length > 0)
+            if (pubCom.NewCommentText.Length > 0)
             {
                 IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
@@ -133,7 +155,7 @@ namespace recenzent.Controllers
 
                 Comment comment = new Comment();
 
-                comment.Text = pubCom.newCommentText;
+                comment.Text = pubCom.NewCommentText;
                 comment.Date = DateTime.Now;
                 comment.User = currentUser;
                 comment.Publication = ctx.Publications.Where(p => p.PublicationId == pubCom.PublicationId).First();
@@ -149,12 +171,13 @@ namespace recenzent.Controllers
                 return View("Open", pubCom);
         }
 
-        public List<Comment> GetCommentReplies(Comment com)
-        {
-            var replies = ctx.Comments.Where(c => c.ParentComment.CommentId == com.CommentId).ToList();
-            replies.OrderBy(c => c.Date);
-            return replies;
-        }
+        //BEEEE
+        //public List<Comment> GetCommentReplies(Comment com)
+        //{
+        //    var replies = ctx.Comments.Where(c => c.ParentComment.CommentId == com.CommentId).ToList();
+        //    replies.OrderBy(c => c.Date);
+        //    return replies;
+        //}
 
 
 
