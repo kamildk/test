@@ -14,8 +14,14 @@ namespace recenzent.Data.Model
         public int SourcePositionId { get; set; }
 
         [Required]
+        [ForeignKey("SourceId")]
         public Source Source { get; set; }
-        [Required]
-        public Publication Publication { get; set; }
+        public int SourceId { get; set; }
+
+        //[Required]
+        //[ForeignKey("PublicationId")]
+        //public Publication Publication { get; set; }
+        //public int PublicationId { get; set; }
+        
     }
 }

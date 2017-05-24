@@ -1,0 +1,18 @@
+﻿@model recenzent.Data.Model.Publication
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+<h2>@Model.Description</h2>
+
+<h1>
+@Html.ActionLink("Pobierz Publikacje",
+                "Download", "PublicationPanel", new { PublicationId = Model.PublicationId }, null)
+</h1> 
+
+
+
+

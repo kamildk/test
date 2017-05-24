@@ -14,26 +14,24 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using recenzent.Models;
 
-namespace recenzent.Controllers
-{
+namespace recenzent.Controllers {
     [Authorize(Roles = "Author")]
-    public class AuthorPanelController : Controller
-    {
+    public class AuthorPanelController : Controller {
         // GET: AuthorPanel
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             return View();
         }
 
         [HttpGet]
         public ActionResult AddPub() {
 
-            using(var ctx = new DataContext()) {
+            using (var ctx = new DataContext()) {
                 ViewBag.Categories = ctx.Publication_Categories.Select(c => c.Name).ToList();
             }
 
             return View();
         }
+
 
         [HttpPost]
         public ActionResult AddPub(PublicationViewModel model) {
@@ -44,7 +42,7 @@ namespace recenzent.Controllers
 
                 IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault(); 
+                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
                 //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
 
                 //Tags
@@ -67,6 +65,35 @@ namespace recenzent.Controllers
 
                 ctx.Publication_Tags.AddRange(pubTags);
 
+                //category
+                ICategoryService categoryService = new CategoryService();
+                Publication_category category = categoryService.GetCategory(model.Category);
+
+                //sources
+                //string[] sourcesSplited = model.Sources.Split('\n');
+                //for (int i = 0; i < sourcesSplited.Length; i++) {
+                //    sourcesSplited[i] = sourcesSplited[i].Trim();
+                //}
+                //var sourcesList = sourcesSplited.ToList();
+                //sourcesList.RemoveAt(sourcesList.Count - 1);
+
+                //ISourceService sourceService = new SourceService();
+                //sourceService.AddSources(sourcesList);
+
+                ////source position
+                //List<SourcePosition> sourcePositions = new List<SourcePosition>();
+                //for (int i = 0; i < sourcesSplited.Length - 1; i++) {
+                //    string sourceName = sourcesSplited[i];
+                //    Source source = ctx.Sources.Where(s => s.Name == sourceName).FirstOrDefault();
+                //    SourcePosition position = new SourcePosition() {
+                //        Source = source,
+                //        Publication = publication
+                //    };
+                //    sourcePositions.Add(position);
+                //}
+
+                //ctx.SourcePositions.AddRange(sourcePositions);
+
                 //File
                 string filePath = Server.MapPath("~/Publications/");
                 if (!Directory.Exists(filePath)) {
@@ -74,6 +101,8 @@ namespace recenzent.Controllers
                 }
 
                 string fileName = model.File.FileName;
+                fileName = fileName.Substring(fileName.LastIndexOf("\\") + 1);
+
                 model.File.SaveAs(filePath + fileName);
 
                 Data.Model.File file = new Data.Model.File() {
@@ -83,12 +112,16 @@ namespace recenzent.Controllers
                     Publication = publication
                 };
 
+                //IFileService fileService = new FileService();
+                //fileService.AddFile(file);
                 ctx.Files.Add(file);
 
                 publication.Author = currentUser;
                 publication.Title = model.Title;
                 publication.PublicationTags = pubTags;
                 publication.Description = model.Description;
+                //publication.SourcePositions = sourcePositions;
+                publication.Category = category;
                 publication.Files.Add(file);
 
                 currentUser.Publications.Add(publication);
@@ -127,11 +160,54 @@ namespace recenzent.Controllers
             }
         }
 
-        public ActionResult PublicationReview(int id = 6) {
+        public ActionResult PublicationReview(int id) {
             using (var ctx = new DataContext()) {
                 Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
+
+                var reviews = from Review r in ctx.Reviews
+                              join ReviewState s in ctx.ReviewStates on r.CurrentStateId equals s.Id
+                              where r.PublicationId == id
+                              select new { Review = r, State = s };
                 
-                return View(pub);
+                List<PublicationReviewViewModel> reviewList = new List<PublicationReviewViewModel>();
+                foreach (var item in reviews) {
+                    reviewList.Add(new PublicationReviewViewModel() {
+                        Id = item.Review.ReviewId,
+                        AddDate = item.Review.Creation_date,
+                        State = item.State.Name
+                    });
+                }
+
+                PublicationReviewListViewModel vm = new PublicationReviewListViewModel() {
+                    Title = pub.Title,
+                    Description = pub.Description,
+                    Category = pub.Category.Name
+                };
+
+                vm.Tags = (from PublicationTag tag in ctx.Publication_Tags
+                           where tag.PublicationId == pub.PublicationId select tag.Tag.Name).ToList();
+                //vm.Sources = (from SourcePosition source in ctx.SourcePositions
+                //              where source.PublicationId == pub.PublicationId select source.Source.Name).ToList();
+                vm.Reviews = reviewList;
+
+                return View(vm);
+            }
+        }
+
+        public ActionResult DownloadReview(int id) {
+            using (var ctx = new DataContext()) {
+                var result = (from Review review in ctx.Reviews
+                              where review.ReviewId == id select review).FirstOrDefault();
+                var filePath = (from Data.Model.File file in ctx.Files
+                                where file.IsCurrent == true && file.ReviewId == result.ReviewId
+                                select file.Link_source).FirstOrDefault();
+
+                if (filePath != null) {
+                    return File(filePath, "application/pdf");
+                }
+                else {
+                    return View("Error");
+                }
             }
         }
     }

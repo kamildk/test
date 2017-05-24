@@ -57,47 +57,6 @@ namespace recenzent.Data.Migrations
                     roleManager.Create(role);
                 }
 
-                //var user = new User();
-                //user.UserName = "admin";
-                //user.Email = "test@test.pl";
-                //user.Name = "Wojciech";
-                //user.Surname = "Sendera";
-                //user.RegistrationDate = DateTime.UtcNow;
-                //user.Affiliation = testAffiliation;
-                //string userPassword = "Test_1234";
-
-                //var chkUser = UserManager.Create(user, userPassword);
-                //if (chkUser.Succeeded) {
-                //    var result1 = UserManager.AddToRole(user.Id, "Admin");
-                //}
-
-                //user = new User();
-                //user.UserName = "author";
-                //user.Email = "test2@test.pl";
-                //user.Name = "Wojciech2";
-                //user.Surname = "Sendera2";
-                //user.RegistrationDate = DateTime.UtcNow;
-                //user.Affiliation = testAffiliation;
-
-                //var chkUser2 = UserManager.Create(user, userPassword);
-                //if (chkUser2.Succeeded) {
-                //    var result1 = UserManager.AddToRole(user.Id, "Author");
-                //}
-
-                //user = new User();
-                //user.UserName = "reviewer";
-                //user.Email = "test3@test.pl";
-                //user.Name = "Wojciech3";
-                //user.Surname = "Sendera3";
-                //user.RegistrationDate = DateTime.UtcNow;
-                //user.Affiliation = testAffiliation;
-                //user.EmailConfirmed = true;
-
-                //var chkUser3 = UserManager.Create(user, userPassword);
-                //if (chkUser3.Succeeded) {
-                //    var result1 = UserManager.AddToRole(user.Id, "Reviewer");
-                //}
-
                 Publication_category category1 = new Publication_category() {
                     Name = "Informatyka"
                 };
@@ -116,6 +75,31 @@ namespace recenzent.Data.Migrations
                 if (!context.Publication_Categories.Any(c => c.Name == category3.Name))
                     context.Publication_Categories.Add(category3);
 
+                ReviewState state1 = new ReviewState() {
+                    Name = "Przydzielony"
+                };
+                ReviewState state2 = new ReviewState() {
+                    Name = "Zaakceptowany"
+                };
+                ReviewState state3 = new ReviewState() {
+                    Name = "Cofniêty do poprawy"
+                };
+                ReviewState state4 = new ReviewState() {
+                    Name = "Odrzucony"
+                };
+
+                if(!context.ReviewStates.Any(s=>s.Name == state1.Name)) {
+                    context.ReviewStates.Add(state1);
+                }
+                if (!context.ReviewStates.Any(s => s.Name == state2.Name)) {
+                    context.ReviewStates.Add(state2);
+                }
+                if (!context.ReviewStates.Any(s => s.Name == state3.Name)) {
+                    context.ReviewStates.Add(state3);
+                }
+                if (!context.ReviewStates.Any(s => s.Name == state4.Name)) {
+                    context.ReviewStates.Add(state4);
+                }
             }
 
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
