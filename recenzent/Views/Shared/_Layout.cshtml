@@ -97,7 +97,10 @@
                             <div class="panel-body">
                                 <small class="social-title">Zalogowanych użytkowników</small>
                                 <h3 class="count">
-                                    0
+                                    @{ 
+                                        int? count = ((List<string>)HttpRuntime.Cache["LoggedInUsers"])?.Count();
+                                    }
+                                    @count.GetValueOrDefault()
                                 </h3>
                                
                             </div>

@@ -13,6 +13,7 @@ using recenzent.Data;
 using recenzent.Data.Model;
 using System.Diagnostics;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace recenzent.Controllers
 {
@@ -83,6 +84,7 @@ namespace recenzent.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    AddLoggedInUser(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -408,6 +410,13 @@ namespace recenzent.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            UserManager<User> manager = new UserManager<User>(new UserStore<User>(new DataContext()));
+            string userId = User.Identity.GetUserId();
+            string mail = (from User u in manager.Users
+                          where u.Id == userId
+                          select u.Email).FirstOrDefault();
+
+            RemoveLoggedInUser(mail);
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
@@ -443,6 +452,27 @@ namespace recenzent.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+
+        private void AddLoggedInUser(string userName) {
+            List<string> loggedInUsersList;
+            if(HttpRuntime.Cache["LoggedInUsers"] != null) {
+                loggedInUsersList = (List<string>) HttpRuntime.Cache["LoggedInUsers"];
+            }
+            else {
+                loggedInUsersList = new List<string>();
+            }
+
+            loggedInUsersList.Add(userName);
+            HttpRuntime.Cache["LoggedInUsers"] = loggedInUsersList;
+        }
+
+        private void RemoveLoggedInUser(string userName) {
+            if (HttpRuntime.Cache["LoggedInUsers"] != null) {
+                List<string> loggedInUsersList = (List<string>)HttpRuntime.Cache["LoggedInUsers"];
+                loggedInUsersList.Remove(userName);
+                HttpRuntime.Cache["LoggedInUsers"] = loggedInUsersList;
+            }
+        }
 
         private IAuthenticationManager AuthenticationManager
         {
