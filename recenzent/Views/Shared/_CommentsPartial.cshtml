@@ -4,10 +4,12 @@
 
 <script>
     function AddReply(id) {
+        
         var divId = '#CommentReply' + id;
         var cButtonCode = '<button type="button" class = "btn btn-default" id ="cButton" onclick="CancelReply()">Anuluj</button>';
-        var aButtonCode = '<button type="submit" class="btn btn-default" id="aButton" >Akceptuj</button>';
-        $(divId).append('<textarea class = "form-control", rows = "5", required = "true" id = reply ></textarea>' + cButtonCode + aButtonCode);
+        var aButtonCode = '<button type="submit" class="btn btn-default" id="aButton" >Dodaj Odpowiedź</button>';
+        var hiddenInputCode = '<input data-val="true" data-val-number="The field StudentId must be a number." data-val-required="The StudentId field is required."id="parentId"  name="parentId" type="hidden" value="'+id+'" />';
+        $(divId).append('<textarea class = "form-control", rows = "5", required = "true" id = reply name = reply ></textarea>' + cButtonCode + aButtonCode + hiddenInputCode);
     }
 
     function CancelReply() {
@@ -18,21 +20,8 @@
         SetSources();
     }
 
-    function SetSources() {
-        var length = $("#SourcesList input").length;
-        var text = ""
-        for (var i = 0; i < length; i++) {
-            id = $("#SourcesList input").get(i).id
-            text += $('#' + id).val() + "\n";
-        }
-        $("#testBox").val(text);
 
-        //alert($("#testBox").val());
-    }
 
-    function Test() {
-        alert($("#testBox").val());
-    }
 </script>
 
 
@@ -44,7 +33,6 @@
         <div class="form-group col-md-10">
             <label class="control-label" for="comment">Skomentuj publikację:</label>
             <div>
-                @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
                 @Html.TextAreaFor(m => m.NewCommentText, new { @class = "form-control", rows = "5", required = "true" })
                 @Html.HiddenFor(m => m.PublicationId)
             </div>
@@ -67,12 +55,20 @@
 
         @{string replyId = "CommentReply" + item.Id.ToString();
         }
+        @using (Html.BeginForm("AddReply", "PublicationPanel", FormMethod.Post, new { enctype = "multipart/form-data", id=Model.PublicationId }))
+        {
         <div class="list-group" id=@replyId>
         </div>
-
+        }
 
     </div>
-    <div>
-        @*Tu kiedyś powinny być odpowiedzi*@
+    <div class="well-sm" style="margin-left: 40px;">
+        @foreach (var it in item.ChildReplies)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">@it.UserName napisał:</div>
+                <div class="panel-body">@it.Body</div>
+            </div>
+        }
     </div>
             }

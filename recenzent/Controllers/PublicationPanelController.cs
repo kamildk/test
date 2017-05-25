@@ -23,7 +23,7 @@ namespace recenzent.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult Open(int id = 1)
+        public ActionResult Open(int id)
         {
             ViewBag.Ratings = new List<int>() { 1, 2, 3, 4, 5 };
 
@@ -49,18 +49,40 @@ namespace recenzent.Controllers
                                           where c.Publication.PublicationId == id && c.ParentComment==null
                                           select c).ToList();
                 List<CommentViewModel> commentVMList = new List<CommentViewModel>();
+                List<CommentViewModel> repliesVMList = new List<CommentViewModel>();
                 foreach (var item in comments) {
                     string userName = (from User u in ctx.Users
                                       where u.Id == item.UserID
                                       select u.UserName).FirstOrDefault();
-                    //PROTIP
-                    //W tym miejscu możesz odpytać jeszcze raz bazę o komentarze, które mają id rodzica równe item.commentID
-                    //Następnie robisz kolejne ViewModele z nich i przypisujesz ją do tego dodawanego niżej:
+
+                    List<CommentViewModel> tRepliesVMList = new List<CommentViewModel>();
+
+
+
+                    item.ChildComments = ctx.Comments.Where(c => c.ParentComment.CommentId == item.CommentId).ToList();
+                    item.ChildComments.OrderBy(c => c.Date);
+                    foreach ( var ccom in item.ChildComments)
+                    {
+                        string CCUserName = (from User u in ctx.Users
+                                           where u.Id == ccom.UserID
+                                           select u.UserName).FirstOrDefault();
+                        tRepliesVMList.Add(new CommentViewModel()
+                        {
+                            Body = ccom.Text,
+                            Id = ccom.CommentId,
+                            UserName = CCUserName,
+                            AddDate = ccom.Date
+
+                        });
+                    }
+
+                    repliesVMList = tRepliesVMList;
 
                     commentVMList.Add(new CommentViewModel() {
                         Body = item.Text,
                         Id = item.CommentId,
                         UserName = userName,
+                        ChildReplies = repliesVMList,
                         AddDate = item.Date
                     });
                 }
@@ -81,6 +103,7 @@ namespace recenzent.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult RatePub(PublicationPanelViewModel pubCom)
         {
             IUserService userService = new UserService();
@@ -113,11 +136,7 @@ namespace recenzent.Controllers
             }
 
 
-            //rate.Date = DateTime.Now;
-            //rate.User = currentUser;
-            //rate.Value = pubCom.rateFromCurrUser;
-            //rate.Publication = ctx.Publications.Find(pubCom.PublicationId);
-            //ctx.Ratings.Add(rate);
+
             wasRatedBefore = true;
 
             if (wasRatedBefore)
@@ -127,25 +146,26 @@ namespace recenzent.Controllers
             else
                 ViewBag.RateMessage = "Oceń tę publikację:";
 
-            //currentUser.Ratings.Add(rate);
-            //  pub.Ratings.Add(rate);
             ctx.SaveChanges();
-            return RedirectToAction("Open");
+            return Redirect("Open/"+pubCom.PublicationId.ToString());
         }
 
+
+        [Authorize]
         public ActionResult Download(int PublicationId)
         {
             var physicalFilePath = (from File f in ctx.Files where f.PublicationId == PublicationId select f.Link_source).First();
 
             if (physicalFilePath != null)
             {
-                return File(physicalFilePath, "File");
+                return File(physicalFilePath, "application/pdf");
             }
             else
                 return View("Error");
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult AddComment(PublicationPanelViewModel pubCom)
         {
             if (pubCom.NewCommentText.Length > 0)
@@ -169,20 +189,45 @@ namespace recenzent.Controllers
 
 
                 ctx.SaveChanges();
-                return RedirectToAction("Open", "PublicationPanel");
+                return Redirect("Open/" + pubCom.PublicationId.ToString());
             }
             else
                 return View("Open", pubCom);
         }
 
-        //BEEEE
-        //public List<Comment> GetCommentReplies(Comment com)
-        //{
-        //    var replies = ctx.Comments.Where(c => c.ParentComment.CommentId == com.CommentId).ToList();
-        //    replies.OrderBy(c => c.Date);
-        //    return replies;
-        //}
+        [HttpPost]
+        [Authorize]
+        public ActionResult AddReply(string reply, int parentId)
+        {
+            if (reply.Length > 0)
+            {
+                IUserService userService = new UserService();
+                string userId = User.Identity.GetUserId();
+                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
 
+                
+                var pub = ctx.Publications.Where(p=>p.PublicationId== ctx.Comments.Where(c => c.CommentId == parentId).FirstOrDefault().PublicationID).FirstOrDefault();
+
+
+                Comment comment = new Comment();
+
+                comment.Text = reply;
+                comment.Date = DateTime.Now;
+                comment.User = currentUser;
+                comment.Publication = pub;
+                comment.ParentComment = ctx.Comments.Where(c => c.CommentId == parentId).FirstOrDefault();
+                pub.Comments.Add(comment);
+                ctx.Comments.Add(comment);
+                currentUser.Comments.Add(comment);
+
+
+                ctx.SaveChanges();
+                return Redirect("Open/" + pub.PublicationId.ToString());
+
+            }
+            else
+                return View("Open");
+        }
 
 
     }
