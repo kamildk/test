@@ -1,4 +1,4 @@
-﻿@model recenzent.Models.PublicationCommentViewModel
+﻿@model recenzent.Models.PublicationPanelViewModel
 
 @{
     ViewBag.Title = Model.Title;
@@ -15,7 +15,7 @@
 </h1>
 
 <h3>
-    @if (Model.rating == 0)
+    @if (Model.Rating == 0)
     {
         <span>
             Ta publiakcja nie ma jeszcze ocen, bądź pierwszym który ją oceni:
@@ -23,7 +23,7 @@
     }
     else
     {
-        <span>Obecna średnia ocena artykułu:@Model.rating</span>
+        <span>Obecna średnia ocena artykułu:@Model.Rating</span>
     }
 </h3>
 
@@ -33,7 +33,7 @@
         <div class="form-group col-md-10">
             <label class="control-label">@ViewBag.RateMessage</label>
             <div>
-                @Html.DropDownListFor(m => m.rateFromCurrUser, new SelectList(ViewBag.Ratings), new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RateFromCurrUser, new SelectList(ViewBag.Ratings), new { @class = "form-control" })
                 @Html.HiddenFor(m => m.PublicationId)
             </div>
         </div>

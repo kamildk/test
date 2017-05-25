@@ -7,7 +7,7 @@ using System.Web;
 
 namespace recenzent.Models
 {
-    public class PublicationCommentViewModel
+    public class PublicationPanelViewModel
     {
 
         public string Title { get; set; }
@@ -17,17 +17,17 @@ namespace recenzent.Models
         public string Description { get; set; }
         public string Category { get; set; }
         public List<string> Sources { get; set; }
-        public List<Comment> Comments { get; set; }
-        public string newCommentText { get; set; }
-        public float rating { get; set; }
-        public int rateFromCurrUser { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
+        public string NewCommentText { get; set; }
+        public float Rating { get; set; }
+        public int RateFromCurrUser { get; set; }
         public int ParentCommentId { get; set; }
 
-        public PublicationCommentViewModel()
+        public PublicationPanelViewModel()
         {
             Tags = new List<string>();
             Sources = new List<string>();
-            Comments = new List<Comment>();
+            //Comments = new List<Comment>();
         }
 
     }

@@ -7,7 +7,7 @@ using System;
 
 namespace recenzent.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BasicController
     {
         private DataContext ctx = new DataContext();
 
@@ -27,5 +27,10 @@ namespace recenzent.Controllers
             return PartialView("LatestPublicationPartial", latestPub);
         }
 
+        public ActionResult ChangeLanguage(string lang)
+        {
+            new SiteLanguages().SetLanguage(lang);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
