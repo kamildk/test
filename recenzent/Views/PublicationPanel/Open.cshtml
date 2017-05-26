@@ -4,17 +4,21 @@
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="pub well-sm">
+    <h1>@Model.Title</h1>
+    <pre><center>@Model.Description</center> </pre> 
 
-<h1>@Model.Title</h1>
-<center>@Model.Description</center>
+</div>
 
-
-<h1>
     @Html.ActionLink("Pobierz Publikacje",
                 "Download", "PublicationPanel", new { Model.PublicationId }, null)
-</h1>
+
+<br />
+<img src="~/Images/pause.png" class="pause img-responsive">
+
 
 <h3>
+    <b>
     @if (Model.Rating == 0)
     {
         <span>
@@ -25,7 +29,9 @@
     {
         <span>Obecna średnia ocena artykułu:@Model.Rating   Twoja ocena: @ViewBag.RateFromUser</span>
     }
+    </b>
 </h3>
+
 
 <div class="container">
     @using (Html.BeginForm("RatePub", "PublicationPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -42,10 +48,5 @@
         </div>
     }
 </div>
-
-
-
-
-
 
 @Html.Partial("_CommentsPartial")

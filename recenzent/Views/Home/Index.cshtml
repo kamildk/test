@@ -23,9 +23,11 @@
 
     <div class="well-sm">
         <h2>@Html.ActionLink(item.Title, "Open", "PublicationPanel", new { id = item.PublicationId }, null)</h2>
-        <br />
         <pre>@Html.DisplayFor(modelItem => item.Description)</pre>
         @Html.ActionLink("więcej", "Open", "PublicationPanel", new { id = item.PublicationId }, htmlAttributes: new {@class= "btn btn-default" })
+
+        <br />
+        <img src="~/Images/pause.png" class="pause img-responsive">
     </div>
 }
 <br />

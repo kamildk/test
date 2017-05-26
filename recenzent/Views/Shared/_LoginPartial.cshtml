@@ -1,31 +1,31 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
         <center>
             <ul class="nav navbar-nav nav-log ">
 
                 <li>
                     @*@Html.ActionLink("Witaj " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-                    @Html.ActionLink("Witaj " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "btn btn-default user-name " })
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "btn btn-default user-name " })
                 </li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-log ">Wyloguj ▼</a></li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-log ">Wyloguj ▲</a></li>
             </ul>
         </center>
     }
 }
 else
 {
-<center>
-    <ul class="nav navbar-nav nav-log">
-        @*<li>@Html.ActionLink("Zarejestruj", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
-        <li>@Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-default btn-log" })</li>
-        @*<li>@Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
-        <li>@Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default btn-log" })</li>
+    <center>
+        <ul class="nav navbar-nav nav-log">
+            @*<li>@Html.ActionLink("Zarejestruj", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+            <li>@Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-default btn-log" })</li>
+            @*<li>@Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+            <li>@Html.ActionLink("Logowanie", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default btn-log" })</li>
 
-    </ul>
-</center>
+        </ul>
+    </center>
 }
