@@ -34,8 +34,16 @@ namespace recenzent.Data.Service
         {
             using (var ctx = new DataContext())
             {
-                int rate = ctx.Ratings.Where(r => r.Publication.PublicationId == publication.PublicationId && r.User.Id==userId).FirstOrDefault().Value;
-                return rate;
+                if(userId!=null)
+                {
+                   if(ctx.Ratings.Where(r => r.Publication.PublicationId == publication.PublicationId && r.User.Id == userId).FirstOrDefault()!=null)
+                    {
+                        int rate = ctx.Ratings.Where(r => r.Publication.PublicationId == publication.PublicationId && r.User.Id == userId).FirstOrDefault().Value;
+                        return rate;
+
+                    }
+                }
+                return 0;
             }
         }
     }
