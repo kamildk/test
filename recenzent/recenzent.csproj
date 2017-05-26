@@ -260,6 +260,7 @@
     <Content Include="Images\Banner.png" />
     <Content Include="Images\Panel-Shadow.png" />
     <Content Include="Images\Panel.png" />
+    <Content Include="Images\pause.png" />
     <Content Include="Images\user.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />

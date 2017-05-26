@@ -7,9 +7,11 @@
 <h2>Panel Recenzenta</h2>
 
 <div class="container">
+   @* 
     <div>
         <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "AuthorPanel")'">Przejdź do panelu autora</button>
     </div>
+   *@
 
     <div class="btn-default well-sm col-lg-11">
         @Html.ActionLink("Publikacje do zrecenzowania", "PublicationsToReview", "Reviewer")
