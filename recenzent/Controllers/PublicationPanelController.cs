@@ -15,87 +15,24 @@ namespace recenzent.Controllers
     public class PublicationPanelController : Controller
     {
         private DataContext ctx = new DataContext();
-        // GET: PublicationPanel
-        public ActionResult Index()
-        {
-            return View();
-        }
-
 
         [AllowAnonymous]
         public ActionResult Open(int id)
         {
-            ViewBag.Ratings = new List<int>() { 1, 2, 3, 4, 5 };
+            IRatingService ratingService = new RatingService() { };
+            string userId = User.Identity.GetUserId();
+
 
             var pub = ctx.Publications.Find(id);
+            var rating = ratingService.GetPublicationRating(pub);
 
-            var rates = (ctx.Ratings.Where(r => r.Publication.PublicationId == id)).ToList();
-            int sum = 0;
-            foreach (var item in rates)
-            {
-                sum += item.Value;
-            }
-
-            float rating;
-            if (rates.Count() != 0)
-                rating = (float)sum / rates.Count();
-            else
-                rating = 0;
-
+            ViewBag.RateFromUser = ratingService.GetUserRateOnPub(pub,userId);
+            ViewBag.Ratings = new List<int>() { 1, 2, 3, 4, 5 };
 
             if (pub != null)
             {
-                List<Comment> comments = (from Comment c in ctx.Comments
-                                          where c.Publication.PublicationId == id && c.ParentComment==null
-                                          select c).ToList();
-                List<CommentViewModel> commentVMList = new List<CommentViewModel>();
-                List<CommentViewModel> repliesVMList = new List<CommentViewModel>();
-                foreach (var item in comments) {
-                    string userName = (from User u in ctx.Users
-                                      where u.Id == item.UserID
-                                      select u.UserName).FirstOrDefault();
-
-                    List<CommentViewModel> tRepliesVMList = new List<CommentViewModel>();
-
-
-
-                    item.ChildComments = ctx.Comments.Where(c => c.ParentComment.CommentId == item.CommentId).ToList();
-                    item.ChildComments.OrderBy(c => c.Date);
-                    foreach ( var ccom in item.ChildComments)
-                    {
-                        string CCUserName = (from User u in ctx.Users
-                                           where u.Id == ccom.UserID
-                                           select u.UserName).FirstOrDefault();
-                        tRepliesVMList.Add(new CommentViewModel()
-                        {
-                            Body = ccom.Text,
-                            Id = ccom.CommentId,
-                            UserName = CCUserName,
-                            AddDate = ccom.Date
-
-                        });
-                    }
-
-                    repliesVMList = tRepliesVMList;
-
-                    commentVMList.Add(new CommentViewModel() {
-                        Body = item.Text,
-                        Id = item.CommentId,
-                        UserName = userName,
-                        ChildReplies = repliesVMList,
-                        AddDate = item.Date
-                    });
-                }
-
-                var pubCom = new PublicationPanelViewModel() 
-                {
-                    Comments = commentVMList,
-                    Description = pub.Description,
-                    Title = pub.Title,
-                    PublicationId = pub.PublicationId,
-                    Rating = rating
-                };
-                return View(pubCom);
+                return View(TransferToViewModel(pub, rating));
+               
             }
             else
                 return View("Error");
@@ -170,25 +107,12 @@ namespace recenzent.Controllers
         {
             if (pubCom.NewCommentText.Length > 0)
             {
+                ICommentService commentService = new CommentService();
                 IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
 
-                var pub = ctx.Publications.Find(pubCom.PublicationId);
+                commentService.AddComment(pubCom.NewCommentText, pubCom.PublicationId, userId);
 
-
-                Comment comment = new Comment();
-
-                comment.Text = pubCom.NewCommentText;
-                comment.Date = DateTime.Now;
-                comment.User = currentUser;
-                comment.Publication = ctx.Publications.Where(p => p.PublicationId == pubCom.PublicationId).First();
-                pub.Comments.Add(comment);
-                ctx.Comments.Add(comment);
-                currentUser.Comments.Add(comment);
-
-
-                ctx.SaveChanges();
                 return Redirect("Open/" + pubCom.PublicationId.ToString());
             }
             else
@@ -201,27 +125,12 @@ namespace recenzent.Controllers
         {
             if (reply.Length > 0)
             {
+                ICommentService commentService = new CommentService();
                 IUserService userService = new UserService();
                 string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
+                var pub = ctx.Publications.Where(p => p.PublicationId == ctx.Comments.Where(c => c.CommentId == parentId).FirstOrDefault().PublicationID).FirstOrDefault();
 
-                
-                var pub = ctx.Publications.Where(p=>p.PublicationId== ctx.Comments.Where(c => c.CommentId == parentId).FirstOrDefault().PublicationID).FirstOrDefault();
-
-
-                Comment comment = new Comment();
-
-                comment.Text = reply;
-                comment.Date = DateTime.Now;
-                comment.User = currentUser;
-                comment.Publication = pub;
-                comment.ParentComment = ctx.Comments.Where(c => c.CommentId == parentId).FirstOrDefault();
-                pub.Comments.Add(comment);
-                ctx.Comments.Add(comment);
-                currentUser.Comments.Add(comment);
-
-
-                ctx.SaveChanges();
+                commentService.AddReply(reply, parentId, userId);
                 return Redirect("Open/" + pub.PublicationId.ToString());
 
             }
@@ -229,6 +138,60 @@ namespace recenzent.Controllers
                 return View("Open");
         }
 
+        private PublicationPanelViewModel TransferToViewModel(Publication pub, float rating)
+        {
+            ICommentService commentService = new CommentService() { };
+            List<Comment> comments = commentService.GetPublicationComments(pub);
+
+            List<CommentViewModel> commentVMList = new List<CommentViewModel>();
+            List<CommentViewModel> repliesVMList = new List<CommentViewModel>();
+            foreach (var item in comments)
+            {
+                string userName = (from User u in ctx.Users
+                                   where u.Id == item.UserID
+                                   select u.UserName).FirstOrDefault();
+
+                List<CommentViewModel> tRepliesVMList = new List<CommentViewModel>();
+
+                item.ChildComments = commentService.GetChildComments(item);
+
+                foreach (var ccom in item.ChildComments)
+                {
+                    string CCUserName = (from User u in ctx.Users
+                                         where u.Id == ccom.UserID
+                                         select u.UserName).FirstOrDefault();
+                    tRepliesVMList.Add(new CommentViewModel()
+                    {
+                        Body = ccom.Text,
+                        Id = ccom.CommentId,
+                        UserName = CCUserName,
+                        AddDate = ccom.Date
+
+                    });
+                }
+
+                repliesVMList = tRepliesVMList;
+
+                commentVMList.Add(new CommentViewModel()
+                {
+                    Body = item.Text,
+                    Id = item.CommentId,
+                    UserName = userName,
+                    ChildReplies = repliesVMList,
+                    AddDate = item.Date
+                });
+            }
+
+            var pubCom = new PublicationPanelViewModel()
+            {
+                Comments = commentVMList,
+                Description = pub.Description,
+                Title = pub.Title,
+                PublicationId = pub.PublicationId,
+                Rating = rating
+            };
+            return pubCom;
+        }
 
     }
 }
