@@ -44,7 +44,32 @@
         </div>
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-11">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+        </div>
+    </div>
 
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-11">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.Reviewer)
+                @Html.LabelFor(m => m.Reviewer)
+              
+            </div>
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.Author)
+                @Html.LabelFor(m => m.Author)
+            </div>
+        </div>
+    </div>
+ @*  <div class="form-group">
+        <p>
+            @Html.DisplayName("*  required fields")
+        </p>
+    </div>
+*@
 
 
     <div class="form-group">

@@ -66,27 +66,40 @@ namespace recenzent.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email*")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password*")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm password*")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "Name*")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Surname")]
+        [Display(Name = "Surname*")]
         public string Surname { get; set; }
+
+         [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$", ErrorMessage = "Not a valid Phone number (e.g. 000-000-000)")]
+        [Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "I want to be a Reviewer.")]
+        public bool Reviewer { get; set; }
+
+        [Display(Name = "I want to be an Author.")]
+        public bool Author { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

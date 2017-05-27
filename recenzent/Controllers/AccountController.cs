@@ -166,6 +166,7 @@ namespace recenzent.Controllers
                     RegistrationDate = DateTime.UtcNow,
                     Name = model.Name,
                     Surname = model.Surname,
+                    PhoneNumber = model.PhoneNumber,
                     }; //TODO: Dodać wszystkie pola
                
                 var result = await UserManager.CreateAsync(user, model.Password);
