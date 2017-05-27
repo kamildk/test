@@ -118,15 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdminPanel" xml:space="preserve">
-    <value>Panel Administratora</value>
+    <value>Admin Panel</value>
   </data>
   <data name="AuthorPanel" xml:space="preserve">
-    <value>Panel Autora</value>
+    <value>Author Panel</value>
   </data>
-  <data name="HomePage" xml:space="preserve">
-    <value>Strona główna</value>
+  <data name="Home" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="LatestPub" xml:space="preserve">
+    <value>Latest Publication</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>read more</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Registration</value>
   </data>
   <data name="ReviewerPanel" xml:space="preserve">
-    <value>Panel Recenzenta</value>
+    <value>Reviewer Panel</value>
   </data>
 </root>

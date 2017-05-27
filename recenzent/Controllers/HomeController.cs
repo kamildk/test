@@ -4,10 +4,13 @@ using recenzent.Data;
 using recenzent.Data.Model;
 using PagedList;
 using System;
+using System.Threading;
+using System.Globalization;
+using System.Web;
 
 namespace recenzent.Controllers
 {
-    public class HomeController : BasicController
+    public class HomeController : Controller
     {
         private DataContext ctx = new DataContext();
 
@@ -29,8 +32,17 @@ namespace recenzent.Controllers
 
         public ActionResult ChangeLanguage(string lang)
         {
-            new SiteLanguages().SetLanguage(lang);
-            return RedirectToAction("Index", "Home");
+            if(lang != null)
+            {
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(lang);
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+            }
+
+            HttpCookie cookie = new HttpCookie("Language");
+            cookie.Value = lang;
+            Response.Cookies.Add(cookie);
+
+            return RedirectToAction("Index");
         }
     }
 }
