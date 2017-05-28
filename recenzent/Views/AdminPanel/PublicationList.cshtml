@@ -5,24 +5,32 @@
     ViewBag.Title = "PublicationList";
 }
 
-<h2>Lista Publikacji</h2>
+<h1>Lista Publikacji</h1>
 <table>
     @foreach (var item in Model)
     {
         var tagList = item.PublicationTags.ToList();
 
-
         <tr>
             <td>
-                @Html.ActionLink(item.Title, "PublicationDetails", "AdminPanel", new { id = item.PublicationId }, null)
+                <h2>
+                    @Html.ActionLink(item.Title, "PublicationDetails", "AdminPanel", new { id = item.PublicationId }, null)
+                </h2>
             </td>
+    <tr>
+       
+        <td>
+            <pre>@Html.DisplayFor(modelItem => item.Description)</pre>
+        </td>
+    </tr>
+            <td >@Html.ActionLink(item.AuthoId, "UserDetails", "AdminPanel", new { id = item.AuthoId }, null)
             <br />
-            <td style="background-color: red"> 
-                <pre>@Html.DisplayFor(modelItem => item.Description)</pre>
+                @Html.ActionLink("Szczegóły", "PublicationDetai ls", "AdminPanel", new { id = item.PublicationId }, htmlAttributes: new { @class = "btn btn-default" })
+               
             </td>
-            <td style="background-color: olivedrab">@Html.ActionLink(item.AuthoId, "UserDetails", "AdminPanel", new { id = item.AuthoId }, null)</td>
-            <td>@Html.ActionLink("Szczegóły", "PublicationDetails", "AdminPanel", new { id = item.PublicationId }, htmlAttributes: new { @class = "btn btn-default" })</td>
+    <tr><td><img src="~/Images/pause.png" class="pause img-responsive"></td></tr>
         </tr>
+
     }
 </table>
 <br />
