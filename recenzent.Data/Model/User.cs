@@ -31,7 +31,8 @@ namespace recenzent.Data.Model
         //public ICollection<Publication_Autors> PublicationAutors { get; set; }
         public ICollection<Publication> Publications { get; set; }
         public ICollection<Review> Reviews { get; set; }
-
+        public bool wantToBeReviewer { get; set; }
+        public bool wantToBeAuthor { get; set; }
         public User() {
             Comments = new List<Comment>();
             Ratings = new List<Rating>();

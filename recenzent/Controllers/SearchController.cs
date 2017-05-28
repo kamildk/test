@@ -12,7 +12,7 @@ using System.Data.Entity;
 
 namespace recenzent.Controllers
 {
-    public class SearchController : BasicController
+    public class SearchController : Controller
     {
         private DataContext _ctx = new DataContext();
 

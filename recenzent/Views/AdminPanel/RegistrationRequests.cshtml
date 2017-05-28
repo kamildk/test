@@ -1,0 +1,67 @@
+﻿@model recenzent.Models.RegistrationRequestViewModel
+
+@{
+    ViewBag.Title = "RegistrationRequests";
+}
+
+<h2>Registration Requests</h2>
+
+
+
+    @if (Model.UserList.Count > 0)
+    {
+
+
+
+        @Html.BeginForm("RegistrationRequests", "AdminPanel", FormMethod.Post)
+        {
+            <table cellpadding="5">
+                <tr>
+                    <td>Imie</td>
+                    <td>Nazwisko</td>
+                    <td>Zaakceptuj autora</td>
+                    <td>Zaakceptuj recenzeta</td>
+                </tr>
+                @for (int i = 0; i < Model.UserCount; i++)
+                {
+
+                    <tr>
+                        <td>@Model.UserList[i].Name</td>
+                        <td>@Model.UserList[i].Surname</td>
+                        <td align="center">
+                            @if (@Model.UserList[i].wantToBeAuthor)
+                            {
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.Author[i])
+                                </div>
+                            }
+                        </td>
+                        <td align="justify" valign="middle">
+                            @if (@Model.UserList[i].wantToBeReviewer)
+                            {
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.Reviewer[i])
+                                </div>
+                            }
+                        </td>
+
+
+                    </tr>
+                }
+            </table>
+            @Html.HiddenFor(m => m.UserCount)
+            for (int i = 0; i < Model.UserCount; i++)
+            {
+                @Html.HiddenFor(model => Model.UserList[i].Id)
+            }
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-11">
+                    <input type="submit" class="btn btn-default" value="Accept changes" />
+                </div>
+            </div>
+        }
+    }
+    else
+{
+<div>Nothing Here ZULUL</div>
+}

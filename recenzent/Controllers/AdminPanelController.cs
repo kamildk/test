@@ -9,6 +9,7 @@ using recenzent.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using recenzent.Data.Service;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +18,8 @@ namespace recenzent.Controllers
     [AllowAnonymous]
     public class AdminPanelController : Controller
     {
+        private DataContext ctx = new DataContext();
+
         // GET: AdminPanel
         [Authorize(Users = "admin")]
         public ActionResult Index()
@@ -56,6 +59,54 @@ namespace recenzent.Controllers
 
                 return View(userlist);
             }
+        }
+
+        //get: List of users that need registration attention
+        [HttpGet]
+        public ViewResult RegistrationRequests()
+        {
+            RegistrationRequestViewModel regvm = new RegistrationRequestViewModel();
+            regvm.UserList = new List<Data.Model.User>();
+            UserService serv = new UserService();
+            var list = serv.GetOwinUsersList();
+            foreach(User user in list)
+            {
+                if (user.wantToBeAuthor || user.wantToBeReviewer)
+                {
+                    regvm.UserList.Add(user);
+                }
+            }
+            regvm.UserCount = regvm.UserList.Count();
+            regvm.Reviewer = new bool[regvm.UserCount];
+            regvm.Author = new bool[regvm.UserCount];
+            return View(regvm); 
+        }
+        [HttpPost]
+        public ActionResult RegistrationRequests(RegistrationRequestViewModel regvm)
+        {
+            UserService userService = new UserService();
+            
+            for (int i=0; i<regvm.UserCount;i++)
+            {
+                User _user = userService.GetDBUser(regvm.UserList[i].Id);
+                bool check = false;
+                if (regvm.Author[i])
+                {
+                    userService.AddToRole(regvm.UserList[i].Id, "Author");
+                    _user.wantToBeAuthor = false;
+                    check = true;
+
+                }
+                if (regvm.Reviewer[i])
+                {
+                    userService.AddToRole(regvm.UserList[i].Id, "Reviewer");
+                    _user.wantToBeReviewer = false;
+                    check = true;
+
+                }
+                if (check)userService.ChangeUser(_user);
+            }
+            return Redirect("Index");
         }
 
 
@@ -106,6 +157,10 @@ namespace recenzent.Controllers
         public ActionResult OrderReview(int publicationId = -1)
         {
             var data = new OrderReviewViewModel();
+            UserService service = new UserService();
+            var _validUsers = service.GetUsersInRole("Reviwer");
+            if (_validUsers != null)
+                data.ValidUsers = _validUsers;
             data.pubId = publicationId;
             return View(data);
         }

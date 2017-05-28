@@ -17,7 +17,7 @@ namespace recenzent.Models
     {
         public int pubId { get; set; }
         public int ReviewerId { get; set; }
-        public IEnumerable<User> ValidUsers{ get; set; }
+        public IQueryable<User> ValidUsers{ get; set; }
         
 
     }

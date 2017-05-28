@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using recenzent.Data.Model;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace recenzent.Models
@@ -88,7 +89,7 @@ namespace recenzent.Models
         [Display(Name = "Surname*")]
         public string Surname { get; set; }
 
-         [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$", ErrorMessage = "Not a valid Phone number (e.g. 000-000-000)")]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
@@ -129,5 +130,13 @@ namespace recenzent.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class RegistrationRequestViewModel
+    {
+        public List<User> UserList { get; set; }
+        public int UserCount { get; set; }
+        public bool[] Reviewer { get; set; }
+        public bool[] Author { get; set; }
     }
 }

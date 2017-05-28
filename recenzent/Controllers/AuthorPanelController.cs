@@ -16,7 +16,7 @@ using recenzent.Models;
 using System.Data.Entity.Migrations;
 
 namespace recenzent.Controllers {
-    [Authorize(Roles = "Author")]
+    //[Authorize(Roles = "Author")]
     public class AuthorPanelController : Controller {
         // GET: AuthorPanel
         public ActionResult Index() {
