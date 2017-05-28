@@ -34,8 +34,21 @@ namespace recenzent.Data.Service {
             return null;
         }
 
+
         public List<Publication> GetPublicationList(Func<Publication, bool> checkFunc) {
             return ctx.Publications.Where(checkFunc).ToList();
+        }
+
+        public List<Publication> GetPublicationListOrderedByDate(Func<Publication, bool> checkFunc, bool ascending)
+        {
+            if (ascending == true)
+            {
+                return ctx.Publications.Where(checkFunc).OrderBy(p => p.ShareDate).ToList();
+            }
+            else
+            {
+                return ctx.Publications.Where(checkFunc).OrderByDescending(p => p.ShareDate).ToList();
+            }
         }
     }
 }
