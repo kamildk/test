@@ -63,4 +63,10 @@ namespace recenzent.Models {
         public string ShareDate { get; set; }
     }
 
+    public class PublicationSmallViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+    }
+
 }

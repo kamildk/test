@@ -1,0 +1,9 @@
+﻿@model IEnumerable<recenzent.Models.PublicationSmallViewModel>
+
+<h3 class="text-center">@recenzent.Resources.HomePage.LatestPub</h3>
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">@Html.ActionLink(item.Title, "Open", "PublicationPanel", new { id = item.Id }, null)</li>
+    }
+</ul>

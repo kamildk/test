@@ -64,7 +64,17 @@ namespace recenzent.Controllers
         {
             IPublicationService pubService = new PublicationService();
             var pubList = pubService.GetPublicationListOrderedByDate(p => p.IsShared == false, false).Take(5);
-            return PartialView("LatestPublicationPartial", pubList);
+            List<PublicationSmallViewModel> pubSVMList = new List<PublicationSmallViewModel>();
+
+            foreach (var item in pubList)
+            {
+                pubSVMList.Add(new PublicationSmallViewModel()
+                {
+                    Id = item.PublicationId,
+                    Title = item.Title
+                });
+            }
+            return PartialView("_LatestPublicationPartial", pubSVMList);
         }
 
         public ActionResult ChangeLanguage(string lang)

@@ -339,7 +339,7 @@
     <Content Include="Views\Reviewer\PublicationDetails.cshtml" />
     <Content Include="Views\Reviewer\PublicationsToReview.cshtml" />
     <Content Include="Views\Reviewer\AddReview.cshtml" />
-    <Content Include="Views\Shared\LatestPublicationPartial.cshtml" />
+    <Content Include="Views\Shared\_LatestPublicationPartial.cshtml" />
     <Content Include="Views\Reviewer\ReviewsWaiting.cshtml" />
     <Content Include="Views\Reviewer\ReviewsAccepted.cshtml" />
     <Content Include="Views\AuthorPanel\EditPub.cshtml" />
