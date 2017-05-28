@@ -28,7 +28,7 @@ namespace recenzent.Data.Model
 
         public string AuthoId { get; set; }
         [ForeignKey("AuthoId")]
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
         //public ICollection<SourcePosition> SourcePositions { get; set; }
         public ICollection<File> Files { get; set; }
