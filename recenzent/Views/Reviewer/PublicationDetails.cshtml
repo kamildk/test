@@ -16,7 +16,7 @@
     <div class="btn-default well-sm col-lg-11">
         @Html.ActionLink("Pobierz publikacje", "DownloadPublication", "Reviewer", new { pubId = Model.PublicationId }, null)
     </div>
-    @if (Model.Reviews.Count == 0)
+    @if (Model.Reviews.ElementAt(0) == null)
     {
         <div class="btn-default well-sm col-lg-11">
             @Html.ActionLink("Recenzuj", "AddReview", "Reviewer", new { pubId = Model.PublicationId }, null)

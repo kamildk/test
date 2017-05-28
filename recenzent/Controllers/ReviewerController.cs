@@ -163,6 +163,17 @@ namespace recenzent.Controllers
                         }
                     }
 
+                    var fileOldId = from Data.Model.File f in ctx.Files
+                              where f.ReviewId == reviewId && f.IsCurrent == true
+                              select f.FileId;
+
+                    if(fileOldId.FirstOrDefault() != default(int))
+                    {
+                        Data.Model.File fileOld = ctx.Files.Find(fileOldId.First());
+                        fileOld.IsCurrent = false;
+                    }
+
+
                     review.Publication = pub;
                     pub.Reviews.Add(review); //Tu moze byc problem
                     //ctx.Entry(pub).State = EntityState.Modified;
@@ -250,6 +261,7 @@ namespace recenzent.Controllers
                     
                     var fId = from Data.Model.File f in ctx.Files
                                 where f.ReviewId == reviewId
+                                orderby f.FileId descending
                                 select f.FileId;
 
                     if (fId.FirstOrDefault() != default(int))
