@@ -18,10 +18,12 @@ namespace recenzent.Data.Model
         [Required]
         public Change_type Type { get; set; }
 
-        //public int EmployeeId { get; set; }
-        //public User Employee { get; set; }
-        public File File { get; set; }
+        public int FileId { get; set; }
+        [ForeignKey("FileId")]
+        public virtual File File { get; set; }
 
-        public User User { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
     }
 }

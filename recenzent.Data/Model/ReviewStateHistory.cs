@@ -15,11 +15,11 @@ namespace recenzent.Data.Model {
 
         public int ReviewId { get; set; }
         [ForeignKey("ReviewId")]
-        public Review Review { get; set; }
+        public virtual Review Review { get; set; }
 
         public int StateId { get; set; }
         [ForeignKey("StateId")]
-        public ReviewState State { get; set; }
+        public virtual ReviewState State { get; set; }
 
     }
 }

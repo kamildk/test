@@ -23,14 +23,14 @@ namespace recenzent.Data.Model
 
         public int? AffiliationId { get; set; }
         [ForeignKey("AffiliationId")]
-        public Affiliation Affiliation { get; set; }
+        public virtual Affiliation Affiliation { get; set; }
         //public Employee Employee { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
-        public ICollection<Change> Changes { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Change> Changes { get; set; }
         //public ICollection<Publication_Autors> PublicationAutors { get; set; }
-        public ICollection<Publication> Publications { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Publication> Publications { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
         public User() {
             Comments = new List<Comment>();

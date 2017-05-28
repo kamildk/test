@@ -17,11 +17,11 @@ namespace recenzent.Data.Model {
 
         public int PublicationID { get; set; }
         [ForeignKey("PublicationID")]
-        public Publication Publication { get; set; }
+        public virtual Publication Publication { get; set; }
 
         public string UserID { get; set; }
         [ForeignKey("UserID")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public Comment ParentComment { get; set; }
         public ICollection<Comment> ChildComments { get; set; }

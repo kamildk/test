@@ -13,6 +13,6 @@ namespace recenzent.Data.Model {
         [Required]
         public string Name { get; set; }
 
-        public ICollection<PublicationTag> PublicationTag { get; set; }
+        public virtual ICollection<PublicationTag> PublicationTag { get; set; }
     }
 }

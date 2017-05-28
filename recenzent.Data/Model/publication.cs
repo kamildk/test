@@ -22,20 +22,20 @@ namespace recenzent.Data.Model
         [Required]
         public string Description { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Publication_category Category { get; set; }
 
         public string AuthoId { get; set; }
         [ForeignKey("AuthoId")]
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
         //public ICollection<SourcePosition> SourcePositions { get; set; }
-        public ICollection<File> Files { get; set; }
-        public ICollection<PublicationTag> PublicationTags { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<File> Files { get; set; }
+        public virtual ICollection<PublicationTag> PublicationTags { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
         public Publication() {
             //SourcePositions = new List<SourcePosition>();
