@@ -10,7 +10,10 @@
 
 </head>
 <body>
-
+    <p>
+        @Html.ActionLink("Polski", "ChangeLanguage", "Home", new { lang = "pl" }, null) &nbsp;
+        @Html.ActionLink("English", "ChangeLanguage", "Home", new { lang = "en" }, null)
+    </p>
     <div class="col-md-10 col-md-offset-1 main-div" style="background-color:#FFFCE9" id="main-div">
         <img src="~/Images/Banner.png" class="banner img-responsive">
         <div class="col-md-9">
@@ -27,10 +30,10 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="main-menu nav navbar-nav">
-                            <li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Panel Autora", "Index", "AuthorPanel")</li>
-                            <li>@Html.ActionLink("Panel Recenzenta", "Index", "Reviewer")</li>
-                            <li>@Html.ActionLink("Panel Administratora", "Index", "AdminPanel")</li>
+                            <li>@Html.ActionLink(recenzent.Resources.HomePage.Home, "Index", "Home")</li>
+                            <li>@Html.ActionLink(recenzent.Resources.HomePage.AuthorPanel, "Index", "AuthorPanel")</li>
+                            <li>@Html.ActionLink(recenzent.Resources.HomePage.ReviewerPanel, "Index", "Reviewer")</li>
+                            <li>@Html.ActionLink(recenzent.Resources.HomePage.AdminPanel, "Index", "AdminPanel")</li>
 
                         </ul>
                         @*@Html.Partial("_LoginPartial")*@
@@ -174,7 +177,10 @@
                         <div class="panel-body">
                             <small class="social-title">Zalogowanych użytkowników</small>
                             <h3 class="count">
-                                0
+                                @{ 
+                                    int? count = ((List<string>)HttpRuntime.Cache["LoggedInUsers"])?.Count();
+                                } 
+                                @count.GetValueOrDefault()                               
                             </h3>
 
                         </div>
