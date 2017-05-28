@@ -130,10 +130,10 @@ namespace recenzent.Controllers
                     if (review != null)
                     {
                         //review.User = currentUser;
-                        DateTime date = DateTime.Now;
+                        //DateTime date = DateTime.Now;
                         //review.Creation_date = date;
-                        date = date.AddDays(14);
-                        review.Expiration_date = date;
+                        //date = date.AddDays(14);
+                        //review.Expiration_date = date;
                         //review.PublicationId = model.pubId;
                         //review.Publication = pub;
                         review.Files.Add(file);
@@ -147,22 +147,26 @@ namespace recenzent.Controllers
                     var fId = from Data.Model.File f in ctx.Files
                               where f.ReviewId == reviewId
                               select f.FileId;
-                    int fileId = fId.First();
 
-                    Data.Model.File fileCheck = ctx.Files.Find(fileId);
-                    if (fileCheck != null)
+                    if (fId.FirstOrDefault() != default(int))
                     {
-                        ReviewStateHistory stateHistory = new ReviewStateHistory();
-                        stateHistory.ChangeDate = DateTime.Now;
-                        stateHistory.StateId = review.CurrentStateId;
-                        stateHistory.ReviewId = reviewId;
-                        ctx.ReviewStateHistory.Add(stateHistory);
+                        int fileId = fId.First();
+
+                        Data.Model.File fileCheck = ctx.Files.Find(fileId);
+                        if (fileCheck != null)
+                        {
+                            ReviewStateHistory stateHistory = new ReviewStateHistory();
+                            stateHistory.ChangeDate = DateTime.Now;
+                            stateHistory.StateId = review.CurrentStateId;
+                            stateHistory.ReviewId = reviewId;
+                            ctx.ReviewStateHistory.Add(stateHistory);
+                        }
                     }
 
                     review.Publication = pub;
                     pub.Reviews.Add(review); //Tu moze byc problem
-                    ctx.Entry(pub).State = EntityState.Modified;
-                    ctx.Entry(pub.Reviews).State = EntityState.Modified;
+                    //ctx.Entry(pub).State = EntityState.Modified;
+                    //ctx.Entry(pub.Reviews).State = EntityState.Modified;
                     ctx.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -236,6 +240,7 @@ namespace recenzent.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult DownloadPublication(ReviewViewModel model)
         {
             using (DataContext ctx = new DataContext())
@@ -244,7 +249,7 @@ namespace recenzent.Controllers
 
                 if (physicalFilePath != null)
                 {
-                    return File(physicalFilePath, "File");
+                    return File(physicalFilePath, "application/pdf");
                 }
                 else
                     return View("Error");
