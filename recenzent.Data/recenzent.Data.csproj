@@ -102,6 +102,8 @@
     <Compile Include="Interface\ICategoryService.cs" />
     <Compile Include="Interface\ICommentService.cs" />
     <Compile Include="Interface\IFileService.cs" />
+    <Compile Include="Interface\IPublicationService.cs" />
+    <Compile Include="Interface\IPublicationTagsService.cs" />
     <Compile Include="Interface\IRatingService.cs" />
     <Compile Include="Interface\ISourceService.cs" />
     <Compile Include="Interface\ITagsService.cs" />
@@ -148,6 +150,8 @@
     <Compile Include="Service\CategoryService.cs" />
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\FileService.cs" />
+    <Compile Include="Service\PublicationService.cs" />
+    <Compile Include="Service\PublicationTagsService.cs" />
     <Compile Include="Service\RatingService.cs" />
     <Compile Include="Service\SourceService.cs" />
     <Compile Include="Service\TagsService.cs" />

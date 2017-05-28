@@ -1,30 +1,20 @@
-﻿@model PagedList.IPagedList<recenzent.Data.Model.Publication>
+﻿@model PagedList.IPagedList<recenzent.Models.PublicationHomeViewModel>
 @using PagedList.Mvc;
 
 @{
     ViewBag.Title = recenzent.Resources.HomePage.Home;
 }
 
-@*<div class="btn btn-block">
-    @Html.ActionLink("Author page", "Index", "AuthorPanel")
-</div>
-
-<div class="btn btn-block">
-    @Html.ActionLink("Admin page", "Index", "AdminPanel")
-</div>
-
-<div class="btn btn-block">
-    @Html.ActionLink("Reviewer page", "Index", "Reviewer")
-</div>*@
-
 @foreach (var item in Model)
 {
-    var tagList = item.PublicationTags.ToList();
 
     <div class="well-sm">
-        <h2>@Html.ActionLink(item.Title, "Open", "PublicationPanel", new { id = item.PublicationId }, null)</h2>
+        <h2>@Html.ActionLink(item.Title, "Open", "PublicationPanel", new { id = item.Id }, null)</h2>
+        <p>@Html.DisplayFor(modelItem => item.AuthorName) &nbsp;-&nbsp; 
+        @Html.DisplayFor(modelItem => item.Category) &nbsp;-&nbsp; 
+        @Html.DisplayFor(modelItem => item.ShareDate)</p>
         <pre>@Html.DisplayFor(modelItem => item.Description)</pre>
-        @Html.ActionLink(recenzent.Resources.HomePage.More, "Open", "PublicationPanel", new { id = item.PublicationId }, htmlAttributes: new {@class= "btn btn-default" })
+        @Html.ActionLink(recenzent.Resources.HomePage.More, "Open", "PublicationPanel", new { id = item.Id }, htmlAttributes: new {@class= "btn btn-default" })
 
         <br />
         <img src="~/Images/pause.png" class="pause img-responsive">
@@ -34,5 +24,3 @@
 @recenzent.Resources.HomePage.Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-}

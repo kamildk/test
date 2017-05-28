@@ -13,6 +13,6 @@ namespace recenzent.Data.Model {
         [Required]
         public string Name { get; set; }
 
-        public ICollection<SourcePosition> SourcePositions { get; set; }
+        public virtual ICollection<SourcePosition> SourcePositions { get; set; }
     }
 }

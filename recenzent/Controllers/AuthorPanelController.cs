@@ -168,13 +168,7 @@ namespace recenzent.Controllers {
         public ActionResult AddPub(PublicationViewModel model) {
 
             if (ModelState.IsValid) {
-                var ctx = new DataContext();
                 Publication publication = new Publication();
-
-                IUserService userService = new UserService();
-                string userId = User.Identity.GetUserId();
-                User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
-                //User currentUser = userService.GetDBUser(User.Identity.GetUserId());
 
                 //Tags
                 string[] tagsSplited = model.Tags.Split(',');
@@ -193,8 +187,6 @@ namespace recenzent.Controllers {
                         pubTags.Add(new PublicationTag() { Publication = publication, Tag = tag });
                     }
                 }
-
-                ctx.Publication_Tags.AddRange(pubTags);
 
                 //category
                 ICategoryService categoryService = new CategoryService();
@@ -244,11 +236,7 @@ namespace recenzent.Controllers {
                     Publication = publication
                 };
 
-                //IFileService fileService = new FileService();
-                //fileService.AddFile(file);
-                ctx.Files.Add(file);
-
-                publication.Author = currentUser;
+                publication.AuthoId = User.Identity.GetUserId();
                 publication.Title = model.Title;
                 publication.PublicationTags = pubTags;
                 publication.Description = model.Description;
@@ -256,11 +244,9 @@ namespace recenzent.Controllers {
                 publication.CategoryId = category.Publication_categoryId;
                 publication.Files.Add(file);
 
-                currentUser.Publications.Add(publication);
+                IPublicationService pubService = new PublicationService();
+                pubService.AddPublication(publication);
 
-                ctx.Publications.Add(publication);
-
-                ctx.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -270,32 +256,78 @@ namespace recenzent.Controllers {
 
         public ActionResult PublicationList() {
 
-            using (var context = new Data.DataContext()) {
-                string userId = User.Identity.GetUserId();
-                var pubList = from Publication pub in context.Publications
-                              where pub.AuthoId == userId && pub.IsShared == true
-                              select pub;
+            //using (var context = new Data.DataContext()) {
+            //    string userId = User.Identity.GetUserId();
+            //    var pubList = from Publication pub in context.Publications
+            //                  where pub.AuthoId == userId && pub.IsShared == true
+            //                  select pub;
 
-                return View(pubList.ToList());
-            }
+            //    return View(pubList.ToList());
+            //}
+            string userId = User.Identity.GetUserId();
+            IPublicationService pubService = new PublicationService();
+            var pubList = pubService.GetPublicationList(p => p.AuthoId == userId && p.IsShared == true);
+            return View(pubList);
         }
 
         public ActionResult PublicationInReviewList() {
 
-            using (var context = new Data.DataContext()) {
-                string userId = User.Identity.GetUserId();
-                var pubList = from Publication pub in context.Publications
-                              where pub.AuthoId == userId && pub.IsShared == false
-                              select pub;
+            //using (var context = new Data.DataContext()) {
+            //    string userId = User.Identity.GetUserId();
+            //    var pubList = from Publication pub in context.Publications
+            //                  where pub.AuthoId == userId && pub.IsShared == false
+            //                  select pub;
 
-                return View(pubList.ToList());
-            }
+            //    return View(pubList.ToList());
+            //}
+
+            string userId = User.Identity.GetUserId();
+            IPublicationService pubService = new PublicationService();
+            var pubList = pubService.GetPublicationList(p => p.AuthoId == userId && p.IsShared == false);
+            return View(pubList);
         }
 
         public ActionResult PublicationReview(int id) {
-            using (var ctx = new DataContext()) {
-                Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
+            //using (var ctx = new DataContext()) {
+            //    Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
 
+            //    var reviews = from Review r in ctx.Reviews
+            //                  join ReviewState s in ctx.ReviewStates on r.CurrentStateId equals s.Id
+            //                  where r.PublicationId == id
+            //                  select new { Review = r, State = s };
+
+            //    List<PublicationReviewViewModel> reviewList = new List<PublicationReviewViewModel>();
+            //    foreach (var item in reviews) {
+            //        reviewList.Add(new PublicationReviewViewModel() {
+            //            Id = item.Review.ReviewId,
+            //            AddDate = item.Review.Creation_date,
+            //            State = item.State.Name
+            //        });
+            //    }
+
+            //    PublicationReviewListViewModel vm = new PublicationReviewListViewModel() {
+            //        Id = id,
+            //        Title = pub.Title,
+            //        Description = pub.Description,
+            //        Category = pub.Category.Name
+            //    };
+
+            //    vm.Tags = (from PublicationTag tag in ctx.Publication_Tags
+            //               where tag.PublicationId == pub.PublicationId select tag.Tag.Name).ToList();
+            //    //vm.Sources = (from SourcePosition source in ctx.SourcePositions
+            //    //              where source.PublicationId == pub.PublicationId select source.Source.Name).ToList();
+            //    vm.Reviews = reviewList;
+
+            //    return View(vm);
+            //}
+            IPublicationService pubService = new PublicationService();
+            IPublicationTagsService pubsTagsService = new PublicationTagsService();
+            ITagsService tagsService = new TagsService();
+            //Tu będzie kiedyś ReviewService
+
+            Publication pub = pubService.GetPublication(p => p.PublicationId == id);
+
+            using (var ctx = new DataContext()) {
                 var reviews = from Review r in ctx.Reviews
                               join ReviewState s in ctx.ReviewStates on r.CurrentStateId equals s.Id
                               where r.PublicationId == id
@@ -309,22 +341,23 @@ namespace recenzent.Controllers {
                         State = item.State.Name
                     });
                 }
-
-                PublicationReviewListViewModel vm = new PublicationReviewListViewModel() {
-                    Id = id,
-                    Title = pub.Title,
-                    Description = pub.Description,
-                    Category = pub.Category.Name
-                };
-
-                vm.Tags = (from PublicationTag tag in ctx.Publication_Tags
-                           where tag.PublicationId == pub.PublicationId select tag.Tag.Name).ToList();
-                //vm.Sources = (from SourcePosition source in ctx.SourcePositions
-                //              where source.PublicationId == pub.PublicationId select source.Source.Name).ToList();
-                vm.Reviews = reviewList;
-
-                return View(vm);
             }
+
+            PublicationReviewListViewModel vm = new PublicationReviewListViewModel() {
+                Id = id,
+                Title = pub.Title,
+                Description = pub.Description,
+                Category = pub.Category.Name
+            };
+
+            var pubTagsResult = pubsTagsService.GetPublicationTagsList(t => t.PublicationId == pub.PublicationId).ToList();
+            List<string> tags = new List<string>();
+            foreach (var item in pubTagsResult) {
+                tags.Add(tagsService.GetTag(item.TagId).Name);
+            }
+            vm.Tags = tags;
+
+            return View(vm);
         }
 
         public ActionResult DownloadReview(int id) {

@@ -1,43 +1,44 @@
 ﻿@model recenzent.Models.PublicationViewModel
+@using recenzent.Resources
 @{
-    ViewBag.Title = "Edycja publikacji";
+    ViewBag.Title = AuthorPanel.EditPubTitle;
 }
 
 <div class="container">
     <div>
-        <h2>Edytuj publikacje</h2>
+        <h2>@AuthorPanel.EditPubTitle</h2>
         @Html.ActionLink("Powrót", "Index")
     </div>
-    @using (Html.BeginForm("EditPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    @using (Html.BeginForm("EditPub", "AuthorPanel", FormMethod.Post, new { enctype = "multipart/form-data", required = "true" })) {
 
         <div class="form-group col-md-10">
-            <label class="control-label">Tytuł</label>
+            <label class="control-label">@AuthorPanel.Title</label>
             <div>
                 @*<input type="text" class="form-control" id="title" name="title">*@
-                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", required = "true" })
             </div>
         </div>
 
         <div class="form-group col-md-10">
-            <label class="control-label" for="file">Plik</label>
+            <label class="control-label" for="file">@AuthorPanel.File</label>
             <div>
                 @*<input type="file" class="form-control" id="PublicationFile" name="file"/>*@
-                @Html.TextBoxFor(m => m.File, new { @class = "form-control inputlg", type = "file", accept = ".pdf" })
+                @Html.TextBoxFor(m => m.File, new { @class = "form-control inputlg", type = "file", accept = ".pdf", required = "true" })
             </div>
         </div>
 
         <div class="form-group col-md-10">
-            <label class="control-label">Kategoria</label>
+            <label class="control-label">@AuthorPanel.Category</label>
             <div>
-                @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.Categories, Model.Category), new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.Categories, Model.Category), new { @class = "form-control", required = "true" })
             </div>
         </div>
 
         <div class="form-group col-md-10">
-            <label class="control-label">Tagi</label>
+            <label class="control-label">@AuthorPanel.Tags</label>
             <div>
                 @*<input type="text" class="form-control" id="tags" name="tags" placeholder="Tagi należy podawać po przecinku, np.Fizyka, Matematyka...">*@
-                @Html.TextBoxFor(m => m.Tags, new { @class = "form-control", placeholder = "Tagi należy podawać po przecinku, np.Fizyka, Matematyka..." })
+                @Html.TextBoxFor(m => m.Tags, new { @class = "form-control", placeholder = AuthorPanel.TagsHelper, required = "true" })
             </div>
         </div>
 
@@ -56,7 +57,7 @@
             </div>*@
 
         <div class="form-group col-md-10">
-            <label class="control-label" for="comment">Opis</label>
+            <label class="control-label" for="comment">@AuthorPanel.Description</label>
             <div>
                 @*<textarea class="form-control" rows="5" id="Description"></textarea>*@
                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5", required = "true" })
@@ -64,7 +65,7 @@
         </div>
 
         <div class="form-group col-md-10">
-            <button type="submit" class="btn btn-default">Akceptuj</button>
+            <button type="submit" class="btn btn-default">@AuthorPanel.Accept</button>
         </div>
 
 

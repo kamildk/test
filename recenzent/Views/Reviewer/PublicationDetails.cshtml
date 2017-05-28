@@ -6,7 +6,7 @@
 <h2>Recenzje publikacji</h2>
 
 <div class="container">
-    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("PublicationsToReview", "Reviewer" )'">Powrót</button>
+    <button type="button" class="btn" id="btn1" onclick="location.href='@Url.Action("Index", "Reviewer" )'">Powrót</button>
     <h3>@Model.Title</h3>
 
     <div class="panel panel-default">
@@ -16,9 +16,39 @@
     <div class="btn-default well-sm col-lg-11">
         @Html.ActionLink("Pobierz publikacje", "DownloadPublication", "Reviewer", new { pubId = Model.PublicationId }, null)
     </div>
-    <div class="btn-default well-sm col-lg-11">
-        @Html.ActionLink("Recenzuj", "AddReview", "Reviewer", new { pubId = Model.PublicationId}, null)
-    </div>
-    
+    @if (Model.Reviews.ElementAt(0) == null)
+    {
+        <div class="btn-default well-sm col-lg-11">
+            @Html.ActionLink("Recenzuj", "AddReview", "Reviewer", new { pubId = Model.PublicationId }, null)
+        </div>
+    }
+    else
+    {
+        <br />
+        <div class="list-group-item">   
+            <h4 class="list-group-item-heading">Twoja recenzja</h4>
+            <p class="list-group-item-text">Data dodania: @Model.Reviews.ElementAt(0).Creation_date.ToShortDateString()</p>
+            <p class="list-group-item-text">Historia recenzji (od najnowszych):</p>
+            @if (Model.Reviews.ElementAt(0).Files != null)
+            {
+                for (int i = 0; i < Model.Reviews.ElementAt(0).Files.Count(); i++)
+                {
+                    <p class="list-group-item-text">Plik: @Html.ActionLink("Pobierz", "DownloadReview", "Reviewer", new { id = Model.Reviews.ElementAt(0).Files.ElementAt(i).FileId }, null) </p>
+                }
+            }
+        </div>
+
+        <div class="btn-default well-sm col-lg-11">
+            @if (Model.Reviews.ElementAt(0).Files != null)
+            {
+                @Html.ActionLink("Recenzuj ponownie", "AddReview", "Reviewer", new { pubId = Model.PublicationId }, null)
+            }
+            else
+            {
+                @Html.ActionLink("Recenzuj", "AddReview", "Reviewer", new { pubId = Model.PublicationId }, null)
+            }
+        </div>
+    }
+
 
 </div>

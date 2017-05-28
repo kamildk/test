@@ -163,6 +163,17 @@ namespace recenzent.Controllers
                         }
                     }
 
+                    var fileOldId = from Data.Model.File f in ctx.Files
+                              where f.ReviewId == reviewId && f.IsCurrent == true
+                              select f.FileId;
+
+                    if(fileOldId.FirstOrDefault() != default(int))
+                    {
+                        Data.Model.File fileOld = ctx.Files.Find(fileOldId.First());
+                        fileOld.IsCurrent = false;
+                    }
+
+
                     review.Publication = pub;
                     pub.Reviews.Add(review); //Tu moze byc problem
                     //ctx.Entry(pub).State = EntityState.Modified;
@@ -236,6 +247,36 @@ namespace recenzent.Controllers
             using (var ctx = new DataContext())
             {
                 Publication pub = ctx.Publications.Where(p => p.PublicationId == id).FirstOrDefault();
+
+                IUserService userService = new UserService();
+                string userId = User.Identity.GetUserId();
+                var revId = from Review rev in ctx.Reviews
+                            where rev.PublicationId == pub.PublicationId && rev.UserId == userId && rev.CurrentStateId != 1
+                            select rev.ReviewId;
+
+                if(revId.FirstOrDefault() != default(int))
+                {
+                    int reviewId = revId.First();
+                    Review review = ctx.Reviews.Find(reviewId);
+                    
+                    var fId = from Data.Model.File f in ctx.Files
+                                where f.ReviewId == reviewId
+                                orderby f.FileId descending
+                                select f.FileId;
+
+                    if (fId.FirstOrDefault() != default(int))
+                    {
+                        Data.Model.File fileCheck;
+                        for (int j = 0; j < fId.Count(); j++)
+                        {
+                            fileCheck = ctx.Files.Find(fId.AsEnumerable().ElementAt(j));
+                            pub.Reviews.ElementAt(0).Files.Add(fileCheck);
+                        }
+                    }
+                        
+                    //pub.Reviews.Add(review);
+                }
+
                 return View(pub);
             }
         }
@@ -253,6 +294,28 @@ namespace recenzent.Controllers
                 }
                 else
                     return View("Error");
+            }
+        }
+
+        public ActionResult DownloadReview(int id)
+        {
+            using (var ctx = new DataContext())
+            {
+                //var result = (from Review review in ctx.Reviews
+                //              where review.ReviewId == id
+                //              select review).FirstOrDefault();
+                var filePath = (from Data.Model.File file in ctx.Files
+                                where file.FileId == id
+                                select file.Link_source).FirstOrDefault();
+
+                if (filePath != null)
+                {
+                    return File(filePath, "application/pdf");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
         }
     }

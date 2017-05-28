@@ -7,27 +7,74 @@ using System;
 using System.Threading;
 using System.Globalization;
 using System.Web;
+using recenzent.Data.Interface;
+using recenzent.Data.Service;
+using recenzent.Models;
+using System.Collections.Generic;
 
 namespace recenzent.Controllers
 {
     public class HomeController : Controller
     {
-        private DataContext ctx = new DataContext();
 
         public ActionResult Index(int? page)
-        {  
-            var pubSort = (from Publication pub in ctx.Publications /*where pub.IsShared == true*/ orderby pub.ShareDate descending select pub).ToList();
-           
+        {
+            IPublicationService pubService = new PublicationService();
+            var pubList = pubService.GetPublicationListOrderedByDate(p => p.IsShared == false, false);
+
+            List<PublicationHomeViewModel> pubVMList = new List<PublicationHomeViewModel>();
+            foreach (var item in pubList)
+            {
+                string categoryName;
+                if (item.Category == null)
+                {
+                    categoryName = "";
+                }
+                else
+                {
+                    categoryName = item.Category.Name;
+                }
+                string pubDate;
+                if (item.ShareDate == null)
+                {
+                    pubDate = "";
+                }
+                else
+                {
+                    pubDate = item.ShareDate.ToString();
+                }
+
+                pubVMList.Add(new PublicationHomeViewModel()
+                {
+                    Id = item.PublicationId,
+                    Title = item.Title,
+                    Description = item.Description,
+                    Category = categoryName,
+                    AuthorName = item.Author.Name + " " + item.Author.Surname,
+                    ShareDate = pubDate
+                });
+            }
+
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(pubSort.ToPagedList(pageNumber, pageSize));
+            return View(pubVMList.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult LatestPublicationsPartial()
         {
-            var latestPub = (from Publication pub in ctx.Publications /*where pub.IsShared == true*/ orderby pub.ShareDate descending select pub).ToList().Take(5);
-            
-            return PartialView("LatestPublicationPartial", latestPub);
+            IPublicationService pubService = new PublicationService();
+            var pubList = pubService.GetPublicationListOrderedByDate(p => p.IsShared == false, false).Take(5);
+            List<PublicationSmallViewModel> pubSVMList = new List<PublicationSmallViewModel>();
+
+            foreach (var item in pubList)
+            {
+                pubSVMList.Add(new PublicationSmallViewModel()
+                {
+                    Id = item.PublicationId,
+                    Title = item.Title
+                });
+            }
+            return PartialView("_LatestPublicationPartial", pubSVMList);
         }
 
         public ActionResult ChangeLanguage(string lang)

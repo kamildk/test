@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<recenzent.Data.Model.Publication>
 
 @{
-    ViewBag.Title = "Lista publikacji w recenzji";
+    ViewBag.Title = recenzent.Resources.AuthorPanel.PublicationInReviewList;
 }
 
-<h2>Lista publikacji w recenzji</h2>
+<h2>@recenzent.Resources.AuthorPanel.PublicationInReviewList</h2>
 
 <div class="list-group pre-scrollable">
     @foreach (var item in Model) {

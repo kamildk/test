@@ -1,6 +1,7 @@
 ﻿@model recenzent.Models.PublicationReviewListViewModel
+@using recenzent.Resources
 @{
-    ViewBag.Title = "Recanzja: " + Model.Title;
+    ViewBag.Title = Model.Title;
 }
 
 @*<h2>Recenzje publikacji</h2>*@
@@ -10,12 +11,12 @@
     <br />
 
     <div class="panel panel-default">
-        <div class="panel-heading">Kategoria</div>
+        <div class="panel-heading">@AuthorPanel.Category</div>
         <div class="panel-body">@Model.Category</div>
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading" style="background-color:#B3DCBF">Opis</div>
+        <div class="panel-heading" style="background-color:#B3DCBF">@AuthorPanel.Description</div>
         <div class="panel-body">@Model.Description</div>
     </div>
 
@@ -25,7 +26,7 @@
         }
     }
     <div class="panel panel-default">
-        <div class="panel-heading">Tagi</div>
+        <div class="panel-heading">@AuthorPanel.Tags</div>
         <div class="panel-body">@tags</div>
     </div>
 
@@ -38,16 +39,16 @@
         </div>
     </div>*@
 
-    @Html.ActionLink("Edytuj", "EditPub", "AuthorPanel", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default edit" })
+    @Html.ActionLink(AuthorPanel.Edit, "EditPub", "AuthorPanel", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default edit" })
 
     <div class="list-group pre-scrollable">
         @for (int i = 0; i < Model.Reviews.Count; i++) {
             <div class="list-group-item">
-                <h4 class="list-group-item-heading">Recenzja  @(i+1)</h4>
-                <p class="list-group-item-text">Data dodania: @Model.Reviews[i].AddDate.ToShortDateString()</p>
-                <p class="list-group-item-text">Stan: @Model.Reviews[i].State</p>
+                <h4 class="list-group-item-heading">@AuthorPanel.Review  @(i+1)</h4>
+                <p class="list-group-item-text">@AuthorPanel.AddDate: @Model.Reviews[i].AddDate.ToShortDateString()</p>
+                <p class="list-group-item-text">@AuthorPanel.State: @Model.Reviews[i].State</p>
                 @*<p class="list-group-item-text">Streszczenie:</p>*@
-                <p class="list-group-item-text">Plik: @Html.ActionLink("Pobierz", "DownloadReview", "AuthorPanel", new { id = Model.Reviews[i].Id }, null) </p>
+                <p class="list-group-item-text">@AuthorPanel.File: @Html.ActionLink(AuthorPanel.Download, "DownloadReview", "AuthorPanel", new { id = Model.Reviews[i].Id }, null) </p>
 
             </div>
         }

@@ -16,6 +16,6 @@ namespace recenzent.Data.Model
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Change> MyProperty { get; set; }
+        public ICollection<Change> Changes { get; set; }
     }
 }

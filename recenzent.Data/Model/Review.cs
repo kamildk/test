@@ -21,15 +21,15 @@ namespace recenzent.Data.Model
 
         public int PublicationId { get; set; }
         [ForeignKey("PublicationId")]
-        public Publication Publication { get; set; }
+        public virtual Publication Publication { get; set; }
 
         public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public int CurrentStateId { get; set; }
         [ForeignKey("CurrentStateId")]
-        public ReviewState CurrentState { get; set; }
+        public virtual ReviewState CurrentState { get; set; }
 
     }
 }
