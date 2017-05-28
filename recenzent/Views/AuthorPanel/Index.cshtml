@@ -1,20 +1,20 @@
-﻿
+﻿@using recenzent.Resources
 @{
     ViewBag.Title = "Panel Autora";
 }
 
-<h2>Panel Autora</h2>
+<h2>@AuthorPanel.Name</h2>
 <form class="container">
 
     <div class="btn-default well-sm col-lg-11">
-        @Html.ActionLink("Dodaj publikacje", "AddPub", "AuthorPanel")
+        @Html.ActionLink(AuthorPanel.AddPublication, "AddPub", "AuthorPanel")
     </div>
 
     <div class="btn-default well-sm col-lg-11">
-        @Html.ActionLink("Lista publikacji", "PublicationList", "AuthorPanel")
+        @Html.ActionLink(AuthorPanel.PublicationList, "PublicationList", "AuthorPanel")
     </div>
 
     <div class="btn-default well-sm col-lg-11">
-        @Html.ActionLink("Lista publikacji w recenzji", "PublicationInReviewList", "AuthorPanel")
+        @Html.ActionLink(AuthorPanel.PublicationInReviewList, "PublicationInReviewList", "AuthorPanel")
     </div>
 </form>
