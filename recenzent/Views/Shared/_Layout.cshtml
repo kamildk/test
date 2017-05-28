@@ -60,6 +60,16 @@
                 </div>
             </div>
 
+            <div class="upper-row" style="background-color: #00a69c; height: auto; min-height: auto;">
+                @RenderSection("RightUpperSection", required: false)
+                <form class="nav" method="POST" action="/Search/Submit">
+                    <div>
+                        <h3>Szukajka</h3>
+                        <input type="text" name="query" class="form-control" placeholder="Szukaj publikacji..." />
+                    </div>
+                </form>
+            </div>
+
             <div class="lower-row" style="background-color:#B3DCBF">
 
                 @RenderSection("RightLowerSection", required: false)
