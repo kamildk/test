@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PublicationPanelController.cs" />
     <Compile Include="Controllers\ReviewerController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -346,6 +347,7 @@
     <Content Include="Views\AdminPanel\EditPub.cshtml" />
     <Content Include="Views\AdminPanel\PublicationDetails.cshtml" />
     <Content Include="Views\AdminPanel\OrderReview.cshtml" />
+    <Content Include="Views\Search\Submit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
