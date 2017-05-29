@@ -2,13 +2,32 @@
 @{
     ViewBag.Title = "OrderReview";
 }
-</div>
-@using (Html.BeginForm("OrderReview", "AdminPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@if (Model.ValidUsersCount > 0)
 {
-@Html.HiddenFor(m => m.pubId)
-<div class="form-group col-md-10">
-    <button type="submit" class="btn btn-default">Akceptuj</button>
-</div>
+
+    @Html.BeginForm("OrderReview", "AdminPanel", FormMethod.Post, new { enctype = "multipart/form-data" })
+    {
+       @Html.HiddenFor(m=>Model.pubId)
+        <table align="center" cellpadding="10">
+            @for (int i = 0; i < Model.ValidUsersCount; i++)
+            {
+                Html.HiddenFor(m => m.ValidUsers[i]);
+            <tr>
+                <td>@Model.ValidUsers[i].Name</td>
+                <td>@Model.ValidUsers[i].Surname</td>
+                <td><div class="checkbox">@Html.CheckBoxFor(m => m.Rewiever[i])</div>
+                </td>
+            </tr>
+            }
+        </table>
+        <button type="submit" class="btn-default">Akceptuj</button>
+        @Html.HiddenFor(m => m.ValidUsersCount)
+        for (int i = 0; i < Model.ValidUsersCount; i++)
+        {
+            @Html.HiddenFor(model => Model.ValidUsers[i].Id)
+        }
+    }
 }
-</div>
+
 @ViewBag.Message

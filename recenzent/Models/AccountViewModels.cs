@@ -131,12 +131,27 @@ namespace recenzent.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+    public class UserForAdmin
+    {
+        public virtual string Id { get; set; }
+        public virtual bool Reviewer { get; set; }
+        public virtual bool Author { get; set; }
 
+    }
     public class RegistrationRequestViewModel
     {
         public List<User> UserList { get; set; }
         public int UserCount { get; set; }
-        public bool[] Reviewer { get; set; }
-        public bool[] Author { get; set; }
+        //public bool[] Reviewer
+        //{
+        //    get;
+
+
+
+        //    set;
+        //} = false[];
+        //public bool[] Author { get; set; }
+
+        public List<UserForAdmin> Lista{get;set;}
     }
 }

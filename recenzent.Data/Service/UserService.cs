@@ -14,8 +14,15 @@ namespace recenzent.Data.Service {
         UserManager<User> userManager;
         DataContext context;
 
-        public UserService() {
-            context = new DataContext();
+        public UserService(DataContext cont=null) {
+            if (cont != null)
+            {
+                context = cont;
+            }
+            else
+            {
+                context = new DataContext();
+            }
             userManager = new UserManager<User>(new UserStore<User>(context));
         }
         //~UserService()

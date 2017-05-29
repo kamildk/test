@@ -10,5 +10,8 @@ namespace recenzent.Data.Interface {
         User GetOwinUser(string id);
         User GetDBUser(string id);
         List<User> GetOwinUsersList();
+        void ChangeUser(User destination);
+        void AddToRole(string Id, string Role);
+        IQueryable<User> GetUsersInRole(string roleName);
     }
 }

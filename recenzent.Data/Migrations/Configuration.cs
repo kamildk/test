@@ -57,6 +57,18 @@ namespace recenzent.Data.Migrations
                     roleManager.Create(role);
                 }
 
+               
+                if (userManager.FindByName("Magik") == null)
+                {
+                    var user = new User() { UserName = "Admin", Name = "Wojciech", Surname = "Sendera", Email="wojteksendera@gmail.com", RegistrationDate=DateTime.UtcNow,  };
+                    userManager.Create(user, "Admin123");
+                    userManager.AddToRole(user.Id, "Admin");
+                    userManager.AddToRole(user.Id, "Author");
+                    userManager.AddToRole(user.Id, "Reviewer");
+
+                }
+
+
                 Publication_category category1 = new Publication_category() {
                     Name = "Informatyka"
                 };

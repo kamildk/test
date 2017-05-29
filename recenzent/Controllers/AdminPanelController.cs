@@ -18,7 +18,6 @@ namespace recenzent.Controllers
     [AllowAnonymous]
     public class AdminPanelController : Controller
     {
-        private DataContext ctx = new DataContext();
 
         // GET: AdminPanel
         [Authorize(Users = "admin")]
@@ -66,45 +65,65 @@ namespace recenzent.Controllers
         public ViewResult RegistrationRequests()
         {
             RegistrationRequestViewModel regvm = new RegistrationRequestViewModel();
-            regvm.UserList = new List<Data.Model.User>();
+            regvm.Lista = new List<UserForAdmin>();
+            regvm.UserList = new List<User>();
             UserService serv = new UserService();
             var list = serv.GetOwinUsersList();
-            foreach(User user in list)
+            foreach (User user in list)
             {
                 if (user.wantToBeAuthor || user.wantToBeReviewer)
                 {
                     regvm.UserList.Add(user);
                 }
             }
-            regvm.UserCount = regvm.UserList.Count();
-            regvm.Reviewer = new bool[regvm.UserCount];
-            regvm.Author = new bool[regvm.UserCount];
-            return View(regvm); 
+            foreach (User user in regvm.UserList)
+            {
+                UserForAdmin _obj = new UserForAdmin();
+                _obj.Id = user.Id;
+                _obj.Reviewer = false;
+                _obj.Author = false;
+                regvm.Lista.Add(_obj);
+            }
+                regvm.UserCount = regvm.UserList.Count();
+            //regvm.Reviewer = new bool[regvm.UserCount];
+            //regvm.Author = new bool[regvm.UserCount];
+            //for (int i = 0; i < regvm.UserCount; i++)
+            //{
+            //    regvm.Reviewer[i] = false;
+            //    regvm.Author[i] = false;
+            //}
+            return View(regvm);
         }
         [HttpPost]
         public ActionResult RegistrationRequests(RegistrationRequestViewModel regvm)
         {
             UserService userService = new UserService();
-            
-            for (int i=0; i<regvm.UserCount;i++)
+ 
+            for (int i = 0; i < regvm.UserCount; i++)
             {
                 User _user = userService.GetDBUser(regvm.UserList[i].Id);
                 bool check = false;
-                if (regvm.Author[i])
-                {
-                    userService.AddToRole(regvm.UserList[i].Id, "Author");
-                    _user.wantToBeAuthor = false;
-                    check = true;
 
-                }
-                if (regvm.Reviewer[i])
-                {
-                    userService.AddToRole(regvm.UserList[i].Id, "Reviewer");
-                    _user.wantToBeReviewer = false;
-                    check = true;
+              
+                    if (regvm.Lista[i].Author==true)
+                    {
+                        userService.AddToRole(regvm.UserList[i].Id, "Author");
+                        _user.wantToBeAuthor = false;
+                        check = true;
 
-                }
-                if (check)userService.ChangeUser(_user);
+                    }
+
+                
+                    if (regvm.Lista[i].Reviewer==true)
+                    {
+                        userService.AddToRole(regvm.UserList[i].Id, "Reviewer");
+                        _user.wantToBeReviewer = false;
+                        check = true;
+
+                    }
+
+
+                if (check) userService.ChangeUser(_user);
             }
             return Redirect("Index");
         }
@@ -112,14 +131,50 @@ namespace recenzent.Controllers
 
         public ActionResult PublicationList(int? page)
         {
-            using (var context = new DataContext())
-            {
-                var pubSort = (from Publication pub in context.Publications orderby pub.ShareDate descending select pub).ToList();
+            IPublicationService pubService = new PublicationService();
+            var pubList = pubService.GetAllPublicationsList();
 
-                int pageSize = 5;
-                int pageNumber = (page ?? 1);
-                return View(pubSort.ToPagedList(pageNumber, pageSize));
+            List<PublicationAdminListViewModel> pubVMList = new List<PublicationAdminListViewModel>();
+            foreach (var item in pubList)
+            {
+                string categoryName;
+                if (item.Category == null)
+                {
+                    categoryName = "";
+                }
+                else
+                {
+                    categoryName = item.Category.Name;
+                }
+                string pubDate;
+                if (item.ShareDate == null)
+                {
+                    pubDate = "";
+                }
+                else
+                {
+                    pubDate = item.ShareDate.ToString();
+                }
+
+                pubVMList.Add(new PublicationAdminListViewModel()
+                {
+                    Id = item.PublicationId,
+                    Title = item.Title,
+                    Description = item.Description,
+                    Category = categoryName,
+                    AuthorName = item.Author.Name + " " + item.Author.Surname,
+                    ShareDate = pubDate,
+                    isShared = item.IsShared,
+
+                    
+                });
+
+
             }
+
+            int pageSize = 40;
+            int pageNumber = (page ?? 1);
+            return View(pubVMList.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult LatestPublicationsPartial()
@@ -139,6 +194,7 @@ namespace recenzent.Controllers
                 RedirectToAction("Index");
             }
 
+            IReviewService revServ = new ReviewService();
             using (DataContext context = new DataContext())
             {
                 int _id = (int)id;
@@ -150,59 +206,86 @@ namespace recenzent.Controllers
                 //data.File= publication.Files.FirstOrDefault();
                 //data.Tags = publication.PublicationTags.ToString();
                 data.Title = publication.Title;
+                data.AllReviews = revServ.GetPublicationReviews(_id).ToList();
                 return View(data);
             }
         }
         [HttpGet]
         public ActionResult OrderReview(int publicationId = -1)
         {
-            var data = new OrderReviewViewModel();
+            var viewModel = new OrderReviewViewModel();
             UserService service = new UserService();
-            var _validUsers = service.GetUsersInRole("Reviwer");
+            List<User> _validUsers = service.GetUsersInRole("Reviewer").ToList();
             if (_validUsers != null)
-                data.ValidUsers = _validUsers;
-            data.pubId = publicationId;
-            return View(data);
+            {
+                viewModel.ValidUsers = _validUsers;
+                viewModel.ValidUsersCount = _validUsers.Count();
+                viewModel.Message = "";
+                viewModel.Rewiever = new bool[viewModel.ValidUsersCount];
+            }
+            else
+            {
+                viewModel.Message = Resources.AdminPanel.ResourceManager.GetString("no_reviewers");
+            }
+            viewModel.pubId = publicationId;
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult OrderReview(OrderReviewViewModel model)
         {
             if (model.pubId > 0)
             {
-                using (DataContext ctx = new DataContext())
+                for (int i = 0; i < model.Rewiever.Count(); i++)
                 {
-                    Review review = new Review();
-                    ReviewStateHistory rsh = new ReviewStateHistory();
-                    
-                    //TODO:
-                    IUserService userService = new UserService();
-                    string userId = User.Identity.GetUserId();
-                    User currentUser = ctx.Users.Where(u => u.Id == userId).FirstOrDefault();
+                    if (model.Rewiever[i] == true)
+                    {
+                        Review review = new Review();
+                        ReviewStateHistory rsh = new ReviewStateHistory();
 
-                    var state = ctx.ReviewStates.First(i => i.Name == "Przydzielony");
-
-
-                    review.User = currentUser;
-                    DateTime date = DateTime.UtcNow;
-                    review.Creation_date = date;
-                    review.Expiration_date = date.AddYears(2);
-                    review.PublicationId = model.pubId;
-                    review.CurrentState = state;
-                    currentUser.Reviews.Add(review);
-                    ctx.Reviews.Add(review);
-                    
-                    ctx.SaveChanges();
-                    rsh.Review = review;
-                    rsh.StateId = state.Id;
-                    rsh.State = state;
-                    rsh.ChangeDate = DateTime.UtcNow;
-                    ctx.ReviewStateHistory.Add(rsh);
-                    ctx.SaveChanges();
-                    return RedirectToAction("Index");
+                        DataContext cont = new DataContext();
+                        IUserService userService = new UserService(cont);
+                        IReviewService reviewService = new ReviewService(cont);
+                        User targetUser = userService.GetOwinUser(model.ValidUsers[i].Id);
+                        var state = reviewService.GetState("Przydzielony");
+                        review.User = targetUser;
+                        DateTime date = DateTime.UtcNow;
+                        review.Creation_date = date;
+                        review.PublicationId = model.pubId;
+                        review.CurrentState = state;
+                        targetUser.Reviews.Add(review);
+                        reviewService.CreateReview(review, rsh, state);
+                        return RedirectToAction("Index");
+                    }
                 }
             }
 
-            return View(model);
+            return Redirect("PublicationList");
+        }
+
+        public ActionResult ChangePublishState(int Id)
+        {
+            IPublicationService pubService = new PublicationService();
+            var pub = pubService.GetPublication(p => p.PublicationId == Id);
+            if (pub.IsShared)
+            {
+                pub.IsShared = false;
+
+            }
+            else
+            {
+                pub.IsShared = true;
+                pub.ShareDate = DateTime.UtcNow;
+            }
+            pubService.UpdatePublication(pub);
+            return Redirect("PublicationList");
+        }
+        public ActionResult DeleteReview(int _revId)
+        {
+            IReviewService revServ = new ReviewService();
+            var _review = revServ.GetReview(p => p.ReviewId == _revId);
+            _review.Expiration_date = DateTime.UtcNow;
+            revServ.UpdateReview(_review);
+            return RedirectToAction("PublicationDetails", _review.PublicationId);
         }
     }
 }

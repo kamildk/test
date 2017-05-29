@@ -50,5 +50,12 @@ namespace recenzent.Data.Service {
                 return ctx.Publications.Where(checkFunc).OrderByDescending(p => p.ShareDate).ToList();
             }
         }
+
+        public void UpdatePublication(Publication targetPublication)
+        {
+            var entity = ctx.Publications.Where(c => c.PublicationId == targetPublication.PublicationId).AsQueryable().FirstOrDefault();
+            ctx.Entry(entity).CurrentValues.SetValues(targetPublication);
+            ctx.SaveChanges();
+        }
     }
 }

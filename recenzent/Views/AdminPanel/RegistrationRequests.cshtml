@@ -10,7 +10,12 @@
 
     @if (Model.UserList.Count > 0)
     {
+        @*for (int i = 0; i < Model.UserCount; i++)
+        {
+            @Html.HiddenFor(m => m.Author[i]);
 
+            @Html.HiddenFor(m =>m.Reviewer[i] );
+        }*@
 
 
         @Html.BeginForm("RegistrationRequests", "AdminPanel", FormMethod.Post)
@@ -32,7 +37,7 @@
                             @if (@Model.UserList[i].wantToBeAuthor)
                             {
                                 <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.Author[i])
+                                    @Html.CheckBoxFor(model => Model.Lista[i].Author)
                                 </div>
                             }
                         </td>
@@ -40,7 +45,7 @@
                             @if (@Model.UserList[i].wantToBeReviewer)
                             {
                                 <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.Reviewer[i])
+                                    @Html.CheckBoxFor(regvm => Model.Lista[i].Reviewer)
                                 </div>
                             }
                         </td>
@@ -53,6 +58,7 @@
             for (int i = 0; i < Model.UserCount; i++)
             {
                 @Html.HiddenFor(model => Model.UserList[i].Id)
+                @Html.HiddenFor(model => Model.Lista[i].Id)
             }
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-11">

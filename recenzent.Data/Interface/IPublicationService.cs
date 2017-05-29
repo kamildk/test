@@ -13,5 +13,6 @@ namespace recenzent.Data.Interface {
         List<Publication> GetPublicationList(Func<Publication, bool> checkFunc);
         List<Publication> GetPublicationListOrderedByDate(Func<Publication, bool> checkFunc, bool ascending = true);
         List<Publication> GetAllPublicationsList();
+        void UpdatePublication(Publication targetPublication);
     }
 }

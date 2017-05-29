@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using recenzent.Data;
+using recenzent.Data.Model;
 
 namespace recenzent.Models {
     public class PublicationViewModel {
@@ -49,7 +50,7 @@ namespace recenzent.Models {
         [Required]
         public string Description { get; set; }
         public string Category { get; set; }
-        public IEnumerable<Data.Model.Review> AllReviews {get; set;}
+        public List<Review> AllReviews {get; set;}
 
     }
 
@@ -69,4 +70,14 @@ namespace recenzent.Models {
         public string Title { get; set; }
     }
 
+    public class PublicationAdminListViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public string AuthorName { get; set; }
+        public string ShareDate { get; set; }
+        public bool isShared { get; set; }
+    }
 }

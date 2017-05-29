@@ -1,11 +1,26 @@
 ﻿@model recenzent.Models.PublicationEditViewModel
+@using recenzent.Data.Model
 @{
     ViewBag.Title = "PublicationDetails";
 }
 
 <h2>@Model.Title</h2>
 @Model.Id
+<br />
+@if (Model.AllReviews != null)
+{
+<table cellpadding="10">
 
-@Html.ActionLink("Dodaj recezje", "OrderReview", "AdminPanel", new { publicationId = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+    @foreach (Review rev in Model.AllReviews)
+    {
+        <tr>
+            <td>@rev.ReviewId </td>
+            <td>@Html.ActionLink("Delete", "DeleteReview", "AdminPanel", new { _revId = rev.ReviewId }, htmlAttributes: new { @class = "btn-default" }) </td>
+        </tr>
+    }
+</table>
+
+<br />}
+@Html.ActionLink("Dodaj recezje", "OrderReview", "AdminPanel", new { publicationId = Model.Id }, htmlAttributes: new { @class = "btn-default" })
 
 
